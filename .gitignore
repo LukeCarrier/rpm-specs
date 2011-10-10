@@ -1,0 +1,5 @@
+# Temporary files used by rpmbuild
+BUILD/
+BUILDROOT/
+RPMS/
+SOURCES/
