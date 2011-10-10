@@ -7,7 +7,7 @@ Group:     Applications/Internet
 License:   BSD (two-clause)
 URL:       http://nginx.org
 Source0:   http://nginx.org/download/nginx-%{version}.tar.gz
-Source1:   http://github.com/LukeCarrier/rpms/raw/master/SUPPORT/nginx-sysvinit.sh
+Source1:   http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/nginx-sysvinit.sh
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 BuildRequires: openssl-devel, pcre-devel, sed, zlib-devel
