@@ -2,6 +2,11 @@
 # nginx init script
 # Written by Luke Carrier <hey@lukecarrier.me>
 
+# chkconfig: - 85 15
+# description: lightweight web and reverse proxy server
+# processname: nginx
+# config: /etc/nginx/nginx.conf
+
 # nginx configuration
 BIN="/usr/sbin/nginx"
 CONF="/etc/nginx/nginx.conf"
