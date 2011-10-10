@@ -36,7 +36,7 @@ Good question. To use these spec files you'll need to set up an environment to
 build them in. This isn't all that scary:
 
     cd ~
-    echo "%_topdir $(echo "$HOME")/rpmbuild" > .rpmmacro
+    echo "%_topdir $(echo "$HOME")/rpmbuild" > .rpmmacros
     git clone git://github.com/LukeCarrier/rpm-specs.git rpmbuild
     yum -y install rpm-build
 
