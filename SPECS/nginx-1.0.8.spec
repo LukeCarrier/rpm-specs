@@ -96,20 +96,11 @@ fi
 
 %files
 %defattr(-, root, root, -)
-                   /usr/sbin/nginx
-%attr(755, -, -)   /etc/rc.d/init.d/nginx
-%config(noreplace) /etc/nginx/fastcgi.conf
-%config(noreplace) /etc/nginx/fastcgi_params
-%config(noreplace) /etc/nginx/koi-utf
-%config(noreplace) /etc/nginx/koi-win
-%config(noreplace) /etc/nginx/mime.types
-%config(noreplace) /etc/nginx/nginx.conf
-%config(noreplace) /etc/nginx/scgi_params
-%config(noreplace) /etc/nginx/uwsgi_params
-%config(noreplace) /etc/nginx/win-utf
-%dir               /var/log/nginx
-%config(noreplace) /var/www/html/50x.html
-%config(noreplace) /var/www/html/index.html
+                   %{_sbindir}/nginx
+%attr(755, -, -)   %{_initddir}/nginx
+%config(noreplace) %{_sysconfdir}/nginx
+%dir               %{_localstatedir}/log/nginx
+%config(noreplace) %{_localstatedir}/www/html
 
 %changelog
 
