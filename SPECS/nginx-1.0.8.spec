@@ -25,12 +25,12 @@ nginx [engine x] is a HTTP and reverse proxy server, as well as a mail proxy ser
 ./configure \
   --with-cc-opt="-w" \
   --prefix=/usr \
-  --conf-path=/etc/nginx/nginx.conf \
-  --error-log-path=/var/log/nginx/error.log \
-  --http-log-path=/var/log/nginx/access.log \
-  --lock-path=/var/lock/nginx.lock \
-  --pid-path=/var/run/nginx.pid \
-  --sbin-path=/usr/sbin/nginx \
+  --conf-path=%{_sysconfdir}/nginx/nginx.conf \
+  --error-log-path=%{_localstatedir}/log/nginx/error.log \
+  --http-log-path=%{_localstatedir}/log/nginx/access.log \
+  --lock-path=%{_localstatedir}/lock/nginx.lock \
+  --pid-path=%{_localstatedir}/run/nginx.pid \
+  --sbin-path=%{_sbindir}/nginx \
   --user=nginx \
   --group=nginx \
   --with-ipv6 \
