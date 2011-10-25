@@ -95,7 +95,7 @@ fi
 %postun
 # What goes up must come down and all that...
 [ "$(id nginx >/dev/null 2>&1; echo -n $?)" = "0" ] && userdel nginx
-[ -d /var/lib/nginx                               ] && rm -rf /var/lib/nginx
+[ -d "%{_sharedstatedir}/nginx"                   ] && rm -rf "%{_sharedstatedir}/nginx"
 
 %files
 %defattr(-, root, root, -)
