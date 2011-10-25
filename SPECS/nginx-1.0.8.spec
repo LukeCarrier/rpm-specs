@@ -70,6 +70,9 @@ mv "$RPM_BUILD_ROOT/usr/html" "$RPM_BUILD_ROOT/%{_localstatedir}/www/html"
 sed -i 's%root   html%root   /%{_localstatedir}/www/html%' "$RPM_BUILD_ROOT/%{_sysconfdir}/nginx/nginx.conf"
 
 
+# Create the nginx user's home directory
+mkdir -p "$RPM_BUILD_ROOT/%{_sharedstatedir}/nginx"
+
 %clean
 rm -rf "$RPM_BUILD_ROOT"
 
@@ -82,10 +85,10 @@ then
     useradd \
       --comment "nginx web server" \
       --home /var/lib/nginx \
-      --create-home \
       --system \
+      -M \
       nginx
-    rm -rf /var/lib/nginx/*
+      # The home directory is created in the %files section!
 fi
 
 
@@ -99,6 +102,7 @@ fi
                    %{_sbindir}/nginx
 %attr(755, -, -)   %{_initddir}/nginx
 %config(noreplace) %{_sysconfdir}/nginx
+%dir               %{_sharedstatedir}/nginx
 %dir               %{_localstatedir}/log/nginx
 %config(noreplace) %{_localstatedir}/www/html
 
