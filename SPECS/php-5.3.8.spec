@@ -28,7 +28,7 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 %package pear
 Summary: hypertext preprocessor - PEAR library repository
-Requires: php, php-phar
+Requires: php, php-devel, php-phar
 
 
 %description pear
