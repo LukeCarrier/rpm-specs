@@ -9,8 +9,8 @@ URL:       http://php.net
 Source0:   http://php.net/distributions/php-%{version}.tar.gz
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-#BuildRequires: 
-#Requires:      
+BuildRequires: bison flex pcre-devel
+Requires:                 pcre
 
 
 %description
@@ -45,7 +45,12 @@ PHP is a widely-used general-purpose scripting language that is especially suite
   --sbindir=%{_sbindir} \
   --sharedstatedir=%{_sharedstatedir} \
   --sysconfdir=%{_sysconfdir} \
-  --disable-all
+  --disable-all \
+  --disable-rpath \
+  --disable-static \
+  --enable-shared \
+  --with-config-file-path=%{_sysconfdir}/php.ini \
+  --with-config-file-scan-path=%{_sysconfdir}/php.ini.d
 make %{?_smp_mflags}
 
 
