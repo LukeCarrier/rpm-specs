@@ -63,7 +63,12 @@ PHP is a widely-used general-purpose scripting language that is especially suite
   --oldincludedir=%{_includedir} \
   --sbindir=%{_sbindir} \
   --sharedstatedir=%{_sharedstatedir} \
-  --sysconfdir=%{_sysconfdir}
+  --sysconfdir=%{_sysconfdir} \
+  --disable-rpath \
+  --disable-static \
+  --enable-shared \
+  --with-config-file-path=%{_sysconfdir}/php.ini \
+  --with-config-file-scan-path=%{_sysconfdir}/php.ini.d
 make %{?_smp_mflags}
 
 
