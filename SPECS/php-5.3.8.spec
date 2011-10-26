@@ -49,21 +49,7 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 
 %build
-# There's probably a macro that does this for you...
-./configure \
-  --prefix=/usr \
-  --bindir=%{_bindir} \
-  --datadir=%{_datadir} \
-  --includedir=%{_includedir} \
-  --infodir=%{_infodir} \
-  --libdir=%{_libdir} \
-  --libexecdir=%{_libexecdir} \
-  --localstatedir=%{_localstatedir} \
-  --mandir=%{_mandir} \
-  --oldincludedir=%{_includedir} \
-  --sbindir=%{_sbindir} \
-  --sharedstatedir=%{_sharedstatedir} \
-  --sysconfdir=%{_sysconfdir} \
+%configure \
   --disable-rpath \
   --disable-static \
   --enable-shared \
