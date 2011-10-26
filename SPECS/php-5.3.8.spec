@@ -58,6 +58,10 @@ make %{?_smp_mflags}
 rm -rf "$RPM_BUILD_ROOT"
 make install INSTALL_ROOT="$RPM_BUILD_ROOT"
 
+# These don't belong here
+cd "$RPM_BUILD_ROOT"
+rm -rfv .channels/ .debdb .debdblock .filemap .lock
+
 
 %clean
 rm -rf "$RPM_BUILD_ROOT"
