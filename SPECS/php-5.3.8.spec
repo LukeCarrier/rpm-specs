@@ -3,7 +3,7 @@ Version: 5.3.8
 Release: 1%{?dist}
 Summary: hypertext preprocessor: CLI utilities
 
-Group:     Applications/Internet
+Group:     Development/Languages
 License:   PHP
 URL:       http://php.net
 Source0:   http://php.net/distributions/php-%{version}.tar.gz
