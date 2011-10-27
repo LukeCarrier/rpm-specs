@@ -55,7 +55,7 @@ get_and_interpolate_meta_value() {
 
 echo " "
 
-[ ! -f $1 ] && echo "$0: the first parameter should be the path to an RPM spec file" >&2 && exit 64
+[ ! -f "$1" ] && echo "$0: the first parameter should be the path to an RPM spec file" >&2 && exit 64
 
 build_dependencies="$(get_meta_value $1 'BuildRequires' 'version' 'Version')"
 source_packages="$(get_and_interpolate_meta_value $1 'Source[0-9]*' 'version' 'Version')"
