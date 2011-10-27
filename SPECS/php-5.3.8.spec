@@ -12,6 +12,11 @@ BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 #BuildRequires: 
 #Requires:      
 
+# Version constants for extensions
+%global phpver  5.3.8
+%global apiver  20090626
+%global zendver 220090626
+
 
 %description
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This package contains its command line interface binaries.
