@@ -52,6 +52,10 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 %prep
 %setup -q
 
+# Prepare for multiple builds (for different SAPIs)
+rm -rf build
+mkdir build-{cgi,embedded,fpm,httpd,zts}
+
 
 %build
 %configure \
