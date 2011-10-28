@@ -59,7 +59,6 @@ mkdir build-{cgi,embedded,fpm,httpd,zts}
 
 
 %build
-
 # Perform a basic build
 #   Defaults for all SAPIs to be compiled; no shared libraries should be built.
 #   All parameters will be passed to the configure script!
