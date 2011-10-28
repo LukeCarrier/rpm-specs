@@ -9,8 +9,8 @@ URL:       http://php.net
 Source0:   http://php.net/distributions/php-%{version}.tar.gz
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-#BuildRequires: 
-#Requires:      
+BuildRequires: bzip2-devel gmp-devel httpd-devel krb5-devel libjpeg-turbo-devel libXpm-devel openssl-devel pcre-devel t1lib-devel
+# TODO - add these for each sub package Requires:      
 
 # Version constants for extensions
 %global phpver  5.3.8
@@ -53,29 +53,73 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 %setup -q
 
 # Prepare for multiple builds (for different SAPIs)
-rm -rf build
+#   Don't remove the "build" directory, since it breaks the build. PHP's build
+#   system sucks *real* bad.
 mkdir build-{cgi,embedded,fpm,httpd,zts}
 
 
 %build
-%configure \
-  --disable-rpath \
-  --disable-static \
-  --enable-shared \
-  --with-config-file-path=%{_sysconfdir}/php.ini \
-  --with-config-file-scan-path=%{_sysconfdir}/php.ini.d
-make %{?_smp_mflags}
 
+# Perform a basic build
+#   Defaults for all SAPIs to be compiled; no shared libraries should be built.
+#   All parameters will be passed to the configure script!
+build_tree() {
+    ln -sf ../configure
+
+    %configure \
+      --srcdir=.. \
+      --cache-file=../config.cache \
+      --with-config-file-path=%{_sysconfdir}/php.ini \
+      --with-config-file-scan-dir=%{_sysconfdir}/php.ini.d \
+      --without-pear \
+      $*
+    make %{?_smp_mflags}
+}
+
+# No shared libraries
+#   Any shared libraries handled by the CGI build should be excluded here to
+#   reduce compile-time.
+without_shared=""
+
+# CGI build (TODO add shared libraries))
+pushd build-cgi
+build_tree
+popd
+
+# TODO Embdedded build
+#pushd build-embedded
+#build_tree \
+#  --enable-embed \
+#  $without_shared
+#popd
+
+# TODO FPM build
+#pushd build-fpm
+#build_tree \
+#  --enable-fpm \
+#  $without_shared
+#popd
+
+# TODO Apache HTTPd build
+#pushd build-httpd
+#build_tree \
+#  --with-apxs2=%{_sbindir}/apxs \
+#  $without_shared
+#popd
+
+# TODO ZTS (thread-safe) build
+#pushd build-zts
+#build_tree
+#popd
 
 %install
 rm -rf "$RPM_BUILD_ROOT"
-make install INSTALL_ROOT="$RPM_BUILD_ROOT"
-cd "$RPM_BUILD_ROOT"
 
-# These PEAR/PECL cache files don't belong here (build system bug?)
-rm -rfv .channels/ .depdb .depdblock .filemap .lock
+# CGI build
+make -C build-cgi install INSTALL_ROOT=$RPM_BUILD_ROOT
 
 # The build directory seems to lose its way, too
+mkdir "$RPM_BUILD_ROOT/%{_libdir}/php"
 mv "$RPM_BUILD_ROOT/%{_libdir}/build" "$RPM_BUILD_ROOT/%{_libdir}/php/build"
 
 
@@ -85,51 +129,29 @@ rm -rf "$RPM_BUILD_ROOT"
 
 %files
 %defattr(-, root, root, -)
-                   %{_bindir}/php
-                   %{_bindir}/php-cgi
-                   %{_bindir}/php-config
-                   %{_mandir}/man1
+                           %{_bindir}/php
+                           %{_bindir}/php-cgi
+                           %{_bindir}/php-config
+                           %{_bindir}/phpize
+                           %{_mandir}/man1/php.1*
+                           %{_mandir}/man1/php-config.1*
+                           %{_mandir}/man1/phpize.1*
 
 
 %files devel
 %defattr(-, root, root, -)
-                   %{_bindir}/phpize
-                   %{_libdir}/php/build
-                   %{_includedir}/php
+                           %{_includedir}/php
+                           %{_libdir}/php/build
 
 
 %files pear
 %defattr(-, root, root, -)
-                   %{_bindir}/pear
-                   %{_bindir}/peardev
-                   %{_bindir}/pecl
-                   %{_sysconfdir}/pear.conf
-                   %{_libdir}/php/.depdb
-                   %{_libdir}/php/.depdblock
-                   %{_libdir}/php/.filemap
-                   %{_libdir}/php/.lock
-                   %{_libdir}/php/.channels
-                   %{_libdir}/php/.registry
-                   %{_libdir}/php/Archive
-                   %{_libdir}/php/Console
-                   %{_libdir}/php/OS
-                   %{_libdir}/php/PEAR.php
-                   %{_libdir}/php/PEAR5.php
-                   %{_libdir}/php/PEAR
-                   %{_libdir}/php/Structures
-                   %{_libdir}/php/System.php
-                   %{_libdir}/php/XML
-                   %{_libdir}/php/data
-                   %{_libdir}/php/doc
-                   %{_libdir}/php/pearcmd.php
-                   %{_libdir}/php/peclcmd.php
-                   %{_libdir}/php/test
 
 
 %files phar
 %defattr(-, root, root, -)
-                   %{_bindir}/phar
-                   %{_bindir}/phar.phar
+                           %{_bindir}/phar
+                           %{_bindir}/phar.phar
 
 
 %changelog
