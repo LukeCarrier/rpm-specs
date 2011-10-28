@@ -68,7 +68,7 @@ build_tree() {
     %configure \
       --srcdir=.. \
       --cache-file=../config.cache \
-      --with-config-file-path=%{_sysconfdir}/php.ini \
+      --with-config-file-path=%{_sysconfdir} \
       --with-config-file-scan-dir=%{_sysconfdir}/php.ini.d \
       --without-pear \
       $*
