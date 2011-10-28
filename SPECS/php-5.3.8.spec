@@ -54,7 +54,7 @@ PHP is a widely-used general-purpose scripting language that is especially suite
   --disable-static \
   --enable-shared \
   --with-config-file-path=%{_sysconfdir}/php.ini \
-  --with-config-file-scan-path=%{_sysconfdir}/php.ini.d
+  --with-config-file-scan-dir=%{_sysconfdir}/php.ini.d
 make %{?_smp_mflags}
 
 
