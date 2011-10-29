@@ -202,7 +202,7 @@ rm -rf "$RPM_BUILD_ROOT"
 %files fpm
 %defattr(-, root, root, -)
                            %{_sbindir}/php-fpm
-                           %{_initddir}/php-fpm
+%attr(755, -, -)           %{_initddir}/php-fpm
                            %{_sysconfdir}/php-fpm.conf
                            %{_mandir}/man8/php-fpm.8*
 
