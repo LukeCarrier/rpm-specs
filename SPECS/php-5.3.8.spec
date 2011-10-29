@@ -37,6 +37,15 @@ Requires: php
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This package contains development header files which may be necessary for applications that require the Zend Engine.
 
 
+%package fpm
+Summary: hypertext preprocessor: FastCGI Process Manager SAPI
+Requires: php
+
+
+%description fpm
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The PHP FPM server API enables resource efficient request processing via lighterweight web servers such as nginx.
+
+
 %package pear
 Summary: hypertext preprocessor - PEAR library repository
 Requires: php, php-devel, php-phar
@@ -103,12 +112,12 @@ popd
 #  $without_shared
 #popd
 
-# TODO FPM build
-#pushd build-fpm
-#build_tree \
-#  --enable-fpm \
-#  $without_shared
-#popd
+# FPM build
+pushd build-fpm
+build_tree \
+  --enable-fpm \
+  $without_shared
+popd
 
 # TODO Apache HTTPd build
 #pushd build-httpd
@@ -133,6 +142,10 @@ generate_file_list() {
 }
 
 rm -rf "$RPM_BUILD_ROOT"
+
+# FPM build
+make -C build-fpm install-fpm INSTALL_ROOT=$RPM_BUILD_ROOT
+mv "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf.default" "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf"
 
 # CGI build
 make -C build-cgi install INSTALL_ROOT=$RPM_BUILD_ROOT
@@ -179,6 +192,13 @@ rm -rf "$RPM_BUILD_ROOT"
 %defattr(-, root, root, -)
                            %{_includedir}/php
                            %{_libdir}/php/build
+
+
+%files fpm
+%defattr(-, root, root, -)
+                           %{_sbindir}/php-fpm
+                           %{_sysconfdir}/php-fpm.conf
+                           %{_mandir}/man8/php-fpm.8*
 
 
 %files pear -f %{buildroot}/_list/pear
