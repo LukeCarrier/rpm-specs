@@ -128,9 +128,8 @@ popd
 #   This seems disgusting, but yey RPM!
 #   $1 | directory path
 #   $2 | filename regex
-#   $3 | file list name
 generate_file_list() {
-    find "$RPM_BUILD_ROOT/$1" -type f -regex "$2" | sed "s:^$RPM_BUILD_ROOT/:/:" | sort | uniq > _list/$3
+    echo "$(find "$RPM_BUILD_ROOT/$1" -type f -regex "$2" | sed "s:^$RPM_BUILD_ROOT/::" | sort -u)"
 }
 
 rm -rf "$RPM_BUILD_ROOT"
@@ -157,7 +156,7 @@ mv "$RPM_BUILD_ROOT/%{_libdir}/build" "$RPM_BUILD_ROOT/%{_libdir}/php/build"
 
 # Build file lists
 mkdir _list
-generate_file_list "/usr/lib64/php" ".*\.\(css\|depdb\|depdblock\|dtd\|filemap\|html\|lock\|php\|phpt\|pkg\|reg\|sh\|spec\|txt\|xml\)" pear
+generate_file_list "/usr/lib64/php" ".*\.\(css\|depdb\|depdblock\|dtd\|filemap\|html\|lock\|php\|phpt\|pkg\|reg\|sh\|spec\|txt\|xml\)" | grep -vP "^%{_libdir}/php/doc" > _list/pear
 
 
 %clean
