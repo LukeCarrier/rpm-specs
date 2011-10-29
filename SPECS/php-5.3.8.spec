@@ -18,6 +18,9 @@ BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 BuildRequires: bzip2-devel gmp-devel httpd-devel krb5-devel libjpeg-turbo-devel libXpm-devel openssl-devel pcre-devel t1lib-devel
 # TODO - add these for each sub package Requires:      
 
+# Extras for different SAPIs
+Source1: https://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpmsysvinit.sh
+
 # Version constants for extensions
 %global phpver  5.3.8
 %global apiver  20090626
@@ -146,6 +149,8 @@ rm -rf "$RPM_BUILD_ROOT"
 # FPM build
 make -C build-fpm install-fpm INSTALL_ROOT=$RPM_BUILD_ROOT
 mv "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf.default" "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf"
+[ ! -d "$RPM_BUILD_ROOT/%{_initddir}" ] && mkdir -p "$RPM_BUILD_ROOT/%{_initddir}"
+cp "%{SOURCE1}" "$RPM_BUILD_ROOT/%{_initddir}/php-fpm"
 
 # CGI build
 make -C build-cgi install INSTALL_ROOT=$RPM_BUILD_ROOT
@@ -197,6 +202,7 @@ rm -rf "$RPM_BUILD_ROOT"
 %files fpm
 %defattr(-, root, root, -)
                            %{_sbindir}/php-fpm
+                           %{_initddir}/php-fpm
                            %{_sysconfdir}/php-fpm.conf
                            %{_mandir}/man8/php-fpm.8*
 
