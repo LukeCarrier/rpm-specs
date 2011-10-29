@@ -148,7 +148,7 @@ do
       "$RPM_BUILD_ROOT/%{_libdir}/php/doc/PEAR_$file"
 done
 mv "$RPM_BUILD_ROOT/%{_libdir}/php/data/Structures_Graph/LICENSE" \
-  "$RPM_BUILD_ROOT/%{_libdir}/php/doc/STRUCTURES_GRAPH_README"
+  "$RPM_BUILD_ROOT/%{_libdir}/php/doc/STRUCTURES_GRAPH_LICENSE"
 
 # The build directory seems to lose its way, too
 [ ! -d "$RPM_BUILD_ROOT/%{_libdir}/php" ] && mkdir "$RPM_BUILD_ROOT/%{_libdir}/php"
