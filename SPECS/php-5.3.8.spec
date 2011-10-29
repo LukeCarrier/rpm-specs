@@ -141,7 +141,7 @@ make -C build-cgi install INSTALL_ROOT=$RPM_BUILD_ROOT
 cd "$RPM_BUILD_ROOT"
 
 # Reorganise PEAR files
-rm -rfv .channels/ .depdb .depdblock .filemap .lock
+rm -rf .channels/ .depdb .depdblock .filemap .lock .registry/
 for file in INSTALL LICENSE README
 do
     mv "$RPM_BUILD_ROOT/%{_libdir}/php/doc/PEAR/$file" \
