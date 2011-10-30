@@ -48,6 +48,17 @@ Requires: php
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This package contains development header files which may be necessary for applications that require the Zend Engine.
 
 
+%if %{with_embedded}
+%package embedded
+Summary: hypertext preprocessor: generic embedded interpreter library
+Requires: php
+
+
+%description embedded
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This shared library enables the use of PHP code within native applications, providing an embedded PHP interpreter.
+%endif
+
+
 %if %{with_fpm}
 %package fpm
 Summary: hypertext preprocessor: FastCGI Process Manager SAPI
@@ -129,14 +140,14 @@ build_tree \
   $with_shared
 popd
 
-# TODO Embdedded build
-#if %{with_embedded}
-#pushd build-embedded
-#build_tree \
-#  --enable-embed \
-#  $without_shared
-#popd
-#%endif
+# Embdedded build
+%if %{with_embedded}
+pushd build-embedded
+build_tree \
+  --enable-embed \
+  $without_shared
+popd
+%endif
 
 # FPM build
 %if %{with_fpm}
@@ -189,6 +200,11 @@ done
 mv "$RPM_BUILD_ROOT/%{_libdir}/php/data/Structures_Graph/LICENSE" \
   "$RPM_BUILD_ROOT/%{_libdir}/php/doc/STRUCTURES_GRAPH_LICENSE"
 
+# Embedded build
+%if %{with_embedded}
+make -C build-embedded install-sapi install-headers INSTALL_ROOT=$RPM_BUILD_ROOT
+mv "$RPM_BUILD_ROOT/usr/lib/libphp5.so" "$RPM_BUILD_ROOT/%{_libdir}"
+%endif
 
 # FPM build
 %if %{with_fpm}
@@ -238,6 +254,13 @@ rm -rf "$RPM_BUILD_ROOT"
 %defattr(-, root, root, -)
                            %{_includedir}/php
                            %{_libdir}/php/build
+
+
+%if %{with_embedded}
+%files embedded
+%defattr(-, root, root, -)
+                           %{_libdir}/libphp5.so
+%endif
 
 
 %if %{with_fpm}
