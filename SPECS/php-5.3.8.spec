@@ -20,6 +20,7 @@ BuildRequires: bzip2-devel gmp-devel httpd-devel krb5-devel libjpeg-turbo-devel 
 
 # Extras for different SAPIs
 Source1: https://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpmsysvinit.sh
+Source2: https://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpm.conf
 
 # Version constants for extensions
 %global phpver  5.3.8
@@ -148,9 +149,10 @@ rm -rf "$RPM_BUILD_ROOT"
 
 # FPM build
 make -C build-fpm install-fpm INSTALL_ROOT=$RPM_BUILD_ROOT
-mv "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf.default" "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf"
 [ ! -d "$RPM_BUILD_ROOT/%{_initddir}" ] && mkdir -p "$RPM_BUILD_ROOT/%{_initddir}"
 cp "%{SOURCE1}" "$RPM_BUILD_ROOT/%{_initddir}/php-fpm"
+rm -f "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf.default"
+cp "%{SOURCE2}" "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf"
 
 # CGI build
 make -C build-cgi install INSTALL_ROOT=$RPM_BUILD_ROOT
