@@ -22,9 +22,17 @@ Source1: https://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpmsysv
 Source2: https://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpm.conf
 
 # Version constants for extensions
-%global phpver  5.3.8
-%global apiver  20090626
-%global zendver 220090626
+%global php_ver  5.3.8
+%global api_ver  20090626
+%global zend_ver 220090626
+
+# Which SAPIs should be built?
+#   The CGI SAPI cannot be disabled, since it's required for all shared
+#   libraries. It'll be possible to cherry pick extensions soon, though.
+%global with_embedded 0
+%global with_fpm      0
+%global with_httpd    0
+%global with_zts      0
 
 
 %description
@@ -40,6 +48,7 @@ Requires: php
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This package contains development header files which may be necessary for applications that require the Zend Engine.
 
 
+%if %{with_fpm}
 %package fpm
 Summary: hypertext preprocessor: FastCGI Process Manager SAPI
 Requires: php
@@ -47,6 +56,7 @@ Requires: php
 
 %description fpm
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The PHP FPM server API enables resource efficient request processing via lighterweight web servers such as nginx.
+%endif
 
 
 %package pear
@@ -109,30 +119,38 @@ build_tree \
 popd
 
 # TODO Embdedded build
+#if %{with_embedded}
 #pushd build-embedded
 #build_tree \
 #  --enable-embed \
 #  $without_shared
 #popd
+#%endif
 
 # FPM build
+%if %{with_fpm}
 pushd build-fpm
 build_tree \
   --enable-fpm \
   $without_shared
 popd
+%endif
 
 # TODO Apache HTTPd build
+#if %{with_httpd}
 #pushd build-httpd
 #build_tree \
 #  --with-apxs2=%{_sbindir}/apxs \
 #  $without_shared
 #popd
+#%endif
 
 # TODO ZTS (thread-safe) build
+#if %{with_zts}
 #pushd build-zts
 #build_tree
 #popd
+#%endif
 
 %install
 # Generate a file list
@@ -146,21 +164,12 @@ generate_file_list() {
 
 rm -rf "$RPM_BUILD_ROOT"
 
-# FPM build
-make -C build-fpm install-fpm INSTALL_ROOT=$RPM_BUILD_ROOT
-[ ! -d "$RPM_BUILD_ROOT/%{_initddir}" ] && mkdir -p "$RPM_BUILD_ROOT/%{_initddir}"
-cp "%{SOURCE1}" "$RPM_BUILD_ROOT/%{_initddir}/php-fpm"
-rm -f "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf.default"
-cp "%{SOURCE2}" "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf"
-
 # CGI build
 make -C build-cgi install INSTALL_ROOT=$RPM_BUILD_ROOT
-
-# The build directories are no longer necessary
-cd "$RPM_BUILD_ROOT"
-
-# Reorganise PEAR files
-rm -rf .channels/ .depdb .depdblock .filemap .lock .registry/
+for file in .channels .depdb .depdblock .filemap .lock .registry
+do
+    rm -rf "$RPM_BUILD_ROOT/$file"
+done
 for file in INSTALL LICENSE README
 do
     mv "$RPM_BUILD_ROOT/%{_libdir}/php/doc/PEAR/$file" \
@@ -168,6 +177,20 @@ do
 done
 mv "$RPM_BUILD_ROOT/%{_libdir}/php/data/Structures_Graph/LICENSE" \
   "$RPM_BUILD_ROOT/%{_libdir}/php/doc/STRUCTURES_GRAPH_LICENSE"
+
+
+# FPM build
+%if %{with_fpm}
+make -C build-fpm install-fpm INSTALL_ROOT=$RPM_BUILD_ROOT
+[ ! -d "$RPM_BUILD_ROOT/%{_initddir}" ] && mkdir -p "$RPM_BUILD_ROOT/%{_initddir}"
+cp "%{SOURCE1}" "$RPM_BUILD_ROOT/%{_initddir}/php-fpm"
+rm -f "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf.default"
+cp "%{SOURCE2}" "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf"
+%endif
+
+# The build directories are no longer necessary
+cd "$RPM_BUILD_ROOT"
+
 
 # The build directory seems to lose its way, too
 [ ! -d "$RPM_BUILD_ROOT/%{_libdir}/php" ] && mkdir "$RPM_BUILD_ROOT/%{_libdir}/php"
@@ -200,12 +223,14 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_libdir}/php/build
 
 
+%if %{with_fpm}
 %files fpm
 %defattr(-, root, root, -)
                            %{_sbindir}/php-fpm
 %attr(755, -, -)           %{_initddir}/php-fpm
                            %{_sysconfdir}/php-fpm.conf
                            %{_mandir}/man8/php-fpm.8*
+%endif
 
 
 %files pear -f %{buildroot}/_list/pear
