@@ -31,7 +31,7 @@ Source2: https://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpm.con
 #   libraries. It'll be possible to cherry pick extensions soon, though.
 %global with_embedded 0
 %global with_fpm      0
-%global with_httpd    1
+%global with_httpd    0
 %global with_zts      0
 
 
@@ -61,12 +61,12 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 %if %{with_httpd}
 %package httpd
-Summary: hypertext processor: Apache HTTPd module (DSO)
-Requires: httpd
+Summary: hypertext preprocessor: Apache HTTPd module (DSO)
+Requires: php, httpd
 
 
 %description httpd
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The Apache HTTPd server is the most prevalent on the Internet due to its easy deployment and proven dependability. This package provides a module which can be installed within Apache to provide an embedded PHP interpreter; it's the most common use of PHP.
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This Apache module enables processing of PHP files requested through Apache via an embedded PHP interpreter. It can be dynamicalloy loaded as a DSO module, as is the standard configuration.
 %endif
 
 
@@ -202,7 +202,7 @@ cp "%{SOURCE2}" "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf"
 # Apache HTTPd build
 %if %{with_httpd}
 [ ! -d "$RPM_BUILD_ROOT/%{_libdir}/httpd/modules" ] && mkdir -p "$RPM_BUILD_ROOT/%{_libdir}/httpd/modules"
-install -m 775 build-httpd/libs/libphp5.so "$RPM_BUILD_ROOT/%{_libdir}/httpd/modules/mod_php5.so"
+install -m 755 build-httpd/libs/libphp5.so "$RPM_BUILD_ROOT/%{_libdir}/httpd/modules/mod_php5.so"
 %endif
 
 # The build directories are no longer necessary
@@ -255,7 +255,6 @@ rm -rf "$RPM_BUILD_ROOT"
 %defattr(-, root, root, -)
                            %{_libdir}/httpd/modules/mod_php5.so
 %endif
-
 
 %files pear -f %{buildroot}/_list/pear
 %defattr(-, root, root, -)
