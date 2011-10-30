@@ -31,7 +31,7 @@ Source2: https://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpm.con
 #   libraries. It'll be possible to cherry pick extensions soon, though.
 %global with_embedded 0
 %global with_fpm      0
-%global with_httpd    0
+%global with_httpd    1
 %global with_zts      0
 
 
@@ -56,6 +56,17 @@ Requires: php
 
 %description fpm
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The PHP FPM server API enables resource efficient request processing via lighterweight web servers such as nginx.
+%endif
+
+
+%if %{with_httpd}
+%package httpd
+Summary: hypertext processor: Apache HTTPd module (DSO)
+Requires: httpd
+
+
+%description httpd
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The Apache HTTPd server is the most prevalent on the Internet due to its easy deployment and proven dependability. This package provides a module which can be installed within Apache to provide an embedded PHP interpreter; it's the most common use of PHP.
 %endif
 
 
@@ -136,14 +147,14 @@ build_tree \
 popd
 %endif
 
-# TODO Apache HTTPd build
-#if %{with_httpd}
-#pushd build-httpd
-#build_tree \
-#  --with-apxs2=%{_sbindir}/apxs \
-#  $without_shared
-#popd
-#%endif
+# Apache HTTPd build
+%if %{with_httpd}
+pushd build-httpd
+build_tree \
+  --with-apxs2=%{_sbindir}/apxs \
+  $without_shared
+popd
+%endif
 
 # TODO ZTS (thread-safe) build
 #if %{with_zts}
@@ -188,6 +199,12 @@ rm -f "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf.default"
 cp "%{SOURCE2}" "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf"
 %endif
 
+# Apache HTTPd build
+%if %{with_httpd}
+[ ! -d "$RPM_BUILD_ROOT/%{_libdir}/httpd/modules" ] && mkdir -p "$RPM_BUILD_ROOT/%{_libdir}/httpd/modules"
+install -m 775 build-httpd/libs/libphp5.so "$RPM_BUILD_ROOT/%{_libdir}/httpd/modules/mod_php5.so"
+%endif
+
 # The build directories are no longer necessary
 cd "$RPM_BUILD_ROOT"
 
@@ -230,6 +247,13 @@ rm -rf "$RPM_BUILD_ROOT"
 %attr(755, -, -)           %{_initddir}/php-fpm
                            %{_sysconfdir}/php-fpm.conf
                            %{_mandir}/man8/php-fpm.8*
+%endif
+
+
+%if %{with_httpd}
+%files httpd
+%defattr(-, root, root, -)
+                           %{_libdir}/httpd/modules/mod_php5.so
 %endif
 
 
