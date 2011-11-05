@@ -1,9 +1,3 @@
-# Known issues:
-#   * PEAR's target directory specified at configure-time with the --with-pear
-#     parameter is completely ignored at compile-time, so some arch-independent
-#     files are in the arch-specific libdir instead of the sharedstatedir
-#     https://bugs.php.net/bug.php?id=60163
-
 Name:    php
 Version: 5.3.8
 Release: 1%{?dist}
