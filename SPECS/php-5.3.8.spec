@@ -29,9 +29,9 @@ Source2: https://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpm.con
 # Which SAPIs should be built?
 #   The CGI SAPI cannot be disabled, since it's required for all shared
 #   libraries. It'll be possible to cherry pick extensions soon, though.
-%global with_embedded 0
-%global with_fpm      0
-%global with_httpd    0
+%global with_embedded 1
+%global with_fpm      1
+%global with_httpd    1
 %global with_zts      0
 
 
