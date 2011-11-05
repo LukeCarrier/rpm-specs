@@ -32,7 +32,7 @@ Source2: https://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpm.con
 %global with_embedded 1
 %global with_fpm      1
 %global with_httpd    1
-%global with_zts      0
+%global with_zts      1
 
 
 %description
@@ -70,6 +70,15 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 %endif
 
 
+%package ftp
+Summary: hypertext preprocessor - FTP library
+Requires: php
+
+
+%description ftp
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This FTP extension enables communication with FTP servers.
+
+
 %if %{with_httpd}
 %package httpd
 Summary: hypertext preprocessor: Apache HTTPd module (DSO)
@@ -97,6 +106,15 @@ Requires: php
 
 %description phar
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. Some applications and libraries may be distributed as archive files (PH(p)AR(chives)). This utility enables their compression and extraction.
+
+
+%package zts-ftp
+Summary: hypertext preprocessor - thread-safe FTP library
+Requires: php php-zts
+
+
+%description zts-ftp
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This thread-safe FTP extension enables communication with FTP servers.
 
 
 %prep
@@ -127,17 +145,18 @@ build_tree() {
 # Shared libraries
 #   Any shared libraries that're to be built only as part of the CGI compilation
 #   should be listed here.
-with_shared="--with-pear"
+with_shared="--enable-ftp=shared"
 
 # No shared libraries
 #   Any shared libraries handled by the CGI build should be excluded here to
 #   reduce compile-time.
-without_shared="--without-pear"
+without_shared=""
 
 # CGI build (TODO add shared libraries))
 pushd build-cgi
 build_tree \
-  $with_shared
+  $with_shared \
+  --with-pear
 popd
 
 # Embdedded build
@@ -145,6 +164,7 @@ popd
 pushd build-embedded
 build_tree \
   --enable-embed \
+  --without-pear \
   $without_shared
 popd
 %endif
@@ -154,6 +174,7 @@ popd
 pushd build-fpm
 build_tree \
   --enable-fpm \
+  --without-pear \
   $without_shared
 popd
 %endif
@@ -163,16 +184,21 @@ popd
 pushd build-httpd
 build_tree \
   --with-apxs2=%{_sbindir}/apxs \
+  --without-pear
   $without_shared
 popd
 %endif
 
-# TODO ZTS (thread-safe) build
-#if %{with_zts}
-#pushd build-zts
-#build_tree
-#popd
-#%endif
+# ZTS (thread-safe) build
+%if %{with_zts}
+pushd build-zts
+build_tree \
+  --enable-mysqlnd-threading \
+  --enable-maintainer-zts \
+  --without-pear \
+  $with_shared
+popd
+%endif
 
 %install
 # Generate a file list
@@ -221,12 +247,17 @@ cp "%{SOURCE2}" "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf"
 install -m 755 build-httpd/libs/libphp5.so "$RPM_BUILD_ROOT/%{_libdir}/httpd/modules/mod_php5.so"
 %endif
 
+# ZTS build
+%if %{with_zts}
+make -C build-zts install-modules INSTALL_ROOT=$RPM_BUILD_ROOT
+%endif
+
 # The build directories are no longer necessary
 cd "$RPM_BUILD_ROOT"
 
-
-# The build directory seems to lose its way, too
+# Extensions and build files shouldn't clutter the libdir
 [ ! -d "$RPM_BUILD_ROOT/%{_libdir}/php" ] && mkdir "$RPM_BUILD_ROOT/%{_libdir}/php"
+[ -d "$RPM_BUILD_ROOT/%{_libdir}/extensions" ] && mv "$RPM_BUILD_ROOT/%{_libdir}/extensions" "$RPM_BUILD_ROOT/%{_libdir}/php"
 mv "$RPM_BUILD_ROOT/%{_libdir}/build" "$RPM_BUILD_ROOT/%{_libdir}/php/build"
 
 # Build file lists
@@ -273,6 +304,12 @@ rm -rf "$RPM_BUILD_ROOT"
 %endif
 
 
+%files ftp
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-20090626/ftp.a
+                           %{_libdir}/php/extensions/no-debug-non-zts-20090626/ftp.so
+
+
 %if %{with_httpd}
 %files httpd
 %defattr(-, root, root, -)
@@ -293,6 +330,12 @@ rm -rf "$RPM_BUILD_ROOT"
 %defattr(-, root, root, -)
                            %{_bindir}/phar
                            %{_bindir}/phar.phar
+
+
+%files zts-ftp
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/ftp.a
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/ftp.so
 
 
 %changelog
