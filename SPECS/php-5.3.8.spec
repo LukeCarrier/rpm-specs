@@ -93,6 +93,24 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 %endif
 
 
+%package pdo
+Summary: hypertext preprocessor - data objects extension
+Requires: php
+
+
+%description pdo
+PHP is a widely-used general-purpose scripting language that is especially suited for web development and can be embedded into HTML. PDO (PHP Data Objects) enables the language to perform SQL queries on a variety of database types in a safe, object-orientated fashion.
+
+
+%package pdo-sqlite
+Summary: hypertext preprocessor - data objects SQLite extension
+Requires: php, php-pdo
+
+
+%description pdo-sqlite
+PHP is a widely-used general-purpose scripting language that is especially suited for web development and can be embedded into HTML. The SQLite PDO extension enables connecting to SQLite databases via the PDO library.
+
+
 %package pear
 Summary: hypertext preprocessor - PEAR library repository
 Requires: php, php-devel, php-phar
@@ -111,10 +129,27 @@ Requires: php
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. Some applications and libraries may be distributed as archive files (PH(p)AR(chives)). This utility enables their compression and extraction.
 
 
+%package sqlite
+Summary: hypertext preprocessor - SQLite < 3 extension
+Requires: php
+
+
+%description sqlite
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This optional extension enables connecting to SQLite (< 3) databases.
+
+%package sqlite3
+Summary: hypertext preprocessor - SQLite 3 extension
+Requires: php
+
+
+%description sqlite3
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This optional extension enables connecting to SQLite 3 databases.
+
+
 %if %{with_zts}
 %package zts-bz2
 Summary: hypertext preprocessor: thread-safe BZip2 extension
-Requires: bzip2 php php-zts
+Requires: bzip2, php, php-zts
 
 
 %description zts-bz2
@@ -123,11 +158,47 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 %package zts-ftp
 Summary: hypertext preprocessor - thread-safe FTP extension
-Requires: php php-zts
+Requires: php, php-zts
 
 
 %description zts-ftp
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This thread-safe FTP extension enables communication with FTP servers.
+
+
+%package zts-pdo
+Summary: hypertext preprocessor - thread-safe data objects extension
+Requires: php
+
+
+%description zts-pdo
+PHP is a widely-used general-purpose scripting language that is especially suited for web development and can be embedded into HTML. PDO (PHP Data Objects) enables the language to perform SQL queries on a variety of database types in a safe, object-orientated fashion.
+
+
+%package zts-pdo-sqlite
+Summary: hypertext preprocessor - thread-safe data objects SQLite extension
+Requires: php, php-pdo
+
+
+%description zts-pdo-sqlite
+PHP is a widely-used general-purpose scripting language that is especially suited for web development and can be embedded into HTML. The SQLite PDO extension enables connecting to SQLite databases via the PDO library.
+
+
+%package zts-sqlite
+Summary: hypertext preprocessor - thread-safe SQLite < 3 extension
+Requires: php
+
+
+%description zts-sqlite
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This optional extension enables connecting to SQLite (< 3) databases.
+
+
+%package zts-sqlite3
+Summary: hypertext preprocessor - thread-safe SQLite 3 extension
+Requires: php
+
+
+%description zts-sqlite3
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This optional extension enables connecting to SQLite 3 databases.
 %endif
 
 
@@ -160,12 +231,21 @@ build_tree() {
 #   Any shared libraries that're to be built only as part of the CGI compilation
 #   should be listed here.
 with_shared="--enable-ftp=shared \
-             --with-bz2=shared"
+             --enable-pdo=shared \
+             --with-bz2=shared \
+             --with-pdo-sqlite=shared \
+             --with-sqlite=shared \
+             --with-sqlite3=shared"
 
 # No shared libraries
 #   Any shared libraries handled by the CGI build should be excluded here to
 #   reduce compile-time.
-without_shared=""
+without_shared="--disable-ftp \
+                --disable-pdo \
+                --without-bz2 \
+                --without-pdo-sqlite \
+                --without-sqlite \
+                --without-sqlite3"
 
 # CGI build (TODO add shared libraries))
 pushd build-cgi
@@ -328,6 +408,17 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_libdir}/httpd/modules/mod_php5.so
 %endif
 
+
+%files pdo
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/pdo.*
+
+
+%files pdo-sqlite
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/pdo_sqlite.*
+
+
 %files pear -f %{buildroot}/_list/pear
 %defattr(-, root, root, -)
                            %{_bindir}/pear
@@ -344,6 +435,16 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_bindir}/phar.phar
 
 
+%files sqlite
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/sqlite.*
+
+
+%files sqlite3
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/sqlite3.*
+
+
 %if %{with_zts}
 %files zts-bz2
 %defattr(-, root, root, -)
@@ -353,6 +454,26 @@ rm -rf "$RPM_BUILD_ROOT"
 %files zts-ftp
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/ftp.*
+
+
+%files zts-pdo
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/pdo.*
+
+
+%files zts-pdo-sqlite
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/pdo_sqlite.*
+
+
+%files zts-sqlite
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/sqlite.*
+
+
+%files zts-sqlite3
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/sqlite3.*
 %endif
 
 
