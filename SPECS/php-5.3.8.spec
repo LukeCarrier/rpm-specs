@@ -33,6 +33,15 @@ Source2: https://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpm.con
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This package contains its command line interface binaries.
 
 
+%package bz2
+Summary: hypertext preprocessor: BZip2 extension
+Requires: bzip2 php
+
+
+%description bz2
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. BZip2 is an efficient file compression library. This extension enables the creation and extraction of such archives from within the PHP language.
+
+
 %package devel
 Summary: hypertext preprocessor: development headers and tools
 Requires: php
@@ -65,7 +74,7 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 
 %package ftp
-Summary: hypertext preprocessor - FTP library
+Summary: hypertext preprocessor - FTP extension
 Requires: php
 
 
@@ -103,8 +112,17 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 
 %if %{with_zts}
+%package zts-bz2
+Summary: hypertext preprocessor: thread-safe BZip2 extension
+Requires: bzip2 php php-zts
+
+
+%description zts-bz2
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. BZip2 is an efficient file compression library. This extension enables the creation and extraction of such archives from within the PHP language.
+
+
 %package zts-ftp
-Summary: hypertext preprocessor - thread-safe FTP library
+Summary: hypertext preprocessor - thread-safe FTP extension
 Requires: php php-zts
 
 
@@ -141,7 +159,8 @@ build_tree() {
 # Shared libraries
 #   Any shared libraries that're to be built only as part of the CGI compilation
 #   should be listed here.
-with_shared="--enable-ftp=shared"
+with_shared="--enable-ftp=shared \
+             --with-bz2=shared"
 
 # No shared libraries
 #   Any shared libraries handled by the CGI build should be excluded here to
@@ -270,6 +289,11 @@ rm -rf "$RPM_BUILD_ROOT"
 %exclude                   /_list
 
 
+%files bz2
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/bz2.*
+
+
 %files devel
 %defattr(-, root, root, -)
                            %{_includedir}/php
@@ -295,8 +319,7 @@ rm -rf "$RPM_BUILD_ROOT"
 
 %files ftp
 %defattr(-, root, root, -)
-                           %{_libdir}/php/extensions/no-debug-non-zts-20090626/ftp.a
-                           %{_libdir}/php/extensions/no-debug-non-zts-20090626/ftp.so
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/ftp.*
 
 
 %if %{with_httpd}
@@ -322,10 +345,14 @@ rm -rf "$RPM_BUILD_ROOT"
 
 
 %if %{with_zts}
+%files zts-bz2
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/bz2.*
+
+
 %files zts-ftp
 %defattr(-, root, root, -)
-                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/ftp.a
-                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/ftp.so
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/ftp.*
 %endif
 
 
