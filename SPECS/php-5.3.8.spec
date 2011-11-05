@@ -184,7 +184,7 @@ popd
 pushd build-httpd
 build_tree \
   --with-apxs2=%{_sbindir}/apxs \
-  --without-pear
+  --without-pear \
   $without_shared
 popd
 %endif
