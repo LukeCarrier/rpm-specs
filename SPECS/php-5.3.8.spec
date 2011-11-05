@@ -108,6 +108,7 @@ Requires: php
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. Some applications and libraries may be distributed as archive files (PH(p)AR(chives)). This utility enables their compression and extraction.
 
 
+%if %{with_zts}
 %package zts-ftp
 Summary: hypertext preprocessor - thread-safe FTP library
 Requires: php php-zts
@@ -115,6 +116,7 @@ Requires: php php-zts
 
 %description zts-ftp
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This thread-safe FTP extension enables communication with FTP servers.
+%endif
 
 
 %prep
@@ -156,7 +158,7 @@ without_shared=""
 pushd build-cgi
 build_tree \
   $with_shared \
-  --with-pear
+  --with-pear=$BUILD_ROOT/%{_sharedstatedir}/php/pear
 popd
 
 # Embdedded build
@@ -218,13 +220,6 @@ for file in .channels .depdb .depdblock .filemap .lock .registry
 do
     rm -rf "$RPM_BUILD_ROOT/$file"
 done
-for file in INSTALL LICENSE README
-do
-    mv "$RPM_BUILD_ROOT/%{_libdir}/php/doc/PEAR/$file" \
-      "$RPM_BUILD_ROOT/%{_libdir}/php/doc/PEAR_$file"
-done
-mv "$RPM_BUILD_ROOT/%{_libdir}/php/data/Structures_Graph/LICENSE" \
-  "$RPM_BUILD_ROOT/%{_libdir}/php/doc/STRUCTURES_GRAPH_LICENSE"
 
 # Embedded build
 %if %{with_embedded}
@@ -322,7 +317,7 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_bindir}/peardev
                            %{_bindir}/pecl
                            %{_sysconfdir}/pear.conf
-%doc                       %{_libdir}/php/doc/*
+                           %{_sharedstatedir}/php/pear
 
 
 
@@ -332,10 +327,12 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_bindir}/phar.phar
 
 
+%if %{with_zts}
 %files zts-ftp
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/ftp.a
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/ftp.so
+%endif
 
 
 %changelog
