@@ -89,8 +89,17 @@ Requires: php, httpd
 
 
 %description httpd
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This Apache module enables processing of PHP files requested through Apache via an embedded PHP interpreter. It can be dynamicalloy loaded as a DSO module, as is the standard configuration.
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This Apache module enables processing of PHP files requested through Apache via an embedded PHP interpreter. It can be dynamically loaded as a DSO module, as is the standard configuration.
 %endif
+
+
+%package openssl
+Summary: hypertext preprocessor - OpenSSL encryption extension
+Requires: openssl, php
+
+
+%description openssl
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The OpenSSL extension for the language enables manipulation of SSL certificates and the encryption and decryption of data.
 
 
 %package pdo
@@ -165,6 +174,15 @@ Requires: php, php-zts
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This thread-safe FTP extension enables communication with FTP servers.
 
 
+%package zts-openssl
+Summary: hypertext preprocessor - thread-safe OpenSSL encryption extension
+Requires: openssl, php
+
+
+%description zts-openssl
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The OpenSSL extension for the language enables manipulation of SSL certificates and the encryption and decryption of data.
+
+
 %package zts-pdo
 Summary: hypertext preprocessor - thread-safe data objects extension
 Requires: php
@@ -236,6 +254,7 @@ build_tree() {
 with_shared="--enable-ftp=shared \
              --enable-pdo=shared \
              --with-bz2=shared \
+             --with-openssl=shared \
              --with-pdo-sqlite=shared \
              --with-sqlite=shared \
              --with-sqlite3=shared"
@@ -412,6 +431,11 @@ rm -rf "$RPM_BUILD_ROOT"
 %endif
 
 
+%files openssl
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/openssl.*
+
+
 %files pdo
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/pdo.*
@@ -457,6 +481,11 @@ rm -rf "$RPM_BUILD_ROOT"
 %files zts-ftp
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/ftp.*
+
+
+%files zts-openssl
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/openssl.*
 
 
 %files zts-pdo
