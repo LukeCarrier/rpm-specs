@@ -265,6 +265,7 @@ with_shared="--enable-ftp=shared \
 without_shared="--disable-ftp \
                 --disable-pdo \
                 --without-bz2 \
+                --without-openssl \
                 --without-pdo-sqlite \
                 --without-sqlite \
                 --without-sqlite3"
