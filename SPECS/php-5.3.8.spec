@@ -224,6 +224,7 @@ build_tree() {
       --disable-rpath \
       --with-config-file-path=%{_sysconfdir} \
       --with-config-file-scan-dir=%{_sysconfdir}/php.ini.d \
+      --with-regex=php \
       $*
     make %{?_smp_mflags}
 }
