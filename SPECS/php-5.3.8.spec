@@ -221,6 +221,7 @@ build_tree() {
     %configure \
       --srcdir=.. \
       --cache-file=../config.cache \
+      --disable-rpath \
       --with-config-file-path=%{_sysconfdir} \
       --with-config-file-scan-dir=%{_sysconfdir}/php.ini.d \
       $*
