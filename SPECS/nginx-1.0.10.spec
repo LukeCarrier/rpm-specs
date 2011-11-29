@@ -8,6 +8,7 @@ License:   BSD (two-clause)
 URL:       http://nginx.org
 Source0:   http://nginx.org/download/nginx-%{version}.tar.gz
 Source1:   http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/nginx-sysvinit.sh
+Source2:   http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/nginx-phpfpmvhostenable.conf
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 BuildRequires: gcc, make, openssl-devel, pcre-devel, sed, zlib-devel
@@ -15,6 +16,15 @@ Requires:                 openssl,       pcre,            zlib
 
 %description
 nginx [engine x] is a HTTP and reverse proxy server, as well as a mail proxy server written by Igor Sysoev. It has been running since 2004 on many heavily loaded Russian sites including Yandex, Mail.Ru, VKontakte, and Rambler. According to Netcraft nginx served or proxied 7.29% busiest sites in September 2011.
+
+
+%package php-fpm
+Summary: nginx - php-fpm per-virtualhost configuration files
+Requires: nginx
+
+
+%description php-fpm
+nginx [engine x] is a HTTP and reverse proxy server, as well as a mail proxy server written by Igor Sysoev. It has been running since 2004 on many heavily loaded Russian sites including Yandex, Mail.Ru, VKontakte, and Rambler. According to Netcraft nginx served or proxied 7.29% busiest sites in September 2011. This package provides extended configuration to enable the pre-hypertext processor (PHP) to serve dynamic web applications when requested via nginx.
 
 
 %prep
@@ -62,6 +72,9 @@ rm -f \
   "$etc/scgi_params.default" \
   "$etc/uwsgi_params.default"
 
+# php-fpm needs this
+cp "%{SOURCE2}" "$RPM_BUILD_ROOT/%{_sysconfdir}/nginx/enable_php"
+
 # Move the document root /var/www/html
 #   If the directory seems a bit random, check the (Apache) httpd packages
 #   shipped by Red Hat; we're only being consistent.
@@ -97,14 +110,21 @@ fi
 [ "$(id nginx >/dev/null 2>&1; echo -n $?)" = "0" ] && userdel nginx
 [ -d "%{_sharedstatedir}/nginx"                   ] && rm -rf "%{_sharedstatedir}/nginx"
 
+
 %files
 %defattr(-, root, root, -)
                    %{_sbindir}/nginx
 %attr(755, -, -)   %{_initddir}/nginx
 %config(noreplace) %{_sysconfdir}/nginx
+%exclude           %{_sysconfdir}/nginx/enable_php
 %dir               %{_sharedstatedir}/nginx
 %dir               %{_localstatedir}/log/nginx
 %config(noreplace) %{_localstatedir}/www/html
+
+
+%files php-fpm
+%defattr(-, root, root, -)
+%config(noreplace) %{_sysconfdir}/nginx/enable_php
 
 %changelog
 
