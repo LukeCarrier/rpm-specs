@@ -10,8 +10,8 @@ Source0:   http://nginx.org/download/nginx-%{version}.tar.gz
 Source1:   http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/nginx-sysvinit.sh
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-BuildRequires: openssl-devel, pcre-devel, sed, zlib-devel
-Requires:      openssl,       pcre,            zlib
+BuildRequires: gcc, openssl-devel, pcre-devel, sed, zlib-devel
+Requires:           openssl,       pcre,            zlib
 
 %description
 nginx [engine x] is a HTTP and reverse proxy server, as well as a mail proxy server written by Igor Sysoev. It has been running since 2004 on many heavily loaded Russian sites including Yandex, Mail.Ru, VKontakte, and Rambler. According to Netcraft nginx served or proxied 7.29% busiest sites in September 2011.
