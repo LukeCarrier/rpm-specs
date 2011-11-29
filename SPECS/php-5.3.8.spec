@@ -9,7 +9,7 @@ URL:       http://php.net
 Source0:   http://php.net/distributions/php-%{version}.tar.gz
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-BuildRequires: bzip2-devel, gcc, gmp-devel, httpd-devel, krb5-devel, libjpeg-turbo-devel, libxml2-devel, libXpm-devel, make, openssl-devel, pcre-devel, t1lib-devel
+BuildRequires: bzip2-devel, gcc, gmp-devel, httpd-devel, krb5-devel, libjpeg-devel, libxml2-devel, libXpm-devel, make, openssl-devel, pcre-devel, t1lib-devel
 
 # Extras for different SAPIs
 Source1: https://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpmsysvinit.sh
