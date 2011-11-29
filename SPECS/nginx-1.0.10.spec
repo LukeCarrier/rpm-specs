@@ -91,24 +91,19 @@ rm -rf "$RPM_BUILD_ROOT"
 
 
 %post
-# Create the nginx user only if it doesn't exist
-#   This is nearly as disgusting as stepping on a slug barefoot.
-if [ "$(id nginx >/dev/null 2>&1); echo -n $?" != "0" ]
-then
-    useradd \
-      --comment "nginx web server" \
-      --home /var/lib/nginx \
-      --system \
-      -M \
-      nginx
-      # The home directory is created in the %files section!
-fi
+# Create the nginx user
+useradd \
+    --comment "nginx web server" \
+    --home /var/lib/nginx \
+    --system \
+    -M \
+    nginx
+    # The home directory is created in the %files section!
 
 
 %postun
 # What goes up must come down and all that...
-[ "$(id nginx >/dev/null 2>&1; echo -n $?)" = "0" ] && userdel nginx
-[ -d "%{_sharedstatedir}/nginx"                   ] && rm -rf "%{_sharedstatedir}/nginx"
+userdel nginx
 
 
 %files
