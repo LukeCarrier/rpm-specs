@@ -336,6 +336,7 @@ for file in .channels .depdb .depdblock .filemap .lock .registry
 do
     rm -rf "$RPM_BUILD_ROOT/$file"
 done
+cp php.ini-production "$RPM_BUILD_ROOT/%{_sysconfdir}/php.ini"
 
 # Embedded build
 %if %{with_embedded}
