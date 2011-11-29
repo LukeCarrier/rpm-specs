@@ -387,6 +387,7 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_bindir}/php-cgi
                            %{_bindir}/php-config
                            %{_bindir}/phpize
+                           %{_sysconfdir}/php.ini
                            %{_mandir}/man1/php.1*
                            %{_mandir}/man1/php-config.1*
                            %{_mandir}/man1/phpize.1*
