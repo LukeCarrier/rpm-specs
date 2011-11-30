@@ -292,6 +292,8 @@ popd
 pushd build-fpm
 build_tree \
   --enable-fpm \
+  --with-fpm-user=www-server \
+  --with-fpm-group=www-server \
   --without-pear \
   $without_shared
 popd

@@ -42,8 +42,8 @@ nginx [engine x] is a HTTP and reverse proxy server, as well as a mail proxy ser
   --lock-path=%{_localstatedir}/lock/nginx.lock \
   --pid-path=%{_localstatedir}/run/nginx.pid \
   --sbin-path=%{_sbindir}/nginx \
-  --user=nginx \
-  --group=nginx \
+  --user=www-server \
+  --group=www-server \
   --with-ipv6 \
   --with-http_ssl_module \
   --with-http_stub_status_module
@@ -85,9 +85,9 @@ mkdir -p "$RPM_BUILD_ROOT/%{_localstatedir}/www"
 mv "$RPM_BUILD_ROOT/usr/html" "$RPM_BUILD_ROOT/%{_localstatedir}/www/html"
 sed -i 's%root   html%root   /%{_localstatedir}/www/html%' "$RPM_BUILD_ROOT/%{_sysconfdir}/nginx/nginx.conf"
 
+# Create the www-server user's home directory
+mkdir -p "$RPM_BUILD_ROOT/%{_sharedstatedir}/www-server"
 
-# Create the nginx user's home directory
-mkdir -p "$RPM_BUILD_ROOT/%{_sharedstatedir}/nginx"
 
 %clean
 rm -rf "$RPM_BUILD_ROOT"
@@ -96,17 +96,16 @@ rm -rf "$RPM_BUILD_ROOT"
 %post
 # Create the nginx user
 useradd \
-    --comment "nginx web server" \
-    --home /var/lib/nginx \
+    --comment "System web server" \
+    --home "%{_sharedstatedir}/www-server" \
     --system \
     -M \
-    nginx
-    # The home directory is created in the %files section!
+    www-server
 
 
 %postun
 # What goes up must come down and all that...
-userdel nginx
+userdel www-server
 
 
 %files
@@ -115,7 +114,7 @@ userdel nginx
 %attr(755, -, -)   %{_initddir}/nginx
 %config(noreplace) %{_sysconfdir}/nginx
 %exclude           %{_sysconfdir}/nginx/enable_php
-%dir               %{_sharedstatedir}/nginx
+%dir               %{_sharedstatedir}/www-server
 %dir               %{_localstatedir}/log/nginx
 %config(noreplace) %{_localstatedir}/www/html
 
