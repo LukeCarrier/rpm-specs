@@ -10,6 +10,7 @@ Source0:   http://nginx.org/download/nginx-%{version}.tar.gz
 Source1:   http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/nginx-sysvinit.sh
 Source2:   http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/nginx-phpfpmvhostenable.conf
 Source3:   http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/nginx-fastcgicore.conf
+Source4:   http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/nginx-fastcgiparams.conf
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 BuildRequires: gcc, make, openssl-devel, pcre-devel, sed, zlib-devel
@@ -68,6 +69,7 @@ etc="$RPM_BUILD_ROOT/%{_sysconfdir}/nginx"
 rm -f \
   "$etc/fastcgi.conf" \
   "$etc/fastcgi.conf.default" \
+  "$etc/fastcgi_params" \
   "$etc/fastcgi_params.default" \
   "$etc/mime.types.default" \
   "$etc/nginx.conf.default" \
@@ -77,6 +79,7 @@ rm -f \
 # Additional configuration files
 cp "%{SOURCE2}" "$RPM_BUILD_ROOT/%{_sysconfdir}/nginx/enable_php"
 cp "%{SOURCE3}" "$RPM_BUILD_ROOT/%{_sysconfdir}/nginx/fastcgi_core"
+cp "%{SOURCE4}" "$RPM_BUILD_ROOT/%{_sysconfdir}/nginx/fastcgi_params"
 
 # Move the document root /var/www/html
 #   If the directory seems a bit random, check the (Apache) httpd packages
