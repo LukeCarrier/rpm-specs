@@ -504,7 +504,7 @@ rm -rf "$RPM_BUILD_ROOT"
 %endif
 
 
-%files zts-mysql
+%files mysql
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/mysql.*
 
