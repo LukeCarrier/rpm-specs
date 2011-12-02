@@ -309,6 +309,10 @@ build_tree() {
     make %{?_smp_mflags}
 }
 
+# Before attempting the build, work around deficiencies in PHP's build system
+export PHP_MYSQLND_ENABLED=yes # Cannot load module 'mysql' because required
+                               # module 'mysqlnd' is not loaded
+
 # Shared libraries
 #   Any shared libraries that're to be built only as part of the CGI compilation
 #   should be listed here.
