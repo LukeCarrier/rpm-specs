@@ -294,7 +294,7 @@ build_tree() {
 with_shared="--enable-ftp=shared \
              --enable-pdo=shared \
              --with-bz2=shared \
-             --with-mysqli=mysqlnd,shared \
+             --with-mysqli=shared,mysqlnd \
              --with-openssl=shared \
              --with-pdo-sqlite=shared \
              --with-sqlite=shared \
