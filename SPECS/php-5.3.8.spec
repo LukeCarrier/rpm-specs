@@ -34,8 +34,9 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 
 %package bz2
-Summary: hypertext preprocessor: BZip2 extension
+Summary:  hypertext preprocessor: BZip2 extension
 Requires: bzip2 php
+Group:    Development/Languages
 
 
 %description bz2
@@ -43,8 +44,9 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 
 %package devel
-Summary: hypertext preprocessor: development headers and tools
+Summary:  hypertext preprocessor: development headers and tools
 Requires: php
+Group:    Development/Languages
 
 
 %description devel
@@ -53,8 +55,9 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 %if %{with_embedded}
 %package embedded
-Summary: hypertext preprocessor: generic embedded interpreter library
+Summary:  hypertext preprocessor: generic embedded interpreter library
 Requires: php
+Group:    Development/Languages
 
 
 %description embedded
@@ -64,8 +67,9 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 %if %{with_fpm}
 %package fpm
-Summary: hypertext preprocessor: FastCGI Process Manager SAPI
+Summary:  hypertext preprocessor: FastCGI Process Manager SAPI
 Requires: php
+Group:    Development/Languages
 
 
 %description fpm
@@ -74,8 +78,9 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 
 %package ftp
-Summary: hypertext preprocessor - FTP extension
+Summary:  hypertext preprocessor - FTP extension
 Requires: php
+Group:    Development/Languages
 
 
 %description ftp
@@ -84,8 +89,9 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 %if %{with_httpd}
 %package httpd
-Summary: hypertext preprocessor: Apache HTTPd module (DSO)
+Summary:  hypertext preprocessor: Apache HTTPd module (DSO)
 Requires: php, httpd
+Group:    Development/Languages
 
 
 %description httpd
@@ -94,8 +100,9 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 
 %package openssl
-Summary: hypertext preprocessor - OpenSSL encryption extension
+Summary:  hypertext preprocessor - OpenSSL encryption extension
 Requires: openssl, php
+Group:    Development/Languages
 
 
 %description openssl
@@ -103,8 +110,9 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 
 %package pdo
-Summary: hypertext preprocessor - data objects extension
+Summary:  hypertext preprocessor - data objects extension
 Requires: php
+Group:    Development/Languages
 
 
 %description pdo
@@ -112,8 +120,9 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 
 %package pdo-sqlite
-Summary: hypertext preprocessor - data objects SQLite extension
+Summary:  hypertext preprocessor - data objects SQLite extension
 Requires: php, php-pdo
+Group:    Development/Languages
 
 
 %description pdo-sqlite
@@ -121,8 +130,9 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 
 %package pear
-Summary: hypertext preprocessor - PEAR library repository
+Summary:  hypertext preprocessor - PEAR library repository
 Requires: php, php-devel, php-phar
+Group:    Development/Languages
 
 
 %description pear
@@ -130,8 +140,9 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 
 %package phar
-Summary: hypertext preprocessor - source code archiving utility
+Summary:  hypertext preprocessor - source code archiving utility
 Requires: php
+Group:    Development/Languages
 
 
 %description phar
@@ -139,16 +150,18 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 
 %package sqlite
-Summary: hypertext preprocessor - SQLite < 3 extension
+Summary:  hypertext preprocessor - SQLite < 3 extension
 Requires: php
+Group:    Development/Languages
 
 
 %description sqlite
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This optional extension enables connecting to SQLite (< 3) databases.
 
 %package sqlite3
-Summary: hypertext preprocessor - SQLite 3 extension
+Summary:  hypertext preprocessor - SQLite 3 extension
 Requires: php
+Group:    Development/Languages
 
 
 %description sqlite3
@@ -157,8 +170,9 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 %if %{with_zts}
 %package zts-bz2
-Summary: hypertext preprocessor: thread-safe BZip2 extension
+Summary:  hypertext preprocessor: thread-safe BZip2 extension
 Requires: bzip2, php, php-zts
+Group:    Development/Languages
 
 
 %description zts-bz2
@@ -166,8 +180,9 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 
 %package zts-ftp
-Summary: hypertext preprocessor - thread-safe FTP extension
+Summary:  hypertext preprocessor - thread-safe FTP extension
 Requires: php, php-zts
+Group:    Development/Languages
 
 
 %description zts-ftp
@@ -175,8 +190,9 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 
 %package zts-openssl
-Summary: hypertext preprocessor - thread-safe OpenSSL encryption extension
+Summary:  hypertext preprocessor - thread-safe OpenSSL encryption extension
 Requires: openssl, php
+Group:    Development/Languages
 
 
 %description zts-openssl
@@ -184,8 +200,9 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 
 %package zts-pdo
-Summary: hypertext preprocessor - thread-safe data objects extension
+Summary:  hypertext preprocessor - thread-safe data objects extension
 Requires: php
+Group:    Development/Languages
 
 
 %description zts-pdo
@@ -193,8 +210,9 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 
 %package zts-pdo-sqlite
-Summary: hypertext preprocessor - thread-safe data objects SQLite extension
+Summary:  hypertext preprocessor - thread-safe data objects SQLite extension
 Requires: php, php-pdo
+Group:    Development/Languages
 
 
 %description zts-pdo-sqlite
@@ -202,8 +220,9 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 
 %package zts-sqlite
-Summary: hypertext preprocessor - thread-safe SQLite < 3 extension
+Summary:  hypertext preprocessor - thread-safe SQLite < 3 extension
 Requires: php
+Group:    Development/Languages
 
 
 %description zts-sqlite
@@ -211,8 +230,9 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 
 %package zts-sqlite3
-Summary: hypertext preprocessor - thread-safe SQLite 3 extension
+Summary:  hypertext preprocessor - thread-safe SQLite 3 extension
 Requires: php
+Group:    Development/Languages
 
 
 %description zts-sqlite3

@@ -24,8 +24,9 @@ nginx [engine x] is a HTTP and reverse proxy server, as well as a mail proxy ser
 
 
 %package php-fpm
-Summary: nginx - php-fpm per-virtualhost configuration files
+Summary:  nginx - php-fpm per-virtualhost configuration files
 Requires: nginx
+Group:    Applications/Internet
 
 
 %description php-fpm
