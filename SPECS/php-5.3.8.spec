@@ -96,7 +96,17 @@ Group:    Development/Languages
 
 %description httpd
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This Apache module enables processing of PHP files requested through Apache via an embedded PHP interpreter. It can be dynamically loaded as a DSO module, as is the standard configuration.
-%endif
+
+
+%package mysql
+Summary:  hypertext preprocessor: MySQL extension
+Requires: mysql, php
+Group:    Development/Languages
+
+
+%description mysql
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This extension provides functionality for accessing MySQL databases in procedural code.
+endif
 
 
 %package mysqli
@@ -199,6 +209,16 @@ Group:    Development/Languages
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This thread-safe FTP extension enables communication with FTP servers.
 
 
+%package zts-mysql
+Summary:  hypertext preprocessor: MySQL extension
+Requires: mysql, php
+Group:    Development/Languages
+
+
+%description zts-mysql
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This extension provides functionality for accessing MySQL databases in procedural code.
+
+
 %package zts-mysqli
 Summary:  hypertext preprocessor: MySQLi extension
 Requires: mysql, php
@@ -294,6 +314,7 @@ build_tree() {
 with_shared="--enable-ftp=shared \
              --enable-pdo=shared \
              --with-bz2=shared \
+             --with-mysql=shared,mysqlnd \
              --with-mysqli=shared,mysqlnd \
              --with-openssl=shared \
              --with-pdo-sqlite=shared \
@@ -482,6 +503,11 @@ rm -rf "$RPM_BUILD_ROOT"
 %endif
 
 
+%files zts-mysql
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/mysql.*
+
+
 %files mysqli
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/mysqli.*
@@ -539,9 +565,14 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/ftp.*
 
 
+%files zts-mysql
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/mysql.*
+
+
 %files zts-mysqli
 %defattr(-, root, root, -)
-                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/mysqli.*
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/mysqli.*
 
 
 %files zts-openssl
