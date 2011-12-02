@@ -363,7 +363,12 @@ cp php.ini-production "$RPM_BUILD_ROOT/%{_sysconfdir}/php.ini"
 # Embedded build
 %if %{with_embedded}
 make -C build-embedded install-sapi install-headers INSTALL_ROOT=$RPM_BUILD_ROOT
-mv "$RPM_BUILD_ROOT/usr/lib/libphp5.so" "$RPM_BUILD_ROOT/%{_libdir}"
+
+# Sometimes the libdir specification is ignored..?
+if [ ! -f "$RPM_BUILD_ROOT/%{_libdir}" ]
+then
+   mv "$RPM_BUILD_ROOT/usr/lib/libphp5.so" "$RPM_BUILD_ROOT/%{_libdir}"
+fi
 %endif
 
 # FPM build
