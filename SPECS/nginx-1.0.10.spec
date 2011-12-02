@@ -91,7 +91,7 @@ rm -rf "$RPM_BUILD_ROOT"
 useradd \
     --comment "System web server" \
     --home "%{_sharedstatedir}/www-server" \
-    --system \
+    -r \
     -M \
     www-server
 
