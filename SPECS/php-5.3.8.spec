@@ -99,6 +99,16 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 %endif
 
 
+%package mcrypt
+Summary:  hypertext preprocessor: MCryot extension
+Requires: php
+Group:    Development/Languages
+
+
+%description mcrypt
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This extension provides crypotography functionality for PHP developers.
+
+
 %package mysql
 Summary:  hypertext preprocessor: MySQL extension
 Requires: mysql, php
@@ -210,6 +220,16 @@ Group:    Development/Languages
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This thread-safe FTP extension enables communication with FTP servers.
 
 
+%package zts-mcrypt
+Summary:  hypertext preprocessor: MCryot extension
+Requires: php
+Group:    Development/Languages
+
+
+%description zts-mcrypt
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This extension provides crypotography functionality for PHP developers.
+
+
 %package zts-mysql
 Summary:  hypertext preprocessor: MySQL extension
 Requires: mysql, php
@@ -319,6 +339,7 @@ export PHP_MYSQLND_ENABLED=yes # Cannot load module 'mysql' because required
 with_shared="--enable-ftp=shared \
              --enable-pdo=shared \
              --with-bz2=shared \
+             --with-mcrypt=shared \
              --with-mysql=shared,mysqlnd \
              --with-mysqli=shared,mysqlnd \
              --with-openssl=shared \
@@ -508,6 +529,11 @@ rm -rf "$RPM_BUILD_ROOT"
 %endif
 
 
+%files mcrypt
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/mcrypt.*
+
+
 %files mysql
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/mysql.*
@@ -568,6 +594,11 @@ rm -rf "$RPM_BUILD_ROOT"
 %files zts-ftp
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/ftp.*
+
+
+%files zts-mcrypt
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/mcrypt.*
 
 
 %files zts-mysql
