@@ -100,7 +100,7 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 
 %package mcrypt
-Summary:  hypertext preprocessor: MCryot extension
+Summary:  hypertext preprocessor: MCrypt extension
 Requires: php
 Group:    Development/Languages
 
@@ -221,7 +221,7 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 
 %package zts-mcrypt
-Summary:  hypertext preprocessor: MCryot extension
+Summary:  hypertext preprocessor: MCrypt extension
 Requires: php
 Group:    Development/Languages
 
