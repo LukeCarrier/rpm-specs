@@ -9,7 +9,7 @@ URL:       http://php.net
 Source0:   http://php.net/distributions/php-%{version}.tar.gz
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-BuildRequires: bzip2-devel, gcc, gmp-devel, httpd-devel, krb5-devel, libjpeg-devel, libxml2-devel, libXpm-devel, make, openssl-devel, pcre-devel, t1lib-devel
+BuildRequires: bzip2-devel, gcc, gmp-devel, httpd-devel, krb5-devel, libjpeg-devel, libxml2-devel, libXpm-devel, make, mysql-devel, openssl-devel, pcre-devel, t1lib-devel
 
 # Extras for different SAPIs
 Source1: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpmsysvinit.sh
@@ -97,6 +97,16 @@ Group:    Development/Languages
 %description httpd
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This Apache module enables processing of PHP files requested through Apache via an embedded PHP interpreter. It can be dynamically loaded as a DSO module, as is the standard configuration.
 %endif
+
+
+%package mysqli
+Summary:  hypertext preprocessor: MySQLi extension
+Requires: mysql, php
+Group:    Development/Languages
+
+
+%description mysqli
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This extension provides functionality for accessing MySQL databases using object-oriented code.
 
 
 %package openssl
@@ -189,6 +199,16 @@ Group:    Development/Languages
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This thread-safe FTP extension enables communication with FTP servers.
 
 
+%package zts-mysqli
+Summary:  hypertext preprocessor: MySQLi extension
+Requires: mysql, php
+Group:    Development/Languages
+
+
+%description zts-mysqli
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This extension provides functionality for accessing MySQL databases using object-oriented code.
+
+
 %package zts-openssl
 Summary:  hypertext preprocessor - thread-safe OpenSSL encryption extension
 Requires: openssl, php
@@ -274,6 +294,7 @@ build_tree() {
 with_shared="--enable-ftp=shared \
              --enable-pdo=shared \
              --with-bz2=shared \
+             --with-mysqli=mysqlnd,shared \
              --with-openssl=shared \
              --with-pdo-sqlite=shared \
              --with-sqlite=shared \
@@ -461,6 +482,11 @@ rm -rf "$RPM_BUILD_ROOT"
 %endif
 
 
+%files mysqli
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/mysqli.*
+
+
 %files openssl
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/openssl.*
@@ -511,6 +537,11 @@ rm -rf "$RPM_BUILD_ROOT"
 %files zts-ftp
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/ftp.*
+
+
+%files zts-mysqli
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/mysqli.*
 
 
 %files zts-openssl
