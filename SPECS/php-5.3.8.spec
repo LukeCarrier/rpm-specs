@@ -96,6 +96,7 @@ Group:    Development/Languages
 
 %description httpd
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This Apache module enables processing of PHP files requested through Apache via an embedded PHP interpreter. It can be dynamically loaded as a DSO module, as is the standard configuration.
+%endif
 
 
 %package mysql
