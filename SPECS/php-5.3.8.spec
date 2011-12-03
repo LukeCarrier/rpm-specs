@@ -209,6 +209,16 @@ Group:    Development/Languages
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This optional extension enables connecting to SQLite 3 databases.
 
 
+%package zip
+Summary:  hypertext preprocessor - zip extension
+Requires: php
+Group:    Development/Languages
+
+
+%description zip
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This optional extension enables the manipulation of compressed zip files.
+
+
 %if %{with_zts}
 %package zts-bz2
 Summary:  hypertext preprocessor: thread-safe BZip2 extension
@@ -318,6 +328,16 @@ Group:    Development/Languages
 
 %description zts-sqlite3
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This optional extension enables connecting to SQLite 3 databases.
+
+
+%package zts-zip
+Summary:  hypertext preprocessor - zip extension
+Requires: php
+Group:    Development/Languages
+
+
+%description zts-zip
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This optional extension enables the manipulation of compressed zip files.
 %endif
 
 
@@ -611,6 +631,11 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/sqlite3.*
 
 
+%files zip
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/zip.*
+
+
 %if %{with_zts}
 %files zts-bz2
 %defattr(-, root, root, -)
@@ -665,6 +690,11 @@ rm -rf "$RPM_BUILD_ROOT"
 %files zts-sqlite3
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/sqlite3.*
+
+
+%files zts-zip
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/zip.*
 %endif
 
 
