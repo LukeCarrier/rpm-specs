@@ -94,9 +94,19 @@ Requires: php, httpd
 Group:    Development/Languages
 
 
-%description httpd
+%description httpdMCrypt
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This Apache module enables processing of PHP files requested through Apache via an embedded PHP interpreter. It can be dynamically loaded as a DSO module, as is the standard configuration.
 %endif
+
+
+%package mbstring
+Summary:  hypertext preprocessor: multi-byte string extension
+Requires: php
+Group:    Development/Languages
+
+
+%description mbstring
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This extension enables the use of character sets whose characters overflow 8-bit values.
 
 
 %package mcrypt
@@ -337,6 +347,7 @@ export PHP_MYSQLND_ENABLED=yes # Cannot load module 'mysql' because required
 #   Any shared libraries that're to be built only as part of the CGI compilation
 #   should be listed here.
 with_shared="--enable-ftp=shared \
+             --enable-mbstring=shared \
              --enable-pdo=shared \
              --with-bz2=shared \
              --with-mcrypt=shared \
@@ -529,6 +540,11 @@ rm -rf "$RPM_BUILD_ROOT"
 %endif
 
 
+%files mbstring
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/mbstring.*
+
+
 %files mcrypt
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/mcrypt.*
@@ -594,6 +610,11 @@ rm -rf "$RPM_BUILD_ROOT"
 %files zts-ftp
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/ftp.*
+
+
+%files zts-mbstring
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/mbstring.*
 
 
 %files zts-mcrypt
