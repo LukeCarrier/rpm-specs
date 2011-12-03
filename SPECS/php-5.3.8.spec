@@ -379,6 +379,7 @@ export PHP_MYSQLND_ENABLED=yes # Cannot load module 'mysql' because required
 with_shared="--enable-ftp=shared \
              --enable-mbstring=shared \
              --enable-pdo=shared \
+             --enable-zip=shared \
              --with-bz2=shared \
              --with-mcrypt=shared \
              --with-mysql=shared,mysqlnd \
