@@ -230,6 +230,16 @@ Group:    Development/Languages
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This thread-safe FTP extension enables communication with FTP servers.
 
 
+%package zts-mbstring
+Summary:  hypertext preprocessor: multi-byte string extension
+Requires: php
+Group:    Development/Languages
+
+
+%description zts-mbstring
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This extension enables the use of character sets whose characters overflow 8-bit values.
+
+
 %package zts-mcrypt
 Summary:  hypertext preprocessor: MCrypt extension
 Requires: php
