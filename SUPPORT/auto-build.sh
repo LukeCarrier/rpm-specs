@@ -75,7 +75,7 @@ echo " "
 echo "Attempting to install packages; you'll either need sudo with no password"
 echo "enabled for this user ($USER) or its password to enter at the prompt."
 echo " "
-sudo yum -y install rpm-build $(echo "$build_dependencies" | sed 's/, / /g')
+sudo yum -y install rpm-build wget $(echo "$build_dependencies" | sed 's/, / /g')
 echo " "
 
 echo "Attempting to download source code to the SOURCES directory relative to the"
