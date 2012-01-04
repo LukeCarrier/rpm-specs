@@ -83,7 +83,7 @@ echo "specified spec file."
 echo " "
 echo "$source_packages" | while read url
 do
-    wget --continue --directory="$(dirname $0)/../SOURCES" --no-check-certificate --progress=dot "$url"
+    echo '' # wget --continue --directory="$(dirname $0)/../SOURCES" --no-check-certificate --progress=dot "$url"
 done
 echo " "
 
