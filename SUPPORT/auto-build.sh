@@ -90,5 +90,5 @@ echo " "
 echo "Running rpmbuild to generate the SRPM and RPM, since we managed to get all"
 echo "necessary dependencies."
 echo " "
-rpmbuild -ba $1
+rpmbuild -ba "$(pwd)/$1"
 echo " "
