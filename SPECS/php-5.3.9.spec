@@ -1,5 +1,5 @@
 Name:    php
-Version: 5.3.8
+Version: 5.3.9
 Release: 1%{?dist}
 Summary: hypertext preprocessor: CLI utilities
 
@@ -9,14 +9,14 @@ URL:       http://php.net
 Source0:   http://php.net/distributions/php-%{version}.tar.gz
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-BuildRequires: bzip2-devel, gcc, gmp-devel, httpd-devel, krb5-devel, libjpeg-devel, libtool-ltdl-devel, libxml2-devel, libXpm-devel, make, libmcrypt-devel, mysql-devel, openssl-devel, pcre-devel, t1lib-devel
+BuildRequires: bzip2-devel, gcc, gmp-devel, httpd-devel, krb5-devel, libjpeg-devel, libtool-ltdl-devel, libxml2-devel, libXpm-devel, make, libmcrypt-devel, mysql-devel, openssl-devel, pcre-devel, sqlite-devel, t1lib-devel
 
 # Extras for different SAPIs
 Source1: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpmsysvinit.sh
 Source2: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpm.conf
 
 # Version constants for extensions
-%global php_ver  5.3.8
+%global php_ver  5.3.9
 %global api_ver  20090626
 %global zend_ver 220090626
 
@@ -554,6 +554,7 @@ rm -rf "$RPM_BUILD_ROOT"
 %defattr(-, root, root, -)
                            %{_sbindir}/php-fpm
 %attr(755, -, -)           %{_initddir}/php-fpm
+                           %{_datadir}/fpm/status.html
                            %{_sysconfdir}/php-fpm.conf
                            %{_mandir}/man8/php-fpm.8*
 %endif
@@ -606,7 +607,7 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/pdo_sqlite.*
 
 
-%files pear -f %{buildroot}/_list/pear
+%files pear -f "%{buildroot}/_list/pear"
 %defattr(-, root, root, -)
                            %{_bindir}/pear
                            %{_bindir}/peardev
