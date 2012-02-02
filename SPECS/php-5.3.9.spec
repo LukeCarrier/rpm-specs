@@ -160,6 +160,16 @@ Group:    Development/Languages
 PHP is a widely-used general-purpose scripting language that is especially suited for web development and can be embedded into HTML. PDO (PHP Data Objects) enables the language to perform SQL queries on a variety of database types in a safe, object-orientated fashion.
 
 
+%package pdo-mysql
+Summary:  hypertext preprocessor - data objects MySQL extension
+Requires: mysql, php, php-pdo
+Group:    Development/Languages
+
+
+%description pdo-mysql
+PHP is a widely-used general-purpose scripting language that is especially suited for web development and can be embedded into HTML. The MySQL PDO extension enables connecting to MySQL databases via the PDO library.
+
+
 %package pdo-sqlite
 Summary:  hypertext preprocessor - data objects SQLite extension
 Requires: php, php-pdo
@@ -309,6 +319,16 @@ Group:    Development/Languages
 PHP is a widely-used general-purpose scripting language that is especially suited for web development and can be embedded into HTML. PDO (PHP Data Objects) enables the language to perform SQL queries on a variety of database types in a safe, object-orientated fashion.
 
 
+%package zts-pdo-mysql
+Summary:  hypertext preprocessor - thread-safe data objects MySQL extension
+Requires: mysql, php, php-pdo
+Group:    Development/Languages
+
+
+%description zts-pdo-mysql
+PHP is a widely-used general-purpose scripting language that is especially suited for web development and can be embedded into HTML. The MySQL PDO extension enables connecting to MySQL databases via the PDO library.
+
+
 %package zts-pdo-sqlite
 Summary:  hypertext preprocessor - thread-safe data objects SQLite extension
 Requires: php, php-pdo
@@ -403,6 +423,7 @@ with_shared="--enable-ftp=shared \
              --with-mysql=shared,mysqlnd \
              --with-mysqli=shared,mysqlnd \
              --with-openssl=shared \
+             --with-pdo-mysql=shared \
              --with-pdo-sqlite=shared \
              --with-sqlite=shared \
              --with-sqlite3=shared
@@ -621,6 +642,11 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/pdo.*
 
 
+%files pdo-mysql
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/pdo_mysql.*
+
+
 %files pdo-sqlite
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/pdo_sqlite.*
@@ -701,6 +727,11 @@ rm -rf "$RPM_BUILD_ROOT"
 %files zts-pdo
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/pdo.*
+
+
+%files zts-pdo-mysql
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/pdo_mysql.*
 
 
 %files zts-pdo-sqlite
