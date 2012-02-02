@@ -9,7 +9,7 @@ URL:       http://php.net
 Source0:   http://php.net/distributions/php-%{version}.tar.gz
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-BuildRequires: bzip2-devel, gcc, gmp-devel, httpd-devel, krb5-devel, libjpeg-devel, libtool-ltdl-devel, libxml2-devel, libXpm-devel, make, libmcrypt-devel, mysql-devel, openssl-devel, pcre-devel, sqlite-devel, t1lib-devel
+BuildRequires: bzip2-devel, gcc, gmp-devel, httpd-devel, krb5-devel, libjpeg-devel, libmcrypt-devel, libtool-ltdl-devel, libxml2-devel, libxslt-devel, libXpm-devel, make, mysql-devel, openssl-devel, pcre-devel, sqlite-devel, t1lib-devel
 
 # Extras for different SAPIs
 Source1: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpmsysvinit.sh
@@ -209,6 +209,15 @@ Group:    Development/Languages
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This optional extension enables connecting to SQLite 3 databases.
 
 
+%package xsl
+Summary:  hypertext preprocessor - XSLT extension
+Requires: libxslt, php
+
+
+%description xsl
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The XSLT extension enables developers to perform advanced operations on XML data.
+
+
 %package zip
 Summary:  hypertext preprocessor - zip extension
 Requires: php
@@ -330,6 +339,15 @@ Group:    Development/Languages
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This optional extension enables connecting to SQLite 3 databases.
 
 
+%package zts-xsl
+Summary:  hypertext preprocessor - thread-safe XSLT extension
+Requires: libxslt, php
+
+
+%description zts-xsl
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The XSLT extension enables developers to perform advanced operations on XML data.
+
+
 %package zts-zip
 Summary:  hypertext preprocessor - zip extension
 Requires: php
@@ -387,7 +405,8 @@ with_shared="--enable-ftp=shared \
              --with-openssl=shared \
              --with-pdo-sqlite=shared \
              --with-sqlite=shared \
-             --with-sqlite3=shared"
+             --with-sqlite3=shared
+             --with-xsl=shared"
 
 # No shared libraries
 #   Any shared libraries handled by the CGI build should be excluded here to
@@ -633,6 +652,11 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/sqlite3.*
 
 
+%files xsl
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/xsl.*
+
+
 %files zip
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/zip.*
@@ -687,6 +711,11 @@ rm -rf "$RPM_BUILD_ROOT"
 %files zts-sqlite
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/sqlite.*
+
+
+%files zts-xsl
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/xsl.*
 
 
 %files zts-sqlite3
