@@ -1,5 +1,5 @@
 Name:    php
-Version: 5.3.9
+Version: 5.3.10
 Release: 1%{?dist}
 Summary: hypertext preprocessor: CLI utilities
 
@@ -16,7 +16,7 @@ Source1: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpmsysvi
 Source2: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpm.conf
 
 # Version constants for extensions
-%global php_ver  5.3.9
+%global php_ver  5.3.10
 %global api_ver  20090626
 %global zend_ver 220090626
 
