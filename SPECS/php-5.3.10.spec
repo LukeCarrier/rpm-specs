@@ -424,7 +424,7 @@ with_shared="--enable-ftp=shared \
              --with-mysqli=shared,mysqlnd \
              --with-openssl=shared \
              --with-pdo-mysql=shared \
-             --with-pdo-sqlite=shared \
+             --with-pdo-sqlite=shared,/usr \
              --with-sqlite=shared \
              --with-sqlite3=shared
              --with-xsl=shared"
