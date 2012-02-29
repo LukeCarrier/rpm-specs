@@ -597,6 +597,11 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/bz2.*
 
 
+%files curl
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/curl.*
+
+
 %files devel
 %defattr(-, root, root, -)
                            %{_includedir}/php
@@ -713,6 +718,11 @@ rm -rf "$RPM_BUILD_ROOT"
 %files zts-bz2
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/bz2.*
+
+
+%files curl
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/curl.*
 
 
 %files zts-ftp
