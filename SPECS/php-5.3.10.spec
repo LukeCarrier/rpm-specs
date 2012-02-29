@@ -9,7 +9,7 @@ URL:       http://php.net
 Source0:   http://php.net/distributions/php-%{version}.tar.gz
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-BuildRequires: bzip2-devel, gcc, gmp-devel, httpd-devel, krb5-devel, libjpeg-devel, libmcrypt-devel, libtool-ltdl-devel, libxml2-devel, libxslt-devel, libXpm-devel, make, mysql-devel, openssl-devel, pcre-devel, sqlite-devel, t1lib-devel
+BuildRequires: bzip2-devel, curl-devel, gcc, gmp-devel, httpd-devel, krb5-devel, libjpeg-devel, libmcrypt-devel, libtool-ltdl-devel, libxml2-devel, libxslt-devel, libXpm-devel, make, mysql-devel, openssl-devel, pcre-devel, sqlite-devel, t1lib-devel
 
 # Extras for different SAPIs
 Source1: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpmsysvinit.sh
@@ -41,6 +41,16 @@ Group:    Development/Languages
 
 %description bz2
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. BZip2 is an efficient file compression library. This extension enables the creation and extraction of such archives from within the PHP language.
+
+
+%package curl
+Summary:  hypertext preprocessor: cURL extension
+Requires: curl, php
+Group:    Development/Languages
+
+
+%description curl
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. libcurl is a free and easy-to-use client-side URL transfer library, supporting DICT, FILE, FTP, FTPS, Gopher, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, POP3, POP3S, RTMP, RTSP, SCP, SFTP, SMTP, SMTPS, Telnet and TFTP. libcurl supports SSL certificates, HTTP POST, HTTP PUT, FTP uploading, HTTP form based upload, proxies, cookies, user+password authentication (Basic, Digest, NTLM, Negotiate, Kerberos), file transfer resume, http proxy tunneling and more! 
 
 
 %package devel
@@ -249,6 +259,16 @@ Group:    Development/Languages
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. BZip2 is an efficient file compression library. This extension enables the creation and extraction of such archives from within the PHP language.
 
 
+%package zts-curl
+Summary:  hypertext preprocessor: thread-safe cURL extension
+Requires: curl, php
+Group:    Development/Languages
+
+
+%description zts-curl
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. libcurl is a free and easy-to-use client-side URL transfer library, supporting DICT, FILE, FTP, FTPS, Gopher, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, POP3, POP3S, RTMP, RTSP, SCP, SFTP, SMTP, SMTPS, Telnet and TFTP. libcurl supports SSL certificates, HTTP POST, HTTP PUT, FTP uploading, HTTP form based upload, proxies, cookies, user+password authentication (Basic, Digest, NTLM, Negotiate, Kerberos), file transfer resume, http proxy tunneling and more!
+
+
 %package zts-ftp
 Summary:  hypertext preprocessor - thread-safe FTP extension
 Requires: php, php-zts
@@ -419,6 +439,7 @@ with_shared="--enable-ftp=shared \
              --enable-pdo=shared \
              --enable-zip=shared \
              --with-bz2=shared \
+             --with-curl=shared \
              --with-mcrypt=shared \
              --with-mysql=shared,mysqlnd \
              --with-mysqli=shared,mysqlnd \
