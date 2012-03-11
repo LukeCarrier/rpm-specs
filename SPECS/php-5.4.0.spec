@@ -1,5 +1,5 @@
 Name:    php
-Version: 5.3.10
+Version: 5.4.0
 Release: 1%{?dist}
 Summary: hypertext preprocessor: CLI utilities
 
@@ -16,9 +16,7 @@ Source1: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpmsysvi
 Source2: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpm.conf
 
 # Version constants for extensions
-%global php_ver  5.3.10
-%global api_ver  20090626
-%global zend_ver 220090626
+%global api_ver  20100525
 
 # Which SAPIs should be built?
 #   The CGI SAPI cannot be disabled, since it's required for all shared
@@ -210,15 +208,6 @@ Group:    Development/Languages
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. Some applications and libraries may be distributed as archive files (PH(p)AR(chives)). This utility enables their compression and extraction.
 
 
-%package sqlite
-Summary:  hypertext preprocessor - SQLite < 3 extension
-Requires: php
-Group:    Development/Languages
-
-
-%description sqlite
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This optional extension enables connecting to SQLite (< 3) databases.
-
 %package sqlite3
 Summary:  hypertext preprocessor - SQLite 3 extension
 Requires: php
@@ -357,16 +346,6 @@ Group:    Development/Languages
 
 %description zts-pdo-sqlite
 PHP is a widely-used general-purpose scripting language that is especially suited for web development and can be embedded into HTML. The SQLite PDO extension enables connecting to SQLite databases via the PDO library.
-
-
-%package zts-sqlite
-Summary:  hypertext preprocessor - thread-safe SQLite < 3 extension
-Requires: php
-Group:    Development/Languages
-
-
-%description zts-sqlite
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This optional extension enables connecting to SQLite (< 3) databases.
 
 
 %package zts-sqlite3
@@ -694,11 +673,6 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_bindir}/phar.phar
 
 
-%files sqlite
-%defattr(-, root, root, -)
-                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/sqlite.*
-
-
 %files sqlite3
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/sqlite3.*
@@ -720,7 +694,7 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/bz2.*
 
 
-%files curl
+%files zts-curl
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/curl.*
 
@@ -768,11 +742,6 @@ rm -rf "$RPM_BUILD_ROOT"
 %files zts-pdo-sqlite
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/pdo_sqlite.*
-
-
-%files zts-sqlite
-%defattr(-, root, root, -)
-                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/sqlite.*
 
 
 %files zts-xsl
