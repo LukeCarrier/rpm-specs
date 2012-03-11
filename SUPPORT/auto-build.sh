@@ -15,6 +15,8 @@ error_trap() {
 
 trap error_trap 1 2 3 15 ERR
 
+rootdir="$(readlink -fn "$(dirname "$0")/..")"
+
 # Get a metadata value from within the spec file.
 #
 # Grabs (and outputs, so run this in a subshell) a value for the specified
@@ -90,5 +92,5 @@ echo " "
 echo "Running rpmbuild to generate the SRPM and RPM, since we managed to get all"
 echo "necessary dependencies."
 echo " "
-rpmbuild -ba "$(pwd)/$1"
+rpmbuild --define "_topdir $rootdir" -ba "$(pwd)/$1"
 echo " "

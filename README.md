@@ -32,19 +32,8 @@ Well, not quite, but you should be aware of a few things:
 Erm, what do I do with this?
 ----------------------------
 
-Good question. To use these spec files you'll need to set up an environment to
-build them in. This isn't all that scary:
-
-    cd ~
-    echo "%_topdir $(echo "$HOME")/rpmbuild" > .rpmmacros
-    git clone git://github.com/LukeCarrier/rpm-specs.git rpmbuild
-    yum -y install rpm-build
-
-Now you're done! You have an RPM build environment in a directory called
-"rpmbuild" in your home directory. Obviously, you can move this, but be sure to
-specify the path to your build directory in your .rpmmacros file, else you'll
-need to pass the path to this directory to rpmbuild every time you want to build
-a package, and that just sucks.
+You build packages! No environment changes should be necessary any more, since
+I've gradually phased them all out in favour of sensible defaults ;)
 
 Building packages
 -----------------
