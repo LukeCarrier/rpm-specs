@@ -9,7 +9,7 @@ URL:       http://php.net
 Source0:   http://php.net/distributions/php-%{version}.tar.gz
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-BuildRequires: bzip2-devel, curl-devel, gcc, gmp-devel, httpd-devel, krb5-devel, libjpeg-devel, libmcrypt-devel, libtool-ltdl-devel, libxml2-devel, libxslt-devel, libXpm-devel, make, mysql-devel, openssl-devel, pcre-devel, sqlite-devel, t1lib-devel
+BuildRequires: bzip2-devel, curl-devel, gcc, gmp-devel, httpd-devel, krb5-devel, libjpeg-devel, libmcrypt-devel, libtool-ltdl-devel, libxml2-devel, libxslt-devel, libXpm-devel, make, mysql-devel, openssl-devel, pcre-devel, postgresql-devel sqlite-devel, t1lib-devel
 
 # Extras for different SAPIs
 Source1: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpmsysvinit.sh
@@ -198,6 +198,16 @@ Group:    Development/Languages
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. Many open source libraries exist for free use within PHP applications; this package provides the tools necessary to install them and extensions to the scripting language that provide new and improved functionality.
 
 
+%package pgsql
+Summary:  hypertext preprocessor - PgSQL library
+Requires: php
+Group:    Development/Languages
+
+
+%description pgsql
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This library extends it with support for the PostgreSQL database server.
+
+
 %package phar
 Summary:  hypertext preprocessor - source code archiving utility
 Requires: php
@@ -348,6 +358,16 @@ Group:    Development/Languages
 PHP is a widely-used general-purpose scripting language that is especially suited for web development and can be embedded into HTML. The SQLite PDO extension enables connecting to SQLite databases via the PDO library.
 
 
+%package zts-pgsql
+Summary:  hypertext preprocessor - thread-safe PgSQL library
+Requires: php
+Group:    Development/Languages
+
+
+%description zts-pgsql
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This library extends it with support for the PostgreSQL database server.
+
+
 %package zts-sqlite3
 Summary:  hypertext preprocessor - thread-safe SQLite 3 extension
 Requires: php
@@ -425,6 +445,7 @@ with_shared="--enable-ftp=shared \
              --with-openssl=shared \
              --with-pdo-mysql=shared \
              --with-pdo-sqlite=shared,/usr \
+             --with-pgsql=shared \
              --with-sqlite=shared \
              --with-sqlite3=shared
              --with-xsl=shared"
@@ -444,7 +465,7 @@ without_shared="--disable-ftp \
 pushd build-cgi
 build_tree \
   $with_shared \
-  --with-pear=$BUILD_ROOT/%{_sharedstatedir}/php/pear
+  --with-pear=%{_sharedstatedir}/php/pear
 popd
 
 # Embdedded build
@@ -508,6 +529,7 @@ for file in .channels .depdb .depdblock .filemap .lock .registry
 do
     rm -rf "$RPM_BUILD_ROOT/$file"
 done
+mkdir -p "$RPM_BUILD_ROOT/%{_sysconfdir}"
 cp php.ini-production "$RPM_BUILD_ROOT/%{_sysconfdir}/php.ini"
 
 # Embedded build
@@ -673,6 +695,11 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_bindir}/phar.phar
 
 
+%files pgsql
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/pgsql.*
+
+
 %files sqlite3
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/sqlite3.*
@@ -747,6 +774,12 @@ rm -rf "$RPM_BUILD_ROOT"
 %files zts-xsl
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/xsl.*
+
+
+%files zts-pgsql
+%defattr(-, root, root, -)
+
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/pgsql.*
 
 
 %files zts-sqlite3
