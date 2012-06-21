@@ -9,7 +9,7 @@ URL:       http://php.net
 Source0:   http://php.net/distributions/php-%{version}.tar.gz
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-BuildRequires: bzip2-devel, curl-devel, gcc, gmp-devel, httpd-devel, krb5-devel, libjpeg-devel, libmcrypt-devel, libtool-ltdl-devel, libxml2-devel, libxslt-devel, libXpm-devel, make, mysql-devel, openssl-devel, pcre-devel, postgresql-devel sqlite-devel, t1lib-devel
+BuildRequires: bzip2-devel, curl-devel, gcc, gmp-devel, httpd-devel, krb5-devel, libjpeg-devel, libmcrypt-devel, libtool-ltdl-devel, libxml2-devel, libxslt-devel, libXpm-devel, make, mysql-devel, openssl-devel, pcre-devel, postgresql-devel sqlite-devel, t1lib-devel, zlib-devel
 
 # Extras for different SAPIs
 Source1: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpmsysvinit.sh
@@ -247,6 +247,16 @@ Group:    Development/Languages
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This optional extension enables the manipulation of compressed zip files.
 
 
+%package zlib
+Summary:  hypertext preprocessor - zlib extension
+Requires: php, zlib
+Group:    Development/Languages
+
+
+%description zlib
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The zlib extension provides compression functionality.
+
+
 %if %{with_zts}
 %package zts-bz2
 Summary:  hypertext preprocessor: thread-safe BZip2 extension
@@ -398,6 +408,16 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 %endif
 
 
+%package zts-zlib
+Summary:  hypertext preprocessor - zlib extension
+Requires: php, zlib
+Group:    Development/Languages
+
+
+%description zts-zlib
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The zlib extension provides compression functionality.
+
+
 %prep
 %setup -q
 
@@ -447,8 +467,9 @@ with_shared="--enable-ftp=shared \
              --with-pdo-sqlite=shared,/usr \
              --with-pgsql=shared \
              --with-sqlite=shared \
-             --with-sqlite3=shared
-             --with-xsl=shared"
+             --with-sqlite3=shared \
+             --with-xsl=shared \
+             --with-zlib=shared"
 
 # No shared libraries
 #   Any shared libraries handled by the CGI build should be excluded here to
@@ -715,6 +736,11 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/zip.*
 
 
+%files zlib
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/zlib.*
+
+
 %if %{with_zts}
 %files zts-bz2
 %defattr(-, root, root, -)
@@ -790,6 +816,11 @@ rm -rf "$RPM_BUILD_ROOT"
 %files zts-zip
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/zip.*
+
+
+%files zts-zlib
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/zlib.*
 %endif
 
 
