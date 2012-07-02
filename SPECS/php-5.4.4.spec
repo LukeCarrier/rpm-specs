@@ -9,7 +9,7 @@ URL:       http://php.net
 Source0:   http://php.net/distributions/php-%{version}.tar.gz
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-BuildRequires: bzip2-devel, curl-devel, gcc, gmp-devel, httpd-devel, krb5-devel, libjpeg-devel, libmcrypt-devel, libtool-ltdl-devel, libxml2-devel, libxslt-devel, libXpm-devel, make, mysql-devel, openssl-devel, pcre-devel, postgresql-devel sqlite-devel, t1lib-devel, zlib-devel
+BuildRequires: bzip2-devel, curl-devel, freetype-devel, gcc, gd-devel, gmp-devel, httpd-devel, krb5-devel, libjpeg-devel, libmcrypt-devel, libtool-ltdl-devel, libxml2-devel, libxslt-devel, libXpm-devel, make, mysql-devel, openssl-devel, pcre-devel, postgresql-devel sqlite-devel, t1lib-devel, zlib-devel
 
 # Extras for different SAPIs
 Source1: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpmsysvinit.sh
@@ -93,6 +93,16 @@ Group:    Development/Languages
 
 %description ftp
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This FTP extension enables communication with FTP servers.
+
+
+%package gd
+Summary:  hypertext preprocessor - GD extension
+Requires: freetype, gd, php
+Group:    Development/Languages
+
+
+%description gd
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This FTP extension enables image manipulation operations.
 
 
 %if %{with_httpd}
@@ -288,6 +298,16 @@ Group:    Development/Languages
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This thread-safe FTP extension enables communication with FTP servers.
 
 
+%package zts-gd
+Summary:  hypertext preprocessor - thread-safe GD extension
+Requires: freetype, gd, php
+Group:    Development/Languages
+
+
+%description zts-gd
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This FTP extension enables image manipulation operations.
+
+
 %package zts-mbstring
 Summary:  hypertext preprocessor: multi-byte string extension
 Requires: php
@@ -459,6 +479,8 @@ with_shared="--enable-ftp=shared \
              --enable-zip=shared \
              --with-bz2=shared \
              --with-curl=shared \
+             --with-freetype-dir=/usr \
+             --with-gd=shared \
              --with-mcrypt=shared \
              --with-mysql=shared,mysqlnd \
              --with-mysqli=shared,mysqlnd \
@@ -653,6 +675,11 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/ftp.*
 
 
+%files gd
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/gd.*
+
+
 %if %{with_httpd}
 %files httpd
 %defattr(-, root, root, -)
@@ -755,6 +782,11 @@ rm -rf "$RPM_BUILD_ROOT"
 %files zts-ftp
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/ftp.*
+
+
+%files zts-gd
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/gd.*
 
 
 %files zts-mbstring
