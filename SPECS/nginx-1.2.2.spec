@@ -1,5 +1,5 @@
 Name:    nginx
-Version: 1.2.1
+Version: 1.2.2
 Release: 1%{?dist}
 Summary: lightweight web and reverse proxy server
 
