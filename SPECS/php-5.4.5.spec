@@ -31,6 +31,16 @@ Source2: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpm.conf
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This package contains its command line interface binaries.
 
 
+%package bcmath
+Summary:  hypertext preprocessor: BCMath extension
+Requires: php
+Group:    Development/Languages
+
+
+%description bcmath
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. BCMath provides arbitrary precision mathematics to PHP applications.
+
+
 %package bz2
 Summary:  hypertext preprocessor: BZip2 extension
 Requires: bzip2 php
@@ -268,6 +278,16 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 
 
 %if %{with_zts}
+%package zts-bcmath
+Summary:  hypertext preprocessor: thread-safe BCMath extension
+Requires: php
+Group:    Development/Languages
+
+
+%description zts-bcmath
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. BCMath provides arbitrary precision mathematics to PHP applications.
+
+
 %package zts-bz2
 Summary:  hypertext preprocessor: thread-safe BZip2 extension
 Requires: bzip2, php, php-zts
@@ -473,7 +493,8 @@ export PHP_MYSQLND_ENABLED=yes # Cannot load module 'mysql' because required
 # Shared libraries
 #   Any shared libraries that're to be built only as part of the CGI compilation
 #   should be listed here.
-with_shared="--enable-ftp=shared \
+with_shared="--enable-bcmath \
+			 --enable-ftp=shared \
              --enable-mbstring=shared \
              --enable-pdo=shared \
              --enable-zip=shared \
@@ -636,6 +657,11 @@ rm -rf "$RPM_BUILD_ROOT"
 %exclude                   /_list
 
 
+%files bcmath
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/bcmath.*
+
+
 %files bz2
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/bz2.*
@@ -769,6 +795,11 @@ rm -rf "$RPM_BUILD_ROOT"
 
 
 %if %{with_zts}
+%files zts-bcmath
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/bcmath.*
+
+
 %files zts-bz2
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/bz2.*
