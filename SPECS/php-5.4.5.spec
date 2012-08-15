@@ -493,7 +493,7 @@ export PHP_MYSQLND_ENABLED=yes # Cannot load module 'mysql' because required
 # Shared libraries
 #   Any shared libraries that're to be built only as part of the CGI compilation
 #   should be listed here.
-with_shared="--enable-bcmath \
+with_shared="--enable-bcmath=shared \
 			 --enable-ftp=shared \
              --enable-mbstring=shared \
              --enable-pdo=shared \
