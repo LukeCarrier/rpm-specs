@@ -9,7 +9,7 @@ URL:       http://php.net
 Source0:   http://php.net/distributions/php-%{version}.tar.gz
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-BuildRequires: bzip2-devel, curl-devel, freetype-devel, gcc, gd-devel, gmp-devel, httpd-devel, krb5-devel, libjpeg-devel, libmcrypt-devel, libtool-ltdl-devel, libxml2-devel, libxslt-devel, libXpm-devel, make, mysql-devel, openssl-devel, pcre-devel, postgresql-devel sqlite-devel, t1lib-devel, zlib-devel
+BuildRequires: bzip2-devel, curl-devel, freetype-devel, gcc, gd-devel, gmp-devel, httpd-devel, krb5-devel, libicu-devel, libjpeg-devel, libmcrypt-devel, libtool-ltdl-devel, libxml2-devel, libxslt-devel, libXpm-devel, make, mysql-devel, openssl-devel, pcre-devel, postgresql-devel sqlite-devel, t1lib-devel, zlib-devel
 
 # Extras for different SAPIs
 Source1: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpmsysvinit.sh
@@ -127,6 +127,16 @@ PHP is a widely-used general-purpose scripting language that is especially suite
 %endif
 
 
+%package intl
+Summary:  hypertext preprocessor: internationalisation extension
+Requires: icu, php
+Group:    Development/Languages
+
+
+%description intl
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. Internationalization extension (further is referred as Intl) is a wrapper for ICU library, enabling PHP programmers to perform UCA-conformant collation and date/time/number/currency formatting in their scripts.
+
+
 %package mbstring
 Summary:  hypertext preprocessor: multi-byte string extension
 Requires: php
@@ -238,6 +248,16 @@ Group:    Development/Languages
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. Some applications and libraries may be distributed as archive files (PH(p)AR(chives)). This utility enables their compression and extraction.
 
 
+%package soap
+Summary:  hypertext preprocessor - SOAP extension
+Requires: libxml, php
+Group:    Development/Languages
+
+
+%description soap
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The SOAP extension can be used to write SOAP Servers and Clients. It supports subsets of SOAP 1.1, SOAP 1.2 and WSDL 1.1 specifications.
+
+
 %package sqlite3
 Summary:  hypertext preprocessor - SQLite 3 extension
 Requires: php
@@ -255,6 +275,15 @@ Requires: libxslt, php
 
 %description xsl
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The XSLT extension enables developers to perform advanced operations on XML data.
+
+
+%package xmlrpc
+Summary:  hypertext preprocessor - XMLRPC extension
+Requires: php
+
+
+%description xmlrpc
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The XMLRPC extension makes it easier for web developers to work with existing web services.
 
 
 %package zip
@@ -326,6 +355,16 @@ Group:    Development/Languages
 
 %description zts-gd
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This FTP extension enables image manipulation operations.
+
+
+%package zts-intl
+Summary:  hypertext preprocessor: thread-safe internationalisation extension
+Requires: icu, php
+Group:    Development/Languages
+
+
+%description zts-intl
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. Internationalization extension (further is referred as Intl) is a wrapper for ICU library, enabling PHP programmers to perform UCA-conformant collation and date/time/number/currency formatting in their scripts.
 
 
 %package zts-mbstring
@@ -418,6 +457,16 @@ Group:    Development/Languages
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This library extends it with support for the PostgreSQL database server.
 
 
+%package zts-soap
+Summary:  hypertext preprocessor - thread-safe SOAP extension
+Requires: libxml, php
+Group:    Development/Languages
+
+
+%description zts-soap
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The SOAP extension can be used to write SOAP Servers and Clients. It supports subsets of SOAP 1.1, SOAP 1.2 and WSDL 1.1 specifications.
+
+
 %package zts-sqlite3
 Summary:  hypertext preprocessor - thread-safe SQLite 3 extension
 Requires: php
@@ -426,6 +475,15 @@ Group:    Development/Languages
 
 %description zts-sqlite3
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This optional extension enables connecting to SQLite 3 databases.
+
+
+%package zts-xmlrpc
+Summary:  hypertext preprocessor - thread-safe XMLRPC extension
+Requires: php
+
+
+%description zts-xmlrpc
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The XMLRPC extension makes it easier for web developers to work with existing web services.
 
 
 %package zts-xsl
@@ -495,8 +553,10 @@ export PHP_MYSQLND_ENABLED=yes # Cannot load module 'mysql' because required
 #   should be listed here.
 with_shared="--enable-bcmath=shared \
 			 --enable-ftp=shared \
+			 --enable-intl=shared \
              --enable-mbstring=shared \
              --enable-pdo=shared \
+             --enable-soap=shared \
              --enable-zip=shared \
              --with-bz2=shared \
              --with-curl=shared \
@@ -511,6 +571,7 @@ with_shared="--enable-bcmath=shared \
              --with-pgsql=shared \
              --with-sqlite=shared \
              --with-sqlite3=shared \
+             --with-xmlrpc=shared \
              --with-xsl=shared \
              --with-zlib=shared"
 
@@ -713,6 +774,11 @@ rm -rf "$RPM_BUILD_ROOT"
 %endif
 
 
+%files intl
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/intl.*
+
+
 %files mbstring
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/mbstring.*
@@ -774,9 +840,19 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/pgsql.*
 
 
+%files soap
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/soap.*
+
+
 %files sqlite3
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/sqlite3.*
+
+
+%files xmlrpc
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/xmlrpc.*
 
 
 %files xsl
@@ -818,6 +894,11 @@ rm -rf "$RPM_BUILD_ROOT"
 %files zts-gd
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/gd.*
+
+
+%files zts-intl
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/intl.*
 
 
 %files zts-mbstring
@@ -871,9 +952,19 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/pgsql.*
 
 
+%files zts-soap
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/soap.*
+
+
 %files zts-sqlite3
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/sqlite3.*
+
+
+%files zts-xmlrpc
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/xmlrpc.*
 
 
 %files zts-zip
