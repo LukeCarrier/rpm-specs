@@ -556,8 +556,8 @@ build_tree() {
       --srcdir=.. \
       --cache-file=../config.cache \
       --disable-rpath \
-      --with-config-file-path=%{_sysconfdir} \
-      --with-config-file-scan-dir=%{_sysconfdir}/php.ini.d \
+      --with-config-file-path=%{_sysconfdir}/php/php.ini \
+      --with-config-file-scan-dir=%{_sysconfdir}/php/conf.d \
       --with-libxml-dir=/usr \
       --with-regex=php \
       $*
@@ -732,7 +732,7 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_bindir}/php-cgi
                            %{_bindir}/php-config
                            %{_bindir}/phpize
-                           %{_sysconfdir}/php.ini
+                           %{_sysconfdir}/php/php.ini
                            %{_mandir}/man1/php.1*
                            %{_mandir}/man1/php-config.1*
                            %{_mandir}/man1/phpize.1*
@@ -773,7 +773,7 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_sbindir}/php-fpm
 %attr(755, -, -)           %{_initddir}/php-fpm
                            %{_datadir}/fpm/status.html
-                           %{_sysconfdir}/php-fpm.conf
+                           %{_sysconfdir}/php/php-fpm.conf
                            %{_mandir}/man8/php-fpm.8*
 %endif
 
