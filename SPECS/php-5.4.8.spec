@@ -676,7 +676,7 @@ do
     rm -rf "$RPM_BUILD_ROOT/$file"
 done
 mkdir -p "$RPM_BUILD_ROOT/%{_sysconfdir}"
-cp php.ini-production "$RPM_BUILD_ROOT/%{_sysconfdir}/php.ini"
+cp php.ini-production "$RPM_BUILD_ROOT/%{_sysconfdir}/php/php.ini"
 
 # Embedded build
 %if %{with_embedded}
@@ -695,7 +695,7 @@ make -C build-fpm install-fpm INSTALL_ROOT=$RPM_BUILD_ROOT
 [ ! -d "$RPM_BUILD_ROOT/%{_initddir}" ] && mkdir -p "$RPM_BUILD_ROOT/%{_initddir}"
 cp "%{SOURCE1}" "$RPM_BUILD_ROOT/%{_initddir}/php-fpm"
 rm -f "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf.default"
-cp "%{SOURCE2}" "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf"
+cp "%{SOURCE2}" "$RPM_BUILD_ROOT/%{_sysconfdir}/php/php-fpm.conf"
 %endif
 
 # Apache HTTPd build
