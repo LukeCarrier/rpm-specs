@@ -9,7 +9,7 @@ URL:       http://php.net
 Source0:   http://php.net/distributions/php-%{version}.tar.gz
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-BuildRequires: bzip2-devel, curl-devel, freetype-devel, gcc, gd-devel, gmp-devel, httpd-devel, krb5-devel, libicu-devel, libjpeg-devel, libmcrypt-devel, libtool-ltdl-devel, libxml2-devel, libxslt-devel, libXpm-devel, make, mysql-devel, openssl-devel, pcre-devel, postgresql-devel sqlite-devel, t1lib-devel, zlib-devel
+BuildRequires: bzip2-devel, curl-devel, freetype-devel, gcc, gd-devel, gmp-devel, httpd-devel, krb5-devel, libicu-devel, libjpeg-devel, libmcrypt-devel, libtool-ltdl-devel, libxml2-devel, libxslt-devel, libXpm-devel, make, mysql-devel, net-snmp, net-snmp-devel, net-snmp-utils, openssl-devel, pcre-devel, postgresql-devel sqlite-devel, t1lib-devel, zlib-devel
 
 # Extras for different SAPIs
 Source1: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpmsysvinit.sh
@@ -248,6 +248,16 @@ Group:    Development/Languages
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. Some applications and libraries may be distributed as archive files (PH(p)AR(chives)). This utility enables their compression and extraction.
 
 
+%package snmp
+Summary:  hypertext preprocessor - SNMP extension
+Requires: net-snmp, net-snmp-utils, php
+Group:    Development/Languages
+
+
+%description snmp
+PHP is a widely used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The SNMP extension allows monitoring of network devices.
+
+
 %package soap
 Summary:  hypertext preprocessor - SOAP extension
 Requires: libxml, php
@@ -457,6 +467,16 @@ Group:    Development/Languages
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This library extends it with support for the PostgreSQL database server.
 
 
+%package zts-snmp
+Summary:  hypertext preprocessor - thread-safe SNMP extension
+Requires: net-snmp, net-snmp-utils, php
+Group:    Development/Languages
+
+
+%description zts-snmp
+PHP is a widely used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The SNMP extension allows monitoring of network devices.
+
+
 %package zts-soap
 Summary:  hypertext preprocessor - thread-safe SOAP extension
 Requires: libxml, php
@@ -569,6 +589,7 @@ with_shared="--enable-bcmath=shared \
              --with-pdo-mysql=shared \
              --with-pdo-sqlite=shared,/usr \
              --with-pgsql=shared \
+             --with-snmp=shared \
              --with-sqlite=shared \
              --with-sqlite3=shared \
              --with-xmlrpc=shared \
@@ -586,7 +607,7 @@ without_shared="--disable-ftp \
                 --without-sqlite \
                 --without-sqlite3"
 
-# CGI build (TODO add shared libraries))
+# CGI build
 pushd build-cgi
 build_tree \
   $with_shared \
@@ -840,6 +861,11 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/pgsql.*
 
 
+%files snmp
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/snmp.*
+
+
 %files soap
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/soap.*
@@ -950,6 +976,11 @@ rm -rf "$RPM_BUILD_ROOT"
 %defattr(-, root, root, -)
 
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/pgsql.*
+
+
+%files zts-snmp
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/snmp.*
 
 
 %files zts-soap
