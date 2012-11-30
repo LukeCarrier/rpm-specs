@@ -12,7 +12,7 @@ prefix=/usr
 exec_prefix=${prefix}
 
 php_fpm_BIN=${exec_prefix}/sbin/php-fpm
-php_fpm_CONF=/etc/php-fpm.conf
+php_fpm_CONF=/etc/php/php-fpm.conf
 php_fpm_PID=/var/run/php-fpm.pid
 
 php_opts="--fpm-config $php_fpm_CONF"
