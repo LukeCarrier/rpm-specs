@@ -1,5 +1,5 @@
 Name:    php
-Version: 5.4.9
+Version: 5.4.10
 Release: 1%{?dist}
 Summary: hypertext preprocessor: CLI utilities
 
@@ -694,7 +694,7 @@ fi
 make -C build-fpm install-fpm INSTALL_ROOT=$RPM_BUILD_ROOT
 [ ! -d "$RPM_BUILD_ROOT/%{_initddir}" ] && mkdir -p "$RPM_BUILD_ROOT/%{_initddir}"
 cp "%{SOURCE1}" "$RPM_BUILD_ROOT/%{_initddir}/php-fpm"
-rm -f "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf.default"
+rm -f "$RPM_BUILD_ROOT/%{_sysconfdir}/php/php-fpm.conf.default"
 cp "%{SOURCE2}" "$RPM_BUILD_ROOT/%{_sysconfdir}/php/php-fpm.conf"
 %endif
 
@@ -845,7 +845,7 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_bindir}/pear
                            %{_bindir}/peardev
                            %{_bindir}/pecl
-                           %{_sysconfdir}/pear.conf
+                           %{_sysconfdir}/php/pear.conf
                            %{_sharedstatedir}/php/pear
 
 
