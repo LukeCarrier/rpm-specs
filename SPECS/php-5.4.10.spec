@@ -677,6 +677,7 @@ do
 done
 mkdir -p "$RPM_BUILD_ROOT/%{_sysconfdir}/php"
 cp php.ini-production "$RPM_BUILD_ROOT/%{_sysconfdir}/php/php.ini"
+mv "$RPM_BUILD_ROOT/%{_sysconfdir}/pear.conf" "$RPM_BUILD_ROOT/%{_sysconfdir}/php/pear.conf"
 
 # Embedded build
 %if %{with_embedded}
@@ -694,7 +695,7 @@ fi
 make -C build-fpm install-fpm INSTALL_ROOT=$RPM_BUILD_ROOT
 [ ! -d "$RPM_BUILD_ROOT/%{_initddir}" ] && mkdir -p "$RPM_BUILD_ROOT/%{_initddir}"
 cp "%{SOURCE1}" "$RPM_BUILD_ROOT/%{_initddir}/php-fpm"
-rm -f "$RPM_BUILD_ROOT/%{_sysconfdir}/php/php-fpm.conf.default"
+rm -f "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf.default"
 cp "%{SOURCE2}" "$RPM_BUILD_ROOT/%{_sysconfdir}/php/php-fpm.conf"
 %endif
 
