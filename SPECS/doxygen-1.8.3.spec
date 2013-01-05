@@ -1,5 +1,5 @@
 Name:    doxygen
-Version: 1.7.6.1
+Version: 1.8.3
 Release: 1%{?dist}
 Summary: generate documentation from source code
 
@@ -66,9 +66,7 @@ rm -rf "$RPM_BUILD_ROOT/man"
 %files
 %defattr(-, root, root, -)
                            %{_bindir}/doxygen
-                           %{_bindir}/doxytag
                            %{_mandir}/man1/doxygen.1.gz
-                           %{_mandir}/man1/doxytag.1.gz
 
 
 %files wizard
