@@ -609,9 +609,11 @@ without_shared="--disable-ftp \
 
 # CGI build
 pushd build-cgi
+export PEAR_CONFIG_SYSCONFDIR="%{_sysconfdir}/php"
 build_tree \
   $with_shared \
   --with-pear=%{_sharedstatedir}/php/pear
+unset PEAR_CONFIG_SYSCONFDIR
 popd
 
 # Embdedded build
