@@ -1,5 +1,5 @@
 Name:    php
-Version: 5.4.13
+Version: 5.5.0
 Release: 1%{?dist}
 Summary: hypertext preprocessor: CLI utilities
 
@@ -9,14 +9,20 @@ URL:       http://php.net
 Source0:   http://php.net/distributions/php-%{version}.tar.gz
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-BuildRequires: bzip2-devel, curl-devel, freetype-devel, gcc, gd-devel, gmp-devel, httpd-devel, krb5-devel, libicu-devel, libjpeg-devel, libmcrypt-devel, libtool-ltdl-devel, libxml2-devel, libxslt-devel, libXpm-devel, make, mysql-devel, net-snmp, net-snmp-devel, net-snmp-utils, openssl-devel, pcre-devel, postgresql-devel sqlite-devel, t1lib-devel, zlib-devel
+BuildRequires: bzip2-devel, curl-devel, freetype-devel, gcc, gd-devel
+BuildRequires: gmp-devel, httpd-devel, krb5-devel, libicu-devel
+BuildRequires: libjpeg-devel, libmcrypt-devel, libtool-ltdl-devel
+BuildRequires: libxml2-devel, libxslt-devel, libXpm-devel, make, mysql-devel
+BuildRequires: net-snmp, net-snmp-devel, net-snmp-utils, openssl-devel
+BuildRequires: pcre-devel, postgresql-devel sqlite-devel, t1lib-devel
+BuildRequires: zlib-devel
 
 # Extras for different SAPIs
 Source1: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpmsysvinit.sh
 Source2: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpm.conf
 
 # Version constants for extensions
-%global api_ver  20100525
+%global api_ver 20121212
 
 # Which SAPIs should be built?
 #   The CGI SAPI cannot be disabled, since it's required for all shared
@@ -25,6 +31,12 @@ Source2: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpm.conf
 %global with_fpm      1
 %global with_httpd    1
 %global with_zts      1
+
+# Run test suite?
+#   The PHP test suite requires user input (for report sending). If you're
+#   unable to deal with these prompts, disable this. I'll patch the test
+#   harness when I get chance; promise.
+%global run_tests 1
 
 
 %description
@@ -206,6 +218,15 @@ Group:    Development/Languages
 
 %description pdo-mysql
 PHP is a widely-used general-purpose scripting language that is especially suited for web development and can be embedded into HTML. The MySQL PDO extension enables connecting to MySQL databases via the PDO library.
+
+
+%package opcache
+Summary:  hypertext preprocessor - opcache extension
+Requires: php
+Group:    Development/Languages
+
+%description opcache
+PHP is a widely-used general-purpose scripting language that is especially suited for web development and can be embedded into HTML. This extension provides an opcode cache.
 
 
 %package pdo-sqlite
@@ -417,6 +438,15 @@ Group:    Development/Languages
 PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This extension provides functionality for accessing MySQL databases using object-oriented code.
 
 
+%package zts-opcache
+Summary:  hypertext preprocessor - opcache extension
+Requires: php
+Group:    Development/Languages
+
+%description zts-opcache
+PHP is a widely-used general-purpose scripting language that is especially suited for web development and can be embedded into HTML. This extension provides an opcode cache.
+
+
 %package zts-openssl
 Summary:  hypertext preprocessor - thread-safe OpenSSL encryption extension
 Requires: openssl, php
@@ -572,9 +602,10 @@ export PHP_MYSQLND_ENABLED=yes # Cannot load module 'mysql' because required
 #   Any shared libraries that're to be built only as part of the CGI compilation
 #   should be listed here.
 with_shared="--enable-bcmath=shared \
-			 --enable-ftp=shared \
-			 --enable-intl=shared \
+             --enable-ftp=shared \
+             --enable-intl=shared \
              --enable-mbstring=shared \
+             --enable-opcache=shared \
              --enable-pdo=shared \
              --enable-soap=shared \
              --enable-zip=shared \
@@ -725,6 +756,18 @@ mkdir _list
 generate_file_list "/usr/lib64/php" ".*\.\(css\|depdb\|depdblock\|dtd\|filemap\|html\|lock\|php\|phpt\|pkg\|reg\|sh\|spec\|txt\|xml\)" | grep -vP "^%{_libdir}/php/doc" > _list/pear
 
 
+%check
+%if %{run_tests}
+    for b in cgi embedded fpm httpd zts; do
+        if [ "$b" = "embedded" ] || [ "%{with_$b}" = "1" ]; then
+            pushd "build-$b"
+            make test
+            popd
+        fi
+    done
+%endif
+
+
 %clean
 rm -rf "$RPM_BUILD_ROOT"
 
@@ -821,6 +864,11 @@ rm -rf "$RPM_BUILD_ROOT"
 %files mysqli
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/mysqli.*
+
+
+%files opcache
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-non-zts-%{api_ver}/opcache.*
 
 
 %files openssl
@@ -948,6 +996,11 @@ rm -rf "$RPM_BUILD_ROOT"
 %files zts-mysqli
 %defattr(-, root, root, -)
                            %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/mysqli.*
+
+
+%files zts-opcache
+%defattr(-, root, root, -)
+                           %{_libdir}/php/extensions/no-debug-zts-%{api_ver}/opcache.*
 
 
 %files zts-openssl
