@@ -1,5 +1,5 @@
 Name:    php
-Version: 5.5.0
+Version: 5.5.1
 Release: 1%{?dist}
 Summary: hypertext preprocessor: CLI utilities
 
@@ -281,7 +281,7 @@ PHP is a widely used general-purpose scripting language that is especially suite
 
 %package soap
 Summary:  hypertext preprocessor - SOAP extension
-Requires: libxml, php
+Requires: libxml2, php
 Group:    Development/Languages
 
 
@@ -779,9 +779,10 @@ rm -rf "$RPM_BUILD_ROOT"
                            %{_bindir}/php-config
                            %{_bindir}/phpize
                            %{_sysconfdir}/php/php.ini
-                           %{_mandir}/man1/php.1*
-                           %{_mandir}/man1/php-config.1*
-                           %{_mandir}/man1/phpize.1*
+                           %{_mandir}/man1/php.*
+                           %{_mandir}/man1/php-cgi.*
+                           %{_mandir}/man1/php-config.*
+                           %{_mandir}/man1/phpize.*
 %exclude                   /_list
 
 
@@ -820,7 +821,7 @@ rm -rf "$RPM_BUILD_ROOT"
 %attr(755, -, -)           %{_initddir}/php-fpm
                            %{_datadir}/fpm/status.html
                            %{_sysconfdir}/php/php-fpm.conf
-                           %{_mandir}/man8/php-fpm.8*
+                           %{_mandir}/man8/php-fpm.*
 %endif
 
 
@@ -905,6 +906,7 @@ rm -rf "$RPM_BUILD_ROOT"
 %defattr(-, root, root, -)
                            %{_bindir}/phar
                            %{_bindir}/phar.phar
+                           %{_mandir}/man1/phar.*
 
 
 %files pgsql
