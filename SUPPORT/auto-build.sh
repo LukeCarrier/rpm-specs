@@ -83,10 +83,12 @@ echo " "
 echo "Attempting to download source code to the SOURCES directory relative to the"
 echo "specified spec file."
 echo " "
-echo "$source_packages" | while read url
-do
-    wget --continue --directory="$(dirname $0)/../SOURCES" --no-check-certificate --progress=dot "$url"
-done
+if [ "x${source_packages}" != "x" ]; then
+    echo "$source_packages" | while read url
+    do
+        wget --continue --directory="$(dirname $0)/../SOURCES" --no-check-certificate --progress=dot "$url"
+    done
+fi
 echo " "
 
 echo "Running rpmbuild to generate the SRPM and RPM, since we managed to get all"
