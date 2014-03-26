@@ -1,5 +1,5 @@
 Name:    doxygen
-Version: 1.8.3
+Version: 1.8.6
 Release: 1%{?dist}
 Summary: generate documentation from source code
 
@@ -41,15 +41,11 @@ fi
 PATH=$PATH:$QTDIR/bin
 
 ./configure \
-    '--prefix' \
-    '/usr' \
-    '--shared' \
-    '--release' \
-    '--with-doxywizard'
+    --prefix /usr \
+    --shared \
+    --release \
+    --with-doxywizard
 
-# Fixes for doxywizard not honouring the install root
-sed -i -e 's%$(MAKE) MAN1DIR=$(MAN1DIR) -C addon/doxywizard install%$(MAKE) MAN1DIR=$(MAN1DIR) DESTDIR=$(DESTDIR) -C addon/doxywizard install%' Makefile
-sed -i -e 's%$(INSTALL)%$(DESTDIR)/$(INSTALL)%' addon/doxywizard/Makefile
 make %{?_smp_mflags}
 
 
@@ -73,5 +69,7 @@ rm -rf "$RPM_BUILD_ROOT/man"
 %defattr(-, root, root, -)
                            %{_bindir}/doxywizard
                            %{_mandir}/man1/doxywizard.1.gz
+
+
 %changelog
 
