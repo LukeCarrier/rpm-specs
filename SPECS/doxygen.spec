@@ -15,11 +15,22 @@ BuildRequires: bison, flex, gcc, gcc-c++, make, perl
 Doxygen is a documentation system for C++, C, Java, Objective-C, Python, IDL (Corba and Microsoft flavors), Fortran, VHDL, PHP, C#, and to some extent D.
 
 
+%package search
+Summary: Search engine and indexer for Doxygen-generated documentation.
+
+BuildRequires: xapian-core-devel
+Requires:      xapian-core
+
+
 %package wizard
 Summary: GUI configuration editor for Doxygen.
 
 BuildRequires: qt-devel
 Requires:      qt
+
+
+%description search
+Doxygen is a documentation system for C++, C, Java, Objective-C, Python, IDL (Corba and Microsoft flavors), Fortran, VHDL, PHP, C#, and to some extent D. This package provides a search engine and indexing utility for searching Doxygen-generated documentation.
 
 
 %description wizard
@@ -44,6 +55,7 @@ PATH=$PATH:$QTDIR/bin
     --prefix /usr \
     --shared \
     --release \
+    --with-doxysearch \
     --with-doxywizard
 
 make %{?_smp_mflags}
@@ -63,6 +75,14 @@ rm -rf "$RPM_BUILD_ROOT/man"
 %defattr(-, root, root, -)
                            %{_bindir}/doxygen
                            %{_mandir}/man1/doxygen.1.gz
+
+
+%files search
+%defattr(-, root, root, -)
+                           %{_bindir}/doxyindexer
+                           %{_bindir}/doxysearch.cgi
+                           %{_mandir}/man1/doxyindexer.1.gz
+                           %{_mandir}/man1/doxysearch.1.gz
 
 
 %files wizard
