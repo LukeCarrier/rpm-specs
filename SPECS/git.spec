@@ -35,7 +35,8 @@ make install install-doc install-html DESTDIR="$RPM_BUILD_ROOT"
 %defattr(-, root, root, -)
                            %{_bindir}/*
                            /usr/lib/python2.6/site-packages/git_remote_helpers*
-                           /usr/lib64/perl5
+%doc                       %{_libdir}/perl5/auto/Git
+%exclude                   %{_libdir}/perl5/perllocal.pod
                            %{_libexecdir}/git-core
 %doc                       %{_defaultdocdir}/git
                            %{_mandir}
