@@ -1,5 +1,5 @@
 Name:    apache-maven
-Version: 3.1.1
+Version: 3.2.1
 Release: 1%{?dist}
 Summary: Java build management tool
 
