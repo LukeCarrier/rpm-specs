@@ -1,5 +1,5 @@
-Name:    powerdns-authoritative	
 Version: 3.1.0
+Name:    powerdns-authoritative
 Release: 1%{?dist}
 Summary: The complete high-performance resolving solution.
 
