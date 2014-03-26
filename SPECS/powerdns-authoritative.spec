@@ -1,12 +1,12 @@
-Version: 3.1.0
 Name:    powerdns-authoritative
+Version: 3.3.1
 Release: 1%{?dist}
 Summary: The complete high-performance resolving solution.
 
 Group:     Applications/Internet
 License:   GPLv2
 URL:       http://powerdns.com/
-Source0:   http://downloads.powerdns.com/releases/pdns-3.1.tar.gz
+Source0:   http://downloads.powerdns.com/releases/pdns-%{version}.tar.gz
 Source1:   http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/powerdns-authoritative-sysvinit.sh
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
