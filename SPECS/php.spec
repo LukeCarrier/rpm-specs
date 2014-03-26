@@ -1,5 +1,5 @@
 Name:    php
-Version: 5.5.4
+Version: 5.5.10
 Release: 1%{?dist}
 Summary: hypertext preprocessor: CLI utilities
 
