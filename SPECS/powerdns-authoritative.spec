@@ -4,7 +4,7 @@ Release: 1%{?dist}
 Summary: The complete high-performance resolving solution.
 
 Group:     Applications/Internet
-License:   I don't bloody know
+License:   GPLv2
 URL:       http://powerdns.com/
 Source0:   http://downloads.powerdns.com/releases/pdns-3.1.tar.gz
 Source1:   http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/powerdns-authoritative-sysvinit.sh
