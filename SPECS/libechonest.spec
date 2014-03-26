@@ -65,5 +65,6 @@ test "$(pkg-config --modversion libechonest)" = "%{version}"
 %{_libdir}/libechonest.so
 %{_libdir}/pkgconfig/libechonest.pc
 
+
 %changelog
 
