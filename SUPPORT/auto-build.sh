@@ -57,10 +57,21 @@ get_and_interpolate_meta_value() {
 
 echo " "
 
-[ ! -f "$1" ] && echo "$0: the first parameter should be the path to an RPM spec file" >&2 && exit 64
+# Parse our arguments
+eval set -- "$(getopt -o "Ds:" --long "no-dependencies:,spec:" -- "$@")"
+while true; do
+    case "$1" in
+        -D|--no-dependencies) NO_DEPENDENCIES=1 ; shift 1 ;;
+        -s|--spec           ) SPEC="$2"         ; shift 2 ;;
+        *                   ) break ;;
+    esac
+done
 
-build_dependencies="$(get_meta_value $1 'BuildRequires' 'version' 'Version')"
-source_packages="$(get_and_interpolate_meta_value $1 'Source[0-9]*' 'version' 'Version')"
+# Make sure they're sane
+[ -z "$SPEC" ] && echo "You must specify a --spec!" && exit 64
+
+build_dependencies="$(get_meta_value $SPEC 'BuildRequires' 'version' 'Version')"
+source_packages="$(get_and_interpolate_meta_value $SPEC 'Source[0-9]*' 'version' 'Version')"
 
 echo "Build dependencies"
 echo "------------------"
@@ -74,25 +85,33 @@ echo " "
 echo "$source_packages"
 echo " "
 
-echo "Attempting to install packages; you'll either need sudo with no password"
-echo "enabled for this user ($USER) or its password to enter at the prompt."
-echo " "
-sudo yum -y install rpm-build wget $(echo "$build_dependencies" | sed 's/, / /g')
-echo " "
+if [ "$NO_DEPENDENCIES" == "1" ]; then
+    echo "Skipping downloading and installing dependencies. If the build fails,"
+    echo "it's likely because you're missing some."
+else
+    echo "Attempting to install packages; you'll either need sudo with no"
+    echo "password enabled for this user ($USER) or its password to enter at"
+    echo "the prompt."
+    echo " "
+    echo "If you know the dependencies are installed, you can use -D (or"
+    echo "--no-dependencies to skip this."
+    echo " "
+    sudo yum -y install rpm-build wget $(echo "$build_dependencies" | sed 's/, / /g')
+    echo " "
 
-echo "Attempting to download source code to the SOURCES directory relative to the"
-echo "specified spec file."
-echo " "
-if [ "x${source_packages}" != "x" ]; then
-    echo "$source_packages" | while read url
-    do
-        wget --continue --directory="$(dirname $0)/../SOURCES" --no-check-certificate --progress=dot "$url"
-    done
+    echo "Attempting to download source code to the SOURCES directory relative to the"
+    echo "specified spec file."
+    echo " "
+    if [ "x${source_packages}" != "x" ]; then
+        echo "$source_packages" | while read url
+        do
+            wget --continue --directory="$(dirname $0)/../SOURCES" --no-check-certificate --progress=dot "$url"
+        done
+    fi
 fi
 echo " "
 
-echo "Running rpmbuild to generate the SRPM and RPM, since we managed to get all"
-echo "necessary dependencies."
+echo "Running rpmbuild to generate the SRPM and RPM."
 echo " "
-rpmbuild --define "_topdir $rootdir" -ba "$(pwd)/$1"
+rpmbuild --define "_topdir $rootdir" -ba "$(pwd)/$SPEC"
 echo " "
