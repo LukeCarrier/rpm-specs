@@ -48,7 +48,13 @@ To have dependency packages and source code managed for you (easier) when you
 want to generate an RPM from a spec file, you'll want to do something like:
 
     cd ~/rpmbuild
-    SUPPORT/auto-build.sh SPECS/some-package-version.spec
+    SUPPORT/auto-build.sh -s SPECS/some-package-version.spec
+
+If you're utilising public transport or have a crappy ISP, you can skip fetching
+dependencies on every build like so:
+
+    cd ~/rpmbuild
+    SUPPORT/auto-build.sh -D -s SPECS/some-package-version.spec
 
 Alternatively, if you'd rather manage dependencies and sources yourself, the
 recommended method is something like:
