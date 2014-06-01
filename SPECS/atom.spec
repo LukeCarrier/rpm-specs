@@ -1,6 +1,6 @@
 Name:    atom
 Summary: A hackable text editor for the 21st century.
-Version: 0.99.0
+Version: 0.100.0
 Release: 1%{?dist}
 
 Group:   Development/Editors
