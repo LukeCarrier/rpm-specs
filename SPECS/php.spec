@@ -1,6 +1,6 @@
 Name:    php
 Version: 5.5.13
-Release: 2%{?dist}
+Release: 3%{?dist}
 Summary: hypertext preprocessor: CLI utilities
 
 Group:     Development/Languages
@@ -584,7 +584,7 @@ build_tree() {
 
     %configure \
       --srcdir=.. \
-      --libdir=%{_libdir} \
+      --libdir=%{_libdir}/php \
       --cache-file=../config.cache \
       --disable-rpath \
       --with-config-file-path=%{_sysconfdir}/php/php.ini \
