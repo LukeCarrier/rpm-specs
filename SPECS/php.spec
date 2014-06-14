@@ -1,6 +1,6 @@
 Name:    php
 Version: 5.5.13
-Release: 1%{?dist}
+Release: 2%{?dist}
 Summary: hypertext preprocessor: CLI utilities
 
 Group:     Development/Languages
@@ -584,6 +584,7 @@ build_tree() {
 
     %configure \
       --srcdir=.. \
+      --libdir=%{_libdir} \
       --cache-file=../config.cache \
       --disable-rpath \
       --with-config-file-path=%{_sysconfdir}/php/php.ini \
@@ -745,11 +746,6 @@ make -C build-zts install-modules INSTALL_ROOT=$RPM_BUILD_ROOT
 
 # The build directories are no longer necessary
 cd "$RPM_BUILD_ROOT"
-
-# Extensions and build files shouldn't clutter the libdir
-[ ! -d "$RPM_BUILD_ROOT/%{_libdir}/php" ] && mkdir "$RPM_BUILD_ROOT/%{_libdir}/php"
-[ -d "$RPM_BUILD_ROOT/%{_libdir}/extensions" ] && mv "$RPM_BUILD_ROOT/%{_libdir}/extensions" "$RPM_BUILD_ROOT/%{_libdir}/php"
-mv "$RPM_BUILD_ROOT/%{_libdir}/build" "$RPM_BUILD_ROOT/%{_libdir}/php/build"
 
 # Build file lists
 mkdir _list
