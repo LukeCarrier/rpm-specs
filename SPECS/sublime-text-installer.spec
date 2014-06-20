@@ -6,13 +6,15 @@
 Name:    sublime-text-installer
 Summary: Installer for Sublime Text 3.
 Version: 3.3059
-Release: 1%{?dist}
+Release: 2%{?dist}
 
 Group:   Development/Editors
 License: Proprietary
 URL:     http://sublimetext.com/3
 
+Requires:      curl
 BuildRequires: bzip2 tar
+
 BuildRoot:     %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 
@@ -61,7 +63,7 @@ BuildRoot:     %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 	cd $TEMPDIR
 
 	# Download application tarball, install to /opt
-	wget --progress=dot -O sublime-text.tar.bz2 \
+	curl -o sublime-text.tar.bz2 \
 	     "http://c758482.r82.cf2.rackcdn.com/sublime_text_%{sublime_text_version}_build_%{sublime_text_build}_${ARCH}.tar.bz2"
 	tar -xjf sublime-text.tar.bz2
 	mv "sublime_text_%{sublime_text_version}" "%{sublime_text_target}"
