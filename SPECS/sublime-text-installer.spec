@@ -6,7 +6,7 @@
 Name:    sublime-text-installer
 Summary: Installer for Sublime Text 3.
 Version: 3.3059
-Release: 2%{?dist}
+Release: 3%{?dist}
 
 Group:   Development/Editors
 License: Proprietary
@@ -73,12 +73,12 @@ BuildRoot:     %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 	rm -rf $TEMPDIR
 
 	# Add shortcuts
-	ln -s "%{sublime_text_target}/sublime_text"         "/usr/local/bin/subl"
-	ln -s "%{sublime_text_target}/sublime_text.desktop" "%{sublime_text_desktop}"
+	ln -sf "%{sublime_text_target}/sublime_text"         "/usr/local/bin/subl"
+	ln -sf "%{sublime_text_target}/sublime_text.desktop" "%{sublime_text_desktop}"
 
 	# Add icon shortcuts
 	for resolution in 16 32 48 128 256; do
-		ln -s "%{sublime_text_target}/Icon/${resolution}x${resolution}/sublime-text.png" \
+		ln -sf "%{sublime_text_target}/Icon/${resolution}x${resolution}/sublime-text.png" \
 		      "/usr/share/icons/hicolor/${resolution}x${resolution}/apps/sublime-text.png"
 	done
 	gtk-update-icon-cache -f /usr/share/icons/hicolor >/dev/null
