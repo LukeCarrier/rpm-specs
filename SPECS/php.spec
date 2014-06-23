@@ -9,8 +9,8 @@ URL:       http://php.net
 Source0:   http://php.net/distributions/php-%{version}.tar.gz
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-BuildRequires: bzip2-devel, curl-devel, freetype-devel, gcc, gd-devel
-BuildRequires: gmp-devel, httpd-devel, krb5-devel, libicu-devel
+BuildRequires: bzip2-devel, curl-devel, freetype-devel, gcc, gcc-c++
+BuildRequires: gd-devel, gmp-devel, httpd-devel, krb5-devel, libicu-devel
 BuildRequires: libjpeg-devel, libmcrypt-devel, libtool-ltdl-devel
 BuildRequires: libxml2-devel, libxslt-devel, libXpm-devel, make, mysql-devel
 BuildRequires: net-snmp, net-snmp-devel, net-snmp-utils, openssl-devel
