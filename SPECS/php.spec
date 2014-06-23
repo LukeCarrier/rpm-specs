@@ -631,13 +631,16 @@ with_shared="--enable-bcmath=shared \
 # No shared libraries
 #   Any shared libraries handled by the CGI build should be excluded here to
 #   reduce compile-time.
-without_shared="--disable-ftp \
+without_shared="--disable-bcmath \
+                --disable-ftp \
+                --disable-intl \
+                --disable-mbstring \
+                --disable-opcache \
                 --disable-pdo \
-                --without-bz2 \
-                --without-openssl \
-                --without-pdo-sqlite \
-                --without-sqlite \
-                --without-sqlite3"
+                --disable-soap \
+                --xmlrpc \
+                --without-xsl \
+                --without-zlib"
 
 # CGI build
 pushd build-cgi
