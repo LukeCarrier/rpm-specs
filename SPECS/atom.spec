@@ -1,6 +1,6 @@
 Name:    atom
 Summary: A hackable text editor for the 21st century.
-Version: 0.104.0
+Version: 0.115.0
 Release: 1%{?dist}
 
 Group:   Development/Editors
@@ -23,6 +23,7 @@ BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 # Don't try to extract debuginfo from built packages
 %global debug_package %{nil}
+%global desktop_file  /opt/atom/share/applications/Atom.desktop
 
 # Attempts to guess dependencies will likely also fail
 AutoReqProv: no
@@ -57,22 +58,32 @@ export INSTALL_PREFIX=%{buildroot}/opt/atom
 # -d switch enables debugging output, -v enables verbose output
 script/grunt -dv --build-dir=$PWD/build-rpm install
 
+# Handle the desktop file (launcher)
+sed -i "s@%{buildroot}@@g" %{buildroot}%{desktop_file}
+mkdir -p %{buildroot}%{_datarootdir}/applications
+ln -sf %{desktop_file} %{buildroot}%{_datarootdir}/applications/atom.desktop
+
+# Link the binaries
+mkdir -p %{buildroot}%{_bindir}
+for binary in atom apm; do
+    ln -sf /opt/atom/bin/$binary %{buildroot}%{_bindir}/$binary
+done
+
 
 %clean
 rm -rf %{buildroot}
 
 
 %post
-for binary in atom apm; do
-    ln -sf /opt/atom/bin/$binary %{_bindir}/$binary
-done
+xdg-desktop-menu forceupdate
 
 
 %postun
-for binary in atom apm; do
-    rm -f %{_bindir}/$binary
-done
+xdg-desktop-menu forceupdate
+
 
 %files
 %defattr(-, root, root, -)
                            /opt/atom
+                           %{_bindir}
+                           %{_datarootdir}/applications/atom.desktop
