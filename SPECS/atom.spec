@@ -52,14 +52,14 @@ script/build --build-dir=$PWD/build-rpm
 %install
 # The install task honours the INSTALL_PREFIX environment variable, so specify
 # it for easier packaging.
-export INSTALL_PREFIX=$RPM_BUILD_ROOT/opt/atom
+export INSTALL_PREFIX=%{buildroot}/opt/atom
 
 # -d switch enables debugging output, -v enables verbose output
 script/grunt -dv --build-dir=$PWD/build-rpm install
 
 
 %clean
-    rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 
 %post
