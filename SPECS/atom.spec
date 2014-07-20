@@ -85,5 +85,5 @@ xdg-desktop-menu forceupdate
 %files
 %defattr(-, root, root, -)
                            /opt/atom
-                           %{_bindir}
-                           %{_datarootdir}/applications/atom.desktop
+                           %{_bindir}/*
+                           %{_datarootdir}/applications/*
