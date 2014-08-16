@@ -1,6 +1,6 @@
 Name:    atom
 Summary: A hackable text editor for the 21st century.
-Version: 0.115.0
+Version: 0.123.0
 Release: 1%{?dist}
 
 Group:   Development/Editors
@@ -16,8 +16,7 @@ Source0: https://github.com/atom/atom/archive/v%{version}.tar.gz
 # This build has been confirmed to run flawlessly on NodeJS 0.10.28 installed
 # via NVM. node-gyp can fail to build if your system has the gyp RPM installed,
 # so remove that first.
-BuildRequires: libgnome-keyring-devel
-Requires:      google-chrome-stable
+BuildRequires: gcc-c++ libgnome-keyring-devel
 
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
