@@ -638,7 +638,7 @@ without_shared="--disable-bcmath \
                 --disable-opcache \
                 --disable-pdo \
                 --disable-soap \
-                --xmlrpc \
+                --without-xmlrpc \
                 --without-xsl \
                 --without-zlib"
 
