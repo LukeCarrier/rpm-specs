@@ -1,6 +1,6 @@
 Name:    php
-Version: 5.5.16
-Release: 3%{?dist}
+Version: 5.6.0
+Release: 1%{?dist}
 Summary: hypertext preprocessor: CLI utilities
 
 Group:     Development/Languages
@@ -22,7 +22,7 @@ Source1: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpmsysvi
 Source2: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpm.conf
 
 # Version constants for extensions
-%global api_ver 20121212
+%global api_ver 20131226
 
 # Which SAPIs should be built?
 #   The CGI SAPI cannot be disabled, since it's required for all shared
@@ -638,7 +638,7 @@ without_shared="--disable-bcmath \
                 --disable-opcache \
                 --disable-pdo \
                 --disable-soap \
-                --without-xmlrpc \
+                --xmlrpc \
                 --without-xsl \
                 --without-zlib"
 
