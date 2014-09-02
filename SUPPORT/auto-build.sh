@@ -58,17 +58,61 @@ get_and_interpolate_meta_value() {
 echo " "
 
 # Parse our arguments
-eval set -- "$(getopt -o "Ds:" --long "no-dependencies:,spec:" -- "$@")"
+eval set -- "$(getopt -o "m:r:s:D" --long "mock:,remote-build:,spec:,no-dependencies" -- "$@")"
 while true; do
     case "$1" in
-        -D|--no-dependencies) NO_DEPENDENCIES=1 ; shift 1 ;;
-        -s|--spec           ) SPEC="$2"         ; shift 2 ;;
-        *                   ) break ;;
+        -D|--no-dependencies ) NO_DEPENDENCIES=1     ; shift 1 ;;
+        -m|--mock            ) MOCK_ENVIRONMENT="$2" ; shift 2 ;;
+        -r|--remote-builder  ) REMOTE_BUILDER="$2"   ; shift 2 ;;
+        -s|--spec            ) SPEC="$2"             ; shift 2 ;;
+        *                    ) break                 ;         ;;
     esac
 done
 
+echo "$NO_DEPENDENCIES|$MOCK_ENVIRONMENT|$REMOTE_BUILDER|$SPEC"
+
 # Make sure they're sane
 [ -z "$SPEC" ] && echo "You must specify a --spec!" && exit 64
+
+# Extract metadata
+SPEC_DIST=$(rpm --eval '%{dist}')
+SPEC_NAME=$(get_meta_value "$SPEC" "Name")
+SPEC_RELEASE=$(get_meta_value "$SPEC" "Release" | grep -o "^[^%]")
+SPEC_VERSION=$(get_meta_value "$SPEC" "Version")
+
+# Print generic information
+echo "Build information"
+echo "-----------------"
+echo " "
+echo "Distribution: ${SPEC_DIST}"
+echo "Package:      ${SPEC_NAME}"
+echo "Version:      ${SPEC_VERSION}"
+echo " "
+
+# Handle a remote build
+if [ -n "$REMOTE_BUILDER" ]; then
+    echo "Remote build preparation"
+    echo "------------------------"
+    echo " "
+    echo "Remote builds require the prior installation of rsync and wget and"
+    echo "installation and configuration of the Mock build system. If your"
+    echo "build fails, please ensure that your Mock build environment is"
+    echo "functioning correctly."
+    echo " "
+
+    echo "Copying files to the remote build host."
+    rsync -avrz --delete \
+          --exclude ".git" --exclude "repodata" --exclude "BUILD" \
+          --exclude "BUILDROOT" --exclude "RPMS" --exclude "SOURCES" \
+          --exclude "SRPMS" \
+          "$rootdir/" "$REMOTE_BUILDER:rpmbuild"
+
+    build_cmd="cd rpmbuild && ~/rpmbuild/SUPPORT/auto-build.sh --mock $MOCK_ENVIRONMENT --spec $SPEC"
+    echo "Starting build (with build command ${build_cmd})"
+    ssh -tt "$REMOTE_BUILDER" "$build_cmd"
+
+    exit
+fi
 
 build_dependencies="$(get_meta_value $SPEC 'BuildRequires' 'version' 'Version')"
 source_packages="$(get_and_interpolate_meta_value $SPEC 'Source[0-9]*' 'version' 'Version')"
@@ -85,9 +129,16 @@ echo " "
 echo "$source_packages"
 echo " "
 
+echo "Obtaining dependencies"
+echo "----------------------"
+echo " "
 if [ "$NO_DEPENDENCIES" == "1" ]; then
     echo "Skipping downloading and installing dependencies. If the build fails,"
     echo "it's likely because you're missing some."
+    echo " "
+elif [ -n "$MOCK_ENVIRONMENT" ]; then
+    echo "Skipping downloading dependencies, because mock will do it for us."
+    echo " "
 else
     echo "Attempting to install packages; you'll either need sudo with no"
     echo "password enabled for this user ($USER) or its password to enter at"
@@ -98,20 +149,48 @@ else
     echo " "
     sudo yum -y install rpm-build wget $(echo "$build_dependencies" | sed 's/, / /g')
     echo " "
+fi
+echo " "
 
+echo "Obtaining source"
+echo "----------------"
+if [ "$NO_DEPENDENCIES" = "1" ]; then
+    echo "Skipping obtaining source code. If the build fails, it's likely"
+    echo "because you're missing some."
+    echo " "
+else
     echo "Attempting to download source code to the SOURCES directory relative to the"
     echo "specified spec file."
     echo " "
     if [ "x${source_packages}" != "x" ]; then
         echo "$source_packages" | while read url
         do
-            wget --continue --directory="$(dirname $0)/../SOURCES" --no-check-certificate --progress=dot "$url"
+            wget --continue --directory="${rootdir}/SOURCES" --no-check-certificate \
+                 --progress=dot "$url"
         done
     fi
+    echo " "
 fi
-echo " "
 
-echo "Running rpmbuild to generate the SRPM and RPM."
+echo "Building"
+echo "--------"
 echo " "
-rpmbuild --define "_topdir $rootdir" -ba "$(pwd)/$SPEC"
-echo " "
+if [ -n "$MOCK_ENVIRONMENT" ]; then
+    echo "Running rpmbuild to generate the SRPM."
+    rpmbuild -bs "${rootdir}/${SPEC}"
+
+    echo "Running mock to generate the RPM. Whilst the build is in progress,"
+    echo "watch ${rootdir}/MOCK/*.log for status information."
+    srpm="${SPEC_NAME}-${SPEC_VERSION}-${SPEC_RELEASE}${SPEC_DIST}.src.rpm"
+    mock -r "$MOCK_ENVIRONMENT" init
+    mock -r "$MOCK_ENVIRONMENT" --chroot -- rm -rf /builddir/build
+    mock -r "$MOCK_ENVIRONMENT" --copyin "${rootdir}" /builddir/build
+    mock -r "$MOCK_ENVIRONMENT" --resultdir "${rootdir}/MOCK" \
+         --rebuild "${rootdir}/SRPMS/${srpm}"
+    mock -r "$MOCK_ENVIRONMENT" clean
+else
+    echo "Running rpmbuild to generate the SRPM and RPM."
+    echo " "
+    rpmbuild --define "_topdir ${rootdir}" -ba "${rootdir}/${SPEC}"
+    echo " "
+fi

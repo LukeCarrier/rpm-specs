@@ -4,3 +4,6 @@
 /RPMS/
 /SOURCES/
 /SRPMS/
+
+# Temporary files used by mock
+/MOCK/
