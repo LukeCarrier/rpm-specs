@@ -36,7 +36,7 @@ Source2: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpm.conf
 #   The PHP test suite requires user input (for report sending). If you're
 #   unable to deal with these prompts, disable this. I'll patch the test
 #   harness when I get chance; promise.
-%global run_tests 1
+%global run_tests 0
 
 
 %description
@@ -70,7 +70,7 @@ Group:    Development/Languages
 
 
 %description curl
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. libcurl is a free and easy-to-use client-side URL transfer library, supporting DICT, FILE, FTP, FTPS, Gopher, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, POP3, POP3S, RTMP, RTSP, SCP, SFTP, SMTP, SMTPS, Telnet and TFTP. libcurl supports SSL certificates, HTTP POST, HTTP PUT, FTP uploading, HTTP form based upload, proxies, cookies, user+password authentication (Basic, Digest, NTLM, Negotiate, Kerberos), file transfer resume, http proxy tunneling and more! 
+PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. libcurl is a free and easy-to-use client-side URL transfer library, supporting DICT, FILE, FTP, FTPS, Gopher, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, POP3, POP3S, RTMP, RTSP, SCP, SFTP, SMTP, SMTPS, Telnet and TFTP. libcurl supports SSL certificates, HTTP POST, HTTP PUT, FTP uploading, HTTP form based upload, proxies, cookies, user+password authentication (Basic, Digest, NTLM, Negotiate, Kerberos), file transfer resume, http proxy tunneling and more!
 
 
 %package devel
@@ -638,7 +638,7 @@ without_shared="--disable-bcmath \
                 --disable-opcache \
                 --disable-pdo \
                 --disable-soap \
-                --xmlrpc \
+                --disable-xmlrpc \
                 --without-xsl \
                 --without-zlib"
 
@@ -677,7 +677,7 @@ popd
 %if %{with_httpd}
 pushd build-httpd
 build_tree \
-  --with-apxs2=%{_sbindir}/apxs \
+  --with-apxs2=$(which apxs) \
   --without-pear \
   $without_shared
 popd
@@ -1067,4 +1067,3 @@ rm -rf "$RPM_BUILD_ROOT"
 
 
 %changelog
-
