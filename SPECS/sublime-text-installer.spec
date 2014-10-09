@@ -1,5 +1,5 @@
 %define sublime_text_version 3
-%define sublime_text_build   3059
+%define sublime_text_build   3064
 %define sublime_text_desktop /usr/share/applications/sublime_text.desktop
 %define sublime_text_target  /opt/sublime_text
 
