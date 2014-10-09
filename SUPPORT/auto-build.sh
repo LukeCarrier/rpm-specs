@@ -69,8 +69,6 @@ while true; do
     esac
 done
 
-echo "$NO_DEPENDENCIES|$MOCK_ENVIRONMENT|$REMOTE_BUILDER|$SPEC"
-
 # Make sure they're sane
 [ -z "$SPEC" ] && echo "You must specify a --spec!" && exit 64
 
