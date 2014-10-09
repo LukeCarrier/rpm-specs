@@ -5,7 +5,7 @@
 
 Name:    sublime-text-installer
 Summary: Installer for Sublime Text 3.
-Version: 3.3059
+Version: %{sublime_text_version}.%{sublime_text_build}
 Release: 3%{?dist}
 
 Group:   Development/Editors
