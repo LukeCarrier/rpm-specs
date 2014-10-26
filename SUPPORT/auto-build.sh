@@ -175,7 +175,7 @@ echo "--------"
 echo " "
 if [ -n "$MOCK_ENVIRONMENT" ]; then
     echo "Running rpmbuild to generate the SRPM."
-    rpmbuild -bs "${rootdir}/${SPEC}"
+    rpmbuild --define "_topdir ${rootdir}" -bs "${rootdir}/${SPEC}"
 
     echo "Running mock to generate the RPM. Whilst the build is in progress,"
     echo "watch ${rootdir}/MOCK/*.log for status information."
