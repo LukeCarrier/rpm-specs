@@ -143,7 +143,7 @@ else
     echo "the prompt."
     echo " "
     echo "If you know the dependencies are installed, you can use -D (or"
-    echo "--no-dependencies to skip this."
+    echo "--no-dependencies) to skip this."
     echo " "
     sudo yum -y install rpm-build wget $(echo "$build_dependencies" | sed 's/, / /g')
     echo " "
