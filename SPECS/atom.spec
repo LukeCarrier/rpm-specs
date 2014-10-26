@@ -1,6 +1,6 @@
 Name:    atom
 Summary: A hackable text editor for the 21st century.
-Version: 0.126.0
+Version: 0.139.0
 Release: 1%{?dist}
 
 Group:   Development/Editors
@@ -22,7 +22,7 @@ BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 # Don't try to extract debuginfo from built packages
 %global debug_package %{nil}
-%global desktop_file  /opt/atom/share/applications/Atom.desktop
+%global desktop_file  /opt/atom/share/applications/atom.desktop
 
 # Attempts to guess dependencies will likely also fail
 AutoReqProv: no
