@@ -30,29 +30,11 @@ rootdir="$(readlink -fn "$(dirname "$0")/..")"
 # @return The raw value, complete with newlines (or not), according to the
 #         formatting of the spec file.
 get_meta_value() {
-    raw=$(grep -P "^$2:" "$1")
+    raw=$(rpmspec -P "$1" | grep -P "^$2:")
     echo "$raw" | while read line
     do
         echo ${line#*:}
     done
-}
-
-# Expand %{} tags to values.
-#
-# Interpolation is difficult with Bash, so to keep it simple you'll need to call
-# specific methods to handle replacements.
-#
-# @uses get_meta_value
-# @uses sed
-# @param $1 The path to the spec file we're fiddling with.
-# @param $2 The value to perform the replacement on.
-# @param $3 The tag to interpolate.
-# @param $4 The tag's capitalised form, as in its definition.
-# @return The value with the interpolation complete.
-get_and_interpolate_meta_value() {
-    raw=$(get_meta_value "$1" "$2")
-    tag=$(get_meta_value "$1" "$4")
-    echo "$raw" | sed "s/%{$3}/$tag/g"
 }
 
 echo " "
@@ -113,7 +95,7 @@ if [ -n "$REMOTE_BUILDER" ]; then
 fi
 
 build_dependencies="$(get_meta_value $SPEC 'BuildRequires' 'version' 'Version')"
-source_packages="$(get_and_interpolate_meta_value $SPEC 'Source[0-9]*' 'version' 'Version')"
+source_packages="$(get_meta_value $SPEC 'Source[0-9]*')"
 
 echo "Build dependencies"
 echo "------------------"
