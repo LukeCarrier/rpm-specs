@@ -1,0 +1,21 @@
+#!/bin/sh
+# Launcher for the Selenium Server application
+
+JAVA="${JAVA:-/usr/bin/java}"
+XVFB_RUN="${XVFB_RUN:-xvfb-run}"
+
+JAR="/usr/share/java/selenium-server.jar"
+
+eval set -- "$(getopt -o "h" --long "headless" -- "$@")"
+while true; do
+    case "$1" in
+        -h|--headless ) HEADLESS=1 ; shift 1 ;;
+        *             ) break      ;         ;;
+    esac
+done
+
+if [ "$HEADLESS" = "1" ]; then
+    $($XVFB_RUN $JAVA -jar $JAR)
+else
+    $($JAVA -jar $JAR)
+fi
