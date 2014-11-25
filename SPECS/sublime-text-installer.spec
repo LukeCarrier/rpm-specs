@@ -17,7 +17,7 @@ URL:     http://sublimetext.com/3
 Requires:      curl
 BuildRequires: bzip2 tar
 
-BuildRoot:     %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
+BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
 
 %description
