@@ -1,6 +1,6 @@
 Name:    atom
 Summary: A hackable text editor for the 21st century.
-Version: 0.139.0
+Version: 0.152.0
 Release: 1%{?dist}
 
 Group:   Development/Editors
@@ -20,11 +20,15 @@ BuildRequires: gcc-c++ libgnome-keyring-devel
 
 BuildRoot: %(mktemp -ud %{_tmppath}/%{name}-%{version}-%{release}-XXXXXX)
 
-# Don't try to extract debuginfo from built packages
+# Don't try to extract debuginfo from built packages, as they're built on
+# another platform and the debuginfo doesn't make any sense anyway.
 %global debug_package %{nil}
 %global desktop_file  /opt/atom/share/applications/atom.desktop
 
-# Attempts to guess dependencies will likely also fail
+# Attempts to guess dependencies will result in missing dependencies on
+# libchromiumcontent.so, which isn't actually available in a base package,
+# so we'll just make the assumption that the user is aware of this and has
+# obtained it somehow.
 AutoReqProv: no
 
 
@@ -44,45 +48,45 @@ AutoReqProv: no
 
 
 %build
-# Set the build directory as per grunt.option('build-dir') in Gruntfile.coffee.
-# This prevents Atom from being built somewhere in /tmp.
-script/build --build-dir=$PWD/build-rpm
+    # Set the build directory as per grunt.option('build-dir') in Gruntfile.coffee.
+    # This prevents Atom from being built somewhere in /tmp.
+    script/build --build-dir=$PWD/build-rpm
 
 
 %install
-# The install task honours the INSTALL_PREFIX environment variable, so specify
-# it for easier packaging.
-export INSTALL_PREFIX=%{buildroot}/opt/atom
+    # The install task honours the INSTALL_PREFIX environment variable, so specify
+    # it for easier packaging.
+    export INSTALL_PREFIX=%{buildroot}/opt/atom
 
-# -d switch enables debugging output, -v enables verbose output
-script/grunt -dv --build-dir=$PWD/build-rpm install
+    # -d switch enables debugging output, -v enables verbose output
+    script/grunt -dv --build-dir=$PWD/build-rpm install
 
-# Handle the desktop file (launcher)
-sed -i "s@%{buildroot}@@g" %{buildroot}%{desktop_file}
-mkdir -p %{buildroot}%{_datarootdir}/applications
-ln -sf %{desktop_file} %{buildroot}%{_datarootdir}/applications/atom.desktop
+    # Handle the desktop file (launcher)
+    sed -i "s@%{buildroot}@@g" %{buildroot}%{desktop_file}
+    mkdir -p %{buildroot}%{_datarootdir}/applications
+    ln -sf %{desktop_file} %{buildroot}%{_datarootdir}/applications/atom.desktop
 
-# Link the binaries
-mkdir -p %{buildroot}%{_bindir}
-for binary in atom apm; do
-    ln -sf /opt/atom/bin/$binary %{buildroot}%{_bindir}/$binary
-done
+    # Link the binaries
+    mkdir -p %{buildroot}%{_bindir}
+    for binary in atom apm; do
+        ln -sf /opt/atom/bin/$binary %{buildroot}%{_bindir}/$binary
+    done
 
 
 %clean
-rm -rf %{buildroot}
+    rm -rf %{buildroot}
 
 
 %post
-xdg-desktop-menu forceupdate
+    xdg-desktop-menu forceupdate
 
 
 %postun
-xdg-desktop-menu forceupdate
+    xdg-desktop-menu forceupdate
 
 
 %files
-%defattr(-, root, root, -)
-                           /opt/atom
-                           %{_bindir}/*
-                           %{_datarootdir}/applications/*
+    %defattr(-, root, root, -)
+                               /opt/atom
+                               %{_bindir}/*
+                               %{_datarootdir}/applications/*
