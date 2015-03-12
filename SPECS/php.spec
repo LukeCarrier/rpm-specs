@@ -859,29 +859,29 @@ mv "$RPM_BUILD_ROOT/%{_sysconfdir}/pear.conf" "$RPM_BUILD_ROOT/%{_sysconfdir}/ph
 
 # FPM build
 %if %{with_fpm}
-	make -C build-fpm install-fpm INSTALL_ROOT=$RPM_BUILD_ROOT
+    make -C build-fpm install-fpm INSTALL_ROOT=$RPM_BUILD_ROOT
 
-	if [ ! -d "$RPM_BUILD_ROOT/%{_initddir}" ]; then
+    if [ ! -d "$RPM_BUILD_ROOT/%{_initddir}" ]; then
         mkdir -p "$RPM_BUILD_ROOT/%{_initddir}"
     fi
 
-	rm -f "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf.default"
+    rm -f "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf.default"
     cp "%{SOURCE2}" "$RPM_BUILD_ROOT/%{_initddir}/php-fpm"
-	cp "%{SOURCE3}" "$RPM_BUILD_ROOT/%{_sysconfdir}/php/php-fpm.conf"
+    cp "%{SOURCE3}" "$RPM_BUILD_ROOT/%{_sysconfdir}/php/php-fpm.conf"
 %endif
 
 # Apache HTTPd build
 %if %{with_httpd}
-	if [ ! -d "$RPM_BUILD_ROOT/%{_libdir}/httpd/modules" ]; then
+    if [ ! -d "$RPM_BUILD_ROOT/%{_libdir}/httpd/modules" ]; then
         mkdir -p "$RPM_BUILD_ROOT/%{_libdir}/httpd/modules"
     fi
-	install -m 755 build-httpd/libs/libphp5.so \
+    install -m 755 build-httpd/libs/libphp5.so \
             "$RPM_BUILD_ROOT/%{_libdir}/httpd/modules/mod_php5.so"
 %endif
 
 # ZTS build
 %if %{with_zts}
-	make -C build-zts install-modules INSTALL_ROOT=$RPM_BUILD_ROOT
+    make -C build-zts install-modules INSTALL_ROOT=$RPM_BUILD_ROOT
 %endif
 
 # The build directories are no longer necessary
