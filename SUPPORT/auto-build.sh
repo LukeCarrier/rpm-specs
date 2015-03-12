@@ -13,7 +13,17 @@ error_trap() {
     exit 69
 }
 
-trap error_trap 1 2 3 15 ERR
+# Disable error trapping.
+#
+# Don't forget to re-enable it!
+disable_error_trap() {
+    trap - 1 2 3 15 ERR
+}
+
+# (Re-)enable error trapping.
+enable_error_trap() {
+    trap error_trap 1 2 3 15 ERR
+}
 
 rootdir="$(readlink -fn "$(dirname "$0")/..")"
 
@@ -30,11 +40,17 @@ rootdir="$(readlink -fn "$(dirname "$0")/..")"
 # @return The raw value, complete with newlines (or not), according to the
 #         formatting of the spec file.
 get_meta_value() {
-    raw=$(rpmspec -P "$1" | grep -P "^$2:")
-    echo "$raw" | while read line
-    do
-        echo ${line#*:}
-    done
+    disable_error_trap
+    if hash rpmspec 2>/dev/null; then
+        raw=$(rpmspec -P "$1" | grep -P "^$2:")
+        echo "$raw" | while read line
+        do
+            echo ${line#*:}
+        done
+    else
+        echo 'WARNING: rpmspec is not available; running with reduced feature set' 1>&2
+    fi
+    enable_error_trap
 }
 
 echo " "
