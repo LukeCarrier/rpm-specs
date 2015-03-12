@@ -106,7 +106,12 @@ if [ -n "$REMOTE_BUILDER" ]; then
           --exclude "SOURCES" --exclude "SRPMS" \
           "$rootdir/" "$REMOTE_BUILDER:rpmbuild"
 
-    build_cmd="cd rpmbuild && ~/rpmbuild/SUPPORT/auto-build.sh --mock $MOCK_ENVIRONMENT --spec $SPEC"
+    if [ -n "$MOCK_ENVIRONMENT" ]; then
+        build_cmd="cd rpmbuild && ~/rpmbuild/SUPPORT/auto-build.sh --mock $MOCK_ENVIRONMENT --spec $SPEC"
+    else
+        build_cmd="cd rpmbuild && ~/rpmbuild/SUPPORT/auto-build.sh --spec $SPEC"
+    fi
+
     echo "Starting build (with build command ${build_cmd})"
     ssh -tt "$REMOTE_BUILDER" "$build_cmd"
 
