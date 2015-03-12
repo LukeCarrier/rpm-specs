@@ -102,8 +102,8 @@ if [ -n "$REMOTE_BUILDER" ]; then
     echo "Copying files to the remote build host."
     rsync -avrz --delete \
           --exclude ".git" --exclude "repodata" --exclude "BUILD" \
-          --exclude "BUILDROOT" --exclude "RPMS" --exclude "SOURCES" \
-          --exclude "SRPMS" \
+          --exclude "BUILDROOT" --exclude "MOCK" --exclude "RPMS" \
+          --exclude "SOURCES" --exclude "SRPMS" \
           "$rootdir/" "$REMOTE_BUILDER:rpmbuild"
 
     build_cmd="cd rpmbuild && ~/rpmbuild/SUPPORT/auto-build.sh --mock $MOCK_ENVIRONMENT --spec $SPEC"
