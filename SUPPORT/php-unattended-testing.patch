@@ -1,0 +1,11 @@
+--- run-tests.php.orig	2015-03-12 14:43:57.590942245 +0000
++++ run-tests.php	2015-03-12 14:44:22.236753116 +0000
+@@ -335,7 +335,7 @@
+ 		echo "Do you want to send this report now? [Yns]: ";
+ 		flush();
+ 
+-		$user_input = fgets($fp, 10);
++		$user_input = 's';
+ 		$just_save_results = (strtolower($user_input[0]) == 's');
+ 	}
+ 

@@ -17,9 +17,12 @@ BuildRequires: net-snmp, net-snmp-devel, net-snmp-utils, openssl-devel
 BuildRequires: pcre-devel, postgresql-devel sqlite-devel, t1lib-devel
 BuildRequires: zlib-devel
 
-# Extras for different SAPIs
-Source1: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpmsysvinit.sh
-Source2: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpm.conf
+# Core test suite patches
+Source1: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-unattended-testing.patch
+
+# SAPI configuration files
+Source2: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpmsysvinit.sh
+Source3: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpm.conf
 
 # Version constants for extensions
 %global api_ver 20131226
@@ -31,12 +34,6 @@ Source2: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpm.conf
 %global with_fpm      1
 %global with_httpd    1
 %global with_zts      1
-
-# Run test suite?
-#   The PHP test suite requires user input (for report sending). If you're
-#   unable to deal with these prompts, disable this. I'll patch the test
-#   harness when I get chance; promise.
-%global run_tests 0
 
 
 %description
@@ -729,11 +726,15 @@ fi
 
 # FPM build
 %if %{with_fpm}
-make -C build-fpm install-fpm INSTALL_ROOT=$RPM_BUILD_ROOT
-[ ! -d "$RPM_BUILD_ROOT/%{_initddir}" ] && mkdir -p "$RPM_BUILD_ROOT/%{_initddir}"
-cp "%{SOURCE1}" "$RPM_BUILD_ROOT/%{_initddir}/php-fpm"
-rm -f "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf.default"
-cp "%{SOURCE2}" "$RPM_BUILD_ROOT/%{_sysconfdir}/php/php-fpm.conf"
+	make -C build-fpm install-fpm INSTALL_ROOT=$RPM_BUILD_ROOT
+
+	if [ ! -d "$RPM_BUILD_ROOT/%{_initddir}" ]; then
+        mkdir -p "$RPM_BUILD_ROOT/%{_initddir}"
+    fi
+
+	rm -f "$RPM_BUILD_ROOT/%{_sysconfdir}/php-fpm.conf.default"
+    cp "%{SOURCE2}" "$RPM_BUILD_ROOT/%{_initddir}/php-fpm"
+	cp "%{SOURCE3}" "$RPM_BUILD_ROOT/%{_sysconfdir}/php/php-fpm.conf"
 %endif
 
 # Apache HTTPd build
@@ -756,15 +757,29 @@ generate_file_list "/usr/lib64/php" ".*\.\(css\|depdb\|depdblock\|dtd\|filemap\|
 
 
 %check
-%if %{run_tests}
-    for b in cgi embedded fpm httpd zts; do
-        if [ "$b" = "embedded" ] || [ "%{with_$b}" = "1" ]; then
-            pushd "build-$b"
-            make test
-            popd
-        fi
-    done
+# Patch the test suite for unattended saving of the log
+patch -p1 run-tests.php %{SOURCE1}
+
+# Determine which builds to test (CGI is required, all other SAPIs are optional)
+builds=(cgi)
+%if %{with_embedded}
+    builds+=(embedded)
 %endif
+%if %{with_fpm}
+    builds+=(fpm)
+%endif
+%if %{with_httpd}
+    builds+=(httpd)
+%endif
+%if %{with_zts}
+    builds+=(zts)
+%endif
+
+for b in ${builds[@]}; do
+    pushd "build-$b"
+    make test
+    popd
+done
 
 
 %clean
