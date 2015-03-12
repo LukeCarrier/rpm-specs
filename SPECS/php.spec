@@ -37,7 +37,9 @@ Source3: http://github.com/LukeCarrier/rpm-specs/raw/master/SUPPORT/php-fpm.conf
 
 
 %description
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This package contains its command line interface binaries.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. This package contains
+its command line interface binaries.
 
 
 %package bcmath
@@ -47,7 +49,9 @@ Group:    Development/Languages
 
 
 %description bcmath
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. BCMath provides arbitrary precision mathematics to PHP applications.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. BCMath provides
+arbitrary precision mathematics to PHP applications.
 
 
 %package bz2
@@ -57,7 +61,10 @@ Group:    Development/Languages
 
 
 %description bz2
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. BZip2 is an efficient file compression library. This extension enables the creation and extraction of such archives from within the PHP language.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. BZip2 is an efficient
+file compression library. This extension enables the creation and extraction of
+such archives from within the PHP language.
 
 
 %package curl
@@ -67,7 +74,14 @@ Group:    Development/Languages
 
 
 %description curl
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. libcurl is a free and easy-to-use client-side URL transfer library, supporting DICT, FILE, FTP, FTPS, Gopher, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, POP3, POP3S, RTMP, RTSP, SCP, SFTP, SMTP, SMTPS, Telnet and TFTP. libcurl supports SSL certificates, HTTP POST, HTTP PUT, FTP uploading, HTTP form based upload, proxies, cookies, user+password authentication (Basic, Digest, NTLM, Negotiate, Kerberos), file transfer resume, http proxy tunneling and more!
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. libcurl is a free and
+easy-to-use client-side URL transfer library, supporting DICT, FILE, FTP, FTPS,
+Gopher, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, POP3, POP3S, RTMP, RTSP, SCP,
+SFTP, SMTP, SMTPS, Telnet and TFTP. libcurl supports SSL certificates, HTTP
+POST, HTTP PUT, FTP uploading, HTTP form based upload, proxies, cookies,
+user+password authentication (Basic, Digest, NTLM, Negotiate, Kerberos), file
+transfer resume, http proxy tunneling and more!
 
 
 %package devel
@@ -77,7 +91,10 @@ Group:    Development/Languages
 
 
 %description devel
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This package contains development header files which may be necessary for applications that require the Zend Engine.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. This package contains
+development header files which may be necessary for applications that require
+the Zend Engine.
 
 
 %if %{with_embedded}
@@ -88,7 +105,10 @@ Group:    Development/Languages
 
 
 %description embedded
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This shared library enables the use of PHP code within native applications, providing an embedded PHP interpreter.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. This shared library
+enables the use of PHP code within native applications, providing an embedded
+PHP interpreter.
 %endif
 
 
@@ -100,7 +120,10 @@ Group:    Development/Languages
 
 
 %description fpm
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The PHP FPM server API enables resource efficient request processing via lighterweight web servers such as nginx.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. The PHP FPM server API
+enables resource efficient request processing via lighter weight web servers
+such as nginx.
 %endif
 
 
@@ -111,7 +134,9 @@ Group:    Development/Languages
 
 
 %description ftp
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This FTP extension enables communication with FTP servers.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. This FTP extension
+enables communication with FTP servers.
 
 
 %package gd
@@ -121,7 +146,9 @@ Group:    Development/Languages
 
 
 %description gd
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This FTP extension enables image manipulation operations.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. This FTP extension
+enables image manipulation operations.
 
 
 %if %{with_httpd}
@@ -132,7 +159,11 @@ Group:    Development/Languages
 
 
 %description httpd
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This Apache module enables processing of PHP files requested through Apache via an embedded PHP interpreter. It can be dynamically loaded as a DSO module, as is the standard configuration.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. This Apache module
+enables processing of PHP files requested through Apache via an embedded PHP
+interpreter. It can be dynamically loaded as a DSO module, as is the standard
+configuration.
 %endif
 
 
@@ -143,7 +174,11 @@ Group:    Development/Languages
 
 
 %description intl
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. Internationalization extension (further is referred as Intl) is a wrapper for ICU library, enabling PHP programmers to perform UCA-conformant collation and date/time/number/currency formatting in their scripts.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HML. Internationalization
+extension (further is referred as Intl) is a wrapper for ICU library, enabling
+PHP programmers to perform UCA-conformant collation and
+date/time/number/currency formatting in their scripts.
 
 
 %package mbstring
@@ -153,7 +188,9 @@ Group:    Development/Languages
 
 
 %description mbstring
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This extension enables the use of character sets whose characters overflow 8-bit values.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. This extension enables
+the use of character sets whose characters overflow 8-bit values.
 
 
 %package mcrypt
@@ -163,7 +200,9 @@ Group:    Development/Languages
 
 
 %description mcrypt
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This extension provides crypotography functionality for PHP developers.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. This extension
+provides crypotography functionality for PHP developers.
 
 
 %package mysql
@@ -173,8 +212,9 @@ Group:    Development/Languages
 
 
 %description mysql
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This extension provides functionality for accessing MySQL databases in procedural code.
-endif
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. This extension
+provides functionality for accessing MySQL databases in procedural code.
 
 
 %package mysqli
@@ -184,7 +224,9 @@ Group:    Development/Languages
 
 
 %description mysqli
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This extension provides functionality for accessing MySQL databases using object-oriented code.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. This extension
+provides functionality for accessing MySQL databases using object-oriented code.
 
 
 %package openssl
@@ -194,7 +236,10 @@ Group:    Development/Languages
 
 
 %description openssl
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The OpenSSL extension for the language enables manipulation of SSL certificates and the encryption and decryption of data.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. The OpenSSL extension
+for the language enables manipulation of SSL certificates and the encryption and
+decryption of data.
 
 
 %package pdo
@@ -204,7 +249,10 @@ Group:    Development/Languages
 
 
 %description pdo
-PHP is a widely-used general-purpose scripting language that is especially suited for web development and can be embedded into HTML. PDO (PHP Data Objects) enables the language to perform SQL queries on a variety of database types in a safe, object-orientated fashion.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for web development and can be embedded into HTML. PDO (PHP Data Objects)
+enables the language to perform SQL queries on a variety of database types in a
+safe, object-orientated fashion.
 
 
 %package pdo-mysql
@@ -214,16 +262,20 @@ Group:    Development/Languages
 
 
 %description pdo-mysql
-PHP is a widely-used general-purpose scripting language that is especially suited for web development and can be embedded into HTML. The MySQL PDO extension enables connecting to MySQL databases via the PDO library.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for web development and can be embedded into HTML. The MySQL PDO
+extension enables connecting to MySQL databases via the PDO library.
 
 
 %package opcache
-Summary:  hypertext preprocessor - opcache extension
+Summary:  hypertext preprocessor - OPcache extension
 Requires: php
 Group:    Development/Languages
 
 %description opcache
-PHP is a widely-used general-purpose scripting language that is especially suited for web development and can be embedded into HTML. This extension provides an opcode cache.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for web development and can be embedded into HTML. This extension
+provides an opcode cache.
 
 
 %package pdo-sqlite
@@ -233,7 +285,9 @@ Group:    Development/Languages
 
 
 %description pdo-sqlite
-PHP is a widely-used general-purpose scripting language that is especially suited for web development and can be embedded into HTML. The SQLite PDO extension enables connecting to SQLite databases via the PDO library.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for web development and can be embedded into HTML. The SQLite PDO
+extension enables connecting to SQLite databases via the PDO library.
 
 
 %package pear
@@ -243,7 +297,11 @@ Group:    Development/Languages
 
 
 %description pear
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. Many open source libraries exist for free use within PHP applications; this package provides the tools necessary to install them and extensions to the scripting language that provide new and improved functionality.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. Many open source
+libraries exist for free use within PHP applications; this package provides the
+tools necessary to install them and extensions to the scripting language that
+provide new and improved functionality.
 
 
 %package pgsql
@@ -253,7 +311,9 @@ Group:    Development/Languages
 
 
 %description pgsql
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This library extends it with support for the PostgreSQL database server.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. This library extends
+it with support for the PostgreSQL database server.
 
 
 %package phar
@@ -263,7 +323,10 @@ Group:    Development/Languages
 
 
 %description phar
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. Some applications and libraries may be distributed as archive files (PH(p)AR(chives)). This utility enables their compression and extraction.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. Some applications and
+libraries may be distributed as archive files (PH(p)AR(chives)). This utility
+enables their compression and extraction.
 
 
 %package snmp
@@ -273,7 +336,9 @@ Group:    Development/Languages
 
 
 %description snmp
-PHP is a widely used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The SNMP extension allows monitoring of network devices.
+PHP is a wiely used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. The SNMP extension
+allows monitoring of network devices.
 
 
 %package soap
@@ -283,7 +348,10 @@ Group:    Development/Languages
 
 
 %description soap
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The SOAP extension can be used to write SOAP Servers and Clients. It supports subsets of SOAP 1.1, SOAP 1.2 and WSDL 1.1 specifications.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. The SOAP extension can
+be used to write SOAP Servers and Clients. It supports subsets of SOAP 1.1, SOAP
+1.2 and WSDL 1.1 specifications.
 
 
 %package sqlite3
@@ -293,7 +361,9 @@ Group:    Development/Languages
 
 
 %description sqlite3
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This optional extension enables connecting to SQLite 3 databases.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. This optional
+extension enables connecting to SQLite 3 databases.
 
 
 %package xsl
@@ -302,7 +372,9 @@ Requires: libxslt, php
 
 
 %description xsl
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The XSLT extension enables developers to perform advanced operations on XML data.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. The XSLT extension
+enables developers to perform advanced operations on XML data.
 
 
 %package xmlrpc
@@ -311,7 +383,9 @@ Requires: php
 
 
 %description xmlrpc
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The XMLRPC extension makes it easier for web developers to work with existing web services.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. The XMLRPC extension
+makes it easier for web developers to work with existing web services.
 
 
 %package zip
@@ -321,7 +395,9 @@ Group:    Development/Languages
 
 
 %description zip
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This optional extension enables the manipulation of compressed zip files.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. This optional
+extension enables the manipulation of compressed zip files.
 
 
 %package zlib
@@ -331,7 +407,9 @@ Group:    Development/Languages
 
 
 %description zlib
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The zlib extension provides compression functionality.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. The zlib extension
+provides compression functionality.
 
 
 %if %{with_zts}
@@ -342,7 +420,9 @@ Group:    Development/Languages
 
 
 %description zts-bcmath
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. BCMath provides arbitrary precision mathematics to PHP applications.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. BCMath provides
+arbitrary precision mathematics to PHP applications.
 
 
 %package zts-bz2
@@ -352,7 +432,10 @@ Group:    Development/Languages
 
 
 %description zts-bz2
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. BZip2 is an efficient file compression library. This extension enables the creation and extraction of such archives from within the PHP language.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. BZip2 is an efficient
+file compression library. This extension enables the creation and extraction of
+such archives from within the PHP language.
 
 
 %package zts-curl
@@ -362,7 +445,14 @@ Group:    Development/Languages
 
 
 %description zts-curl
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. libcurl is a free and easy-to-use client-side URL transfer library, supporting DICT, FILE, FTP, FTPS, Gopher, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, POP3, POP3S, RTMP, RTSP, SCP, SFTP, SMTP, SMTPS, Telnet and TFTP. libcurl supports SSL certificates, HTTP POST, HTTP PUT, FTP uploading, HTTP form based upload, proxies, cookies, user+password authentication (Basic, Digest, NTLM, Negotiate, Kerberos), file transfer resume, http proxy tunneling and more!
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. libcurl is a free and
+easy-to-use client-side URL transfer library, supporting DICT, FILE, FTP, FTPS,
+Gopher, HTTP, HTTPS, IMAP, IMAPS, LDAP, LDAPS, POP3, POP3S, RTMP, RTSP, SCP,
+SFTP, SMTP, SMTPS, Telnet and TFTP. libcurl supports SSL certificates, HTTP
+POST, HTTP PUT, FTP uploading, HTTP form based upload, proxies, cookies,
+user+password authentication (Basic, Digest, NTLM, Negotiate, Kerberos), file
+transfer resume, http proxy tunneling and more!
 
 
 %package zts-ftp
@@ -372,7 +462,9 @@ Group:    Development/Languages
 
 
 %description zts-ftp
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This thread-safe FTP extension enables communication with FTP servers.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. This thread-safe FTP
+extension enables communication with FTP servers.
 
 
 %package zts-gd
@@ -382,7 +474,9 @@ Group:    Development/Languages
 
 
 %description zts-gd
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This FTP extension enables image manipulation operations.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. This FTP extension
+enables image manipulation operations.
 
 
 %package zts-intl
@@ -392,56 +486,70 @@ Group:    Development/Languages
 
 
 %description zts-intl
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. Internationalization extension (further is referred as Intl) is a wrapper for ICU library, enabling PHP programmers to perform UCA-conformant collation and date/time/number/currency formatting in their scripts.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. Internationalization
+extension (further is referred as Intl) is a wrapper for ICU library, enabling
+PHP programmers to perform UCA-conformant collation and
+date/time/number/currency formatting in their scripts.
 
 
 %package zts-mbstring
-Summary:  hypertext preprocessor: multi-byte string extension
+Summary:  hypertext preprocessor: thread-safe multi-byte string extension
 Requires: php
 Group:    Development/Languages
 
 
 %description zts-mbstring
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This extension enables the use of character sets whose characters overflow 8-bit values.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. This extension enables
+the use of character sets whose characters overflow 8-bit values.
 
 
 %package zts-mcrypt
-Summary:  hypertext preprocessor: MCrypt extension
+Summary:  hypertext preprocessor: thread-safe MCrypt extension
 Requires: php
 Group:    Development/Languages
 
 
 %description zts-mcrypt
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This extension provides crypotography functionality for PHP developers.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. This extension
+provides crypotography functionality for PHP developers.
 
 
 %package zts-mysql
-Summary:  hypertext preprocessor: MySQL extension
+Summary:  hypertext preprocessor: thread-safe MySQL extension
 Requires: mysql, php
 Group:    Development/Languages
 
 
 %description zts-mysql
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This extension provides functionality for accessing MySQL databases in procedural code.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. This extension
+provides functionality for accessing MySQL databases in procedural code.
 
 
 %package zts-mysqli
-Summary:  hypertext preprocessor: MySQLi extension
+Summary:  hypertext preprocessor: thread-safe MySQLi extension
 Requires: mysql, php
 Group:    Development/Languages
 
 
 %description zts-mysqli
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This extension provides functionality for accessing MySQL databases using object-oriented code.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. This extension
+provides functionality for accessing MySQL databases using object-oriented code.
 
 
 %package zts-opcache
-Summary:  hypertext preprocessor - opcache extension
+Summary:  hypertext preprocessor - thread-safe OPcache extension
 Requires: php
 Group:    Development/Languages
 
 %description zts-opcache
-PHP is a widely-used general-purpose scripting language that is especially suited for web development and can be embedded into HTML. This extension provides an opcode cache.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for web development and can be embedded into HTML. This extension
+provides an opcode cache.
 
 
 %package zts-openssl
@@ -451,7 +559,10 @@ Group:    Development/Languages
 
 
 %description zts-openssl
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The OpenSSL extension for the language enables manipulation of SSL certificates and the encryption and decryption of data.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. The OpenSSL extension
+for the language enables manipulation of SSL certificates and the encryption and
+decryption of data.
 
 
 %package zts-pdo
@@ -461,7 +572,10 @@ Group:    Development/Languages
 
 
 %description zts-pdo
-PHP is a widely-used general-purpose scripting language that is especially suited for web development and can be embedded into HTML. PDO (PHP Data Objects) enables the language to perform SQL queries on a variety of database types in a safe, object-orientated fashion.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for web development and can be embedded into HTML. PDO (PHP Data Objects)
+enables the language to perform SQL queries on a variety of database types in a
+safe, object-orientated fashion.
 
 
 %package zts-pdo-mysql
@@ -471,7 +585,9 @@ Group:    Development/Languages
 
 
 %description zts-pdo-mysql
-PHP is a widely-used general-purpose scripting language that is especially suited for web development and can be embedded into HTML. The MySQL PDO extension enables connecting to MySQL databases via the PDO library.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for web development and can be embedded into HTML. The MySQL PDO
+extension enables connecting to MySQL databases via the PDO library.
 
 
 %package zts-pdo-sqlite
@@ -481,7 +597,9 @@ Group:    Development/Languages
 
 
 %description zts-pdo-sqlite
-PHP is a widely-used general-purpose scripting language that is especially suited for web development and can be embedded into HTML. The SQLite PDO extension enables connecting to SQLite databases via the PDO library.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for web development and can be embedded into HTML. The SQLite PDO
+extension enables connecting to SQLite databases via the PDO library.
 
 
 %package zts-pgsql
@@ -491,7 +609,9 @@ Group:    Development/Languages
 
 
 %description zts-pgsql
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This library extends it with support for the PostgreSQL database server.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. This library extends
+it with support for the PostgreSQL database server.
 
 
 %package zts-snmp
@@ -501,7 +621,9 @@ Group:    Development/Languages
 
 
 %description zts-snmp
-PHP is a widely used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The SNMP extension allows monitoring of network devices.
+PHP is a widely used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. The SNMP extension
+allows monitoring of network devices.
 
 
 %package zts-soap
@@ -511,7 +633,10 @@ Group:    Development/Languages
 
 
 %description zts-soap
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The SOAP extension can be used to write SOAP Servers and Clients. It supports subsets of SOAP 1.1, SOAP 1.2 and WSDL 1.1 specifications.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. The SOAP extension can
+be used to write SOAP Servers and Clients. It supports subsets of SOAP 1.1, SOAP
+1.2 and WSDL 1.1 specifications.
 
 
 %package zts-sqlite3
@@ -521,7 +646,9 @@ Group:    Development/Languages
 
 
 %description zts-sqlite3
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This optional extension enables connecting to SQLite 3 databases.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. This optional
+extension enables connecting to SQLite 3 databases.
 
 
 %package zts-xmlrpc
@@ -530,7 +657,9 @@ Requires: php
 
 
 %description zts-xmlrpc
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The XMLRPC extension makes it easier for web developers to work with existing web services.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. The XMLRPC extension
+makes it easier for web developers to work with existing web services.
 
 
 %package zts-xsl
@@ -539,28 +668,34 @@ Requires: libxslt, php
 
 
 %description zts-xsl
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The XSLT extension enables developers to perform advanced operations on XML data.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. The XSLT extension
+enables developers to perform advanced operations on XML data.
 
 
 %package zts-zip
-Summary:  hypertext preprocessor - zip extension
+Summary:  hypertext preprocessor - thread-safe zip extension
 Requires: php
 Group:    Development/Languages
 
 
 %description zts-zip
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. This optional extension enables the manipulation of compressed zip files.
-%endif
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. This optional
+extension enables the manipulation of compressed zip files.
 
 
 %package zts-zlib
-Summary:  hypertext preprocessor - zlib extension
+Summary:  hypertext preprocessor - thread-safe zlib extension
 Requires: php, zlib
 Group:    Development/Languages
 
 
 %description zts-zlib
-PHP is a widely-used general-purpose scripting language that is especially suited for Web development and can be embedded into HTML. The zlib extension provides compression functionality.
+PHP is a widely-used general-purpose scripting language that is especially
+suited for Web development and can be embedded into HTML. The zlib extension
+provides compression functionality.
+%endif
 
 
 %prep
