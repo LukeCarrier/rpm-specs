@@ -785,45 +785,45 @@ popd
 
 # Embdedded build
 %if %{with_embedded}
-pushd build-embedded
-build_tree \
-  --enable-embed \
-  --without-pear \
-  $without_shared
-popd
+    pushd build-embedded
+    build_tree \
+      --enable-embed \
+      --without-pear \
+      $without_shared
+    popd
 %endif
 
 # FPM build
 %if %{with_fpm}
-pushd build-fpm
-build_tree \
-  --enable-fpm \
-  --with-fpm-user=www-server \
-  --with-fpm-group=www-server \
-  --without-pear \
-  $without_shared
-popd
+    pushd build-fpm
+    build_tree \
+      --enable-fpm \
+      --with-fpm-user=www-server \
+      --with-fpm-group=www-server \
+      --without-pear \
+      $without_shared
+    popd
 %endif
 
 # Apache HTTPd build
 %if %{with_httpd}
-pushd build-httpd
-build_tree \
-  --with-apxs2=$(which apxs) \
-  --without-pear \
-  $without_shared
-popd
+    pushd build-httpd
+    build_tree \
+      --with-apxs2=$(which apxs) \
+      --without-pear \
+      $without_shared
+    popd
 %endif
 
 # ZTS (thread-safe) build
 %if %{with_zts}
-pushd build-zts
-build_tree \
-  --enable-mysqlnd-threading \
-  --enable-maintainer-zts \
-  --without-pear \
-  $with_shared
-popd
+    pushd build-zts
+    build_tree \
+      --enable-mysqlnd-threading \
+      --enable-maintainer-zts \
+      --without-pear \
+      $with_shared
+    popd
 %endif
 
 %install
@@ -840,8 +840,7 @@ rm -rf "$RPM_BUILD_ROOT"
 
 # CGI build
 make -C build-cgi install INSTALL_ROOT=$RPM_BUILD_ROOT
-for file in .channels .depdb .depdblock .filemap .lock .registry
-do
+for file in .channels .depdb .depdblock .filemap .lock .registry; do
     rm -rf "$RPM_BUILD_ROOT/$file"
 done
 mkdir -p "$RPM_BUILD_ROOT/%{_sysconfdir}/php"
@@ -850,13 +849,12 @@ mv "$RPM_BUILD_ROOT/%{_sysconfdir}/pear.conf" "$RPM_BUILD_ROOT/%{_sysconfdir}/ph
 
 # Embedded build
 %if %{with_embedded}
-make -C build-embedded install-sapi install-headers INSTALL_ROOT=$RPM_BUILD_ROOT
+    make -C build-embedded install-sapi install-headers INSTALL_ROOT=$RPM_BUILD_ROOT
 
-# Sometimes the libdir specification is ignored..?
-if [ ! -f "$RPM_BUILD_ROOT/%{_libdir}/libphp5.so" ]
-then
-   mv "$RPM_BUILD_ROOT/usr/lib/libphp5.so" "$RPM_BUILD_ROOT/%{_libdir}"
-fi
+    # Sometimes the libdir specification is ignored..?
+    if [ ! -f "$RPM_BUILD_ROOT/%{_libdir}/libphp5.so" ]; then
+       mv "$RPM_BUILD_ROOT/usr/lib/libphp5.so" "$RPM_BUILD_ROOT/%{_libdir}"
+    fi
 %endif
 
 # FPM build
@@ -874,21 +872,27 @@ fi
 
 # Apache HTTPd build
 %if %{with_httpd}
-[ ! -d "$RPM_BUILD_ROOT/%{_libdir}/httpd/modules" ] && mkdir -p "$RPM_BUILD_ROOT/%{_libdir}/httpd/modules"
-install -m 755 build-httpd/libs/libphp5.so "$RPM_BUILD_ROOT/%{_libdir}/httpd/modules/mod_php5.so"
+	if [ ! -d "$RPM_BUILD_ROOT/%{_libdir}/httpd/modules" ]; then
+        mkdir -p "$RPM_BUILD_ROOT/%{_libdir}/httpd/modules"
+    fi
+	install -m 755 build-httpd/libs/libphp5.so \
+            "$RPM_BUILD_ROOT/%{_libdir}/httpd/modules/mod_php5.so"
 %endif
 
 # ZTS build
 %if %{with_zts}
-make -C build-zts install-modules INSTALL_ROOT=$RPM_BUILD_ROOT
+	make -C build-zts install-modules INSTALL_ROOT=$RPM_BUILD_ROOT
 %endif
 
 # The build directories are no longer necessary
 cd "$RPM_BUILD_ROOT"
 
 # Build file lists
+IGNORE_REGEX='.*\.(css|depdb|depdblock|dtd|filemap|html|lock|php|phpt|pkg|reg|sh|spec|txt|xml)'
+
 mkdir _list
-generate_file_list "/usr/lib64/php" ".*\.\(css\|depdb\|depdblock\|dtd\|filemap\|html\|lock\|php\|phpt\|pkg\|reg\|sh\|spec\|txt\|xml\)" | grep -vP "^%{_libdir}/php/doc" > _list/pear
+generate_file_list "/usr/lib64/php" "$IGNORE_REGEX" \
+        | grep -vP "^%{_libdir}/php/doc" > _list/pear
 
 
 %check
