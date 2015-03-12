@@ -894,6 +894,9 @@ mkdir _list
 generate_file_list "/usr/lib64/php" "$IGNORE_REGEX" \
         | grep -vP "^%{_libdir}/php/doc" > _list/pear
 
+# For some reason PHP writes links to the INSTALL_ROOT; these won't work
+ln -sf "%{_bindir}/phar.phar" "$RPM_BUILD_ROOT/%{_bindir}/phar"
+
 
 %check
 # Patch the test suite for unattended saving of the log
