@@ -56,9 +56,10 @@ get_meta_value() {
 echo " "
 
 # Parse our arguments
-eval set -- "$(getopt -o "m:r:s:D" --long "mock:,remote-build:,spec:,no-dependencies" -- "$@")"
+eval set -- "$(getopt -o "m:r:s:CD" --long "mock:,remote-build:,spec:,no-check,no-dependencies" -- "$@")"
 while true; do
     case "$1" in
+        -C|--no-check        ) NO_CHECK=1            ; shift 1 ;;
         -D|--no-dependencies ) NO_DEPENDENCIES=1     ; shift 1 ;;
         -m|--mock            ) MOCK_ENVIRONMENT="$2" ; shift 2 ;;
         -r|--remote-builder  ) REMOTE_BUILDER="$2"   ; shift 2 ;;
@@ -183,6 +184,9 @@ if [ -n "$MOCK_ENVIRONMENT" ]; then
     echo "Running rpmbuild to generate the SRPM."
     rpmbuild --define "_topdir ${rootdir}" -bs "${rootdir}/${SPEC}"
 
+    check=''
+    [ "$NO_CHECK" = "1" ] && check='--nocheck'
+
     echo "Running mock to generate the RPM. Whilst the build is in progress,"
     echo "watch ${rootdir}/MOCK/*.log for status information."
     srpm="${SPEC_NAME}-${SPEC_VERSION}-${SPEC_RELEASE}${SPEC_DIST}.src.rpm"
@@ -190,7 +194,7 @@ if [ -n "$MOCK_ENVIRONMENT" ]; then
     mock -r "$MOCK_ENVIRONMENT" --chroot -- rm -rf /builddir/build
     mock -r "$MOCK_ENVIRONMENT" --copyin "${rootdir}" /builddir/build
     mock -r "$MOCK_ENVIRONMENT" --resultdir "${rootdir}/MOCK" \
-         --rebuild "${rootdir}/SRPMS/${srpm}"
+         --rebuild "${rootdir}/SRPMS/${srpm}" "$check"
     mock -r "$MOCK_ENVIRONMENT" clean
 else
     echo "Running rpmbuild to generate the SRPM and RPM."
