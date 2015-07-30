@@ -6,6 +6,8 @@ XVFB_RUN="${XVFB_RUN:-xvfb-run}"
 
 JAR="/usr/share/java/selenium-server.jar"
 
+export PATH="/usr/libexec/selenium-server:$PATH"
+
 eval set -- "$(getopt -o "h" --long "headless" -- "$@")"
 while true; do
     case "$1" in
