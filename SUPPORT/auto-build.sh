@@ -194,7 +194,7 @@ if [ -n "$MOCK_ENVIRONMENT" ]; then
     mock -r "$MOCK_ENVIRONMENT" --chroot -- rm -rf /builddir/build
     mock -r "$MOCK_ENVIRONMENT" --copyin "${rootdir}" /builddir/build
     mock -r "$MOCK_ENVIRONMENT" --resultdir "${rootdir}/MOCK" \
-         --rebuild "${rootdir}/SRPMS/${srpm}" "$check"
+         --rebuild "${rootdir}/SRPMS/${srpm}" $check
     mock -r "$MOCK_ENVIRONMENT" clean
 else
     echo "Running rpmbuild to generate the SRPM and RPM."
