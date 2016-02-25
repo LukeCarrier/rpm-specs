@@ -1,5 +1,5 @@
 %global selenium_series 2
-%global selenium_major  46
+%global selenium_major  52
 %global selenium_minor  0
 
 Name:    selenium-server
